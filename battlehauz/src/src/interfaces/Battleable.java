@@ -1,4 +1,4 @@
-package models.interfaces;
+package interfaces;
 
 public interface Battleable {
     void dealDamage();

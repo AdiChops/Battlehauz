@@ -60,7 +60,7 @@ The project will make use of many concepts we have learned in class. To name a f
     - moves
   - Polymorphism
     - Subclasses of items and moves can be classified together and organized under a group of items and moves
-    - Enemy subclasses extend from an interface.
+    - classes.Enemy subclasses extend from an interface.
 - Abstraction
   - The user will only be shown the moves and items they can use. The details of how those items and moves work in the game are not important and not shown to the user
 - Encapsulation

@@ -1,6 +1,7 @@
+package classes;
 
 import java.util.Random;
-abstract class Enemy extends Characters implements Fightable{
+abstract class Enemy extends Characters implements interfaces.Battleable {
     protected int mana;// will be used later to generate special move
 
     public Enemy(String n, int baseHealth, Moves[] moves, int mana) {
