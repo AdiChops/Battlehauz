@@ -1,10 +1,10 @@
-package classes;
+package models;
 
 import java.util.Random;
-abstract class Enemy extends Characters implements interfaces.Battleable {
+abstract class Enemy extends Character implements interfaces.Battleable {
     protected int mana;// will be used later to generate special move
 
-    public Enemy(String n, int baseHealth, Moves[] moves, int mana) {
+    public Enemy(String n, int baseHealth, Move[] moves, int mana) {
         super(n, baseHealth, moves);
         this.mana = mana;
     }
@@ -48,10 +48,10 @@ abstract class Enemy extends Characters implements interfaces.Battleable {
 //
 //    }
 
-    public void takeDamage(Moves playerMove) {
+    public void takeDamage(Move playerMove) {
         //calls dies() if dead.
         if (Player.attackSuccessful() == true){
-            if(this.baseHealth >= playerMove.getDamage()){
+            if(this.getBaseHealth() >= playerMove.getDamage()){
                 this.baseHealth -= playerMove.getDamage();
             }
 
