@@ -1,4 +1,4 @@
 package models;
 
-public class Player {
+public class Player extends GameCharacter{
 }
