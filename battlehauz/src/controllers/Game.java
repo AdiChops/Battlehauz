@@ -6,8 +6,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    public void start() {
-        Scanner input = new Scanner(System.in);
+    public void displayStartUp(){
         System.out.println("Welcome to\n" +
                 " .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.   .----------------. .----------------. .----------------. .----------------. \n" +
                 "| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | | .--------------. | .--------------. | .--------------. | .--------------. |\n" +
@@ -20,6 +19,11 @@ public class Game {
                 "| |              | | |              | | |              | | |              | | |              | | |              | | | |              | | |              | | |              | | |              | |\n" +
                 "| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | | '--------------' | '--------------' | '--------------' | '--------------' |\n" +
                 " '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'   '----------------' '----------------' '----------------' '----------------' ");
+
+    }
+
+    public void start() {
+        Scanner input = new Scanner(System.in);
         System.out.println("How would you like to proceed");
         System.out.println("1. Enter BattleHauz\n" +
                 "2. Enter the shop\n" +
@@ -33,21 +37,25 @@ public class Game {
                 int choice = Integer.parseInt(choiceS);
                 if (choice == 1){
                     exit = true;
+                    //When writing actual functions for the game, remove exit = true;
                 }else if (choice == 2){
                     exit = true;
                 }else if (choice == 3){
                     displayStats();
+                    exit = true;
                 }else if (choice == 4){
                     displayCredits();
+                    exit = true;
                 }else if (choice == 5){
-                    System.exit(1);
+                    System.exit(0);
                 }else{
-                    throw new InputException("Invalid input, please enter a number between 1-5");
+                    throw new InputException("Invalid input. Please enter a number between 1-5.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Please input a number");
-            } catch (InputException e){
-                System.out.println(e);
+            }
+            catch (InputException e){
+                System.out.println(e.getMessage());
             }
         }
     }
