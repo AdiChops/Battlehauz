@@ -1,48 +1,63 @@
 package models;
 
-import java.util.Arrays;
-
 public abstract class GameCharacter {
     private String name;
-    private int max_health;
-    private int current_health;
-    private int level;
+    private int maxHealth;
+    private int currentHealth;
+    private int XP;
     private Move[] moves;
-    private final static int MAX_MOVES = 9; //how many types of moves they can have
     private int moveCount;
-    boolean isAlive;
+    private final static int MAX_MOVES = 9; //how many types of moves they can have
 
-    public GameCharacter(String name, int max_health, int level){
+    public GameCharacter(String name, int maxHealth, int xp){
         this.name = name;
-        this.max_health = max_health;
-        this.current_health = max_health;
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
         this.moves = new Move[MAX_MOVES];
+        this.XP = xp;
         this.moveCount = 0;
-        this.level = level;
-        this.isAlive = true;
     }
 
-    public void setCurrent_health(int health){ this.current_health = health; }
-
-    public int getCurrent_health() { return current_health; }
-
-    public String getName() { return name; }
-
-    public int getLevel() { return level; }
-
-    public void setLevel(int level) { this.level = level; }
-
-    public void setAlive(boolean alive) { isAlive = alive; }
-
-    public boolean isAlive() { return isAlive; }
-
-    public int getMax_health() { return max_health; }
-
-    public void setMax_health(int health){
-        //in case at anytime we want to change the health of an enemy as well, I put this here.
-        //to be used for player though.
-        this.max_health = health;
+    public String getName() {
+        return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+
+    public void setCurrentHealth(int currentHealth) {
+        this.currentHealth = currentHealth;
+    }
+
+    public int getXP() {
+        return XP;
+    }
+
+    public void setXP(int XP) {
+        this.XP = XP;
+    }
+
+    public Move[] getMoves() {
+        return moves;
+    }
+
+    public int calculateLevel() { return XP/1000;}
+
+    public boolean isAlive() { return currentHealth > 0; }
+
 
     public boolean addMove(Move move){
         if (checkMove(move)) {
@@ -67,6 +82,10 @@ public abstract class GameCharacter {
         return true;
     }
 
+    public String speak(char mode){
+        return "";
+    }
+
     @Override
     public String toString() {
         if (this instanceof Player) {
@@ -79,8 +98,8 @@ public abstract class GameCharacter {
             return "This is an enemy, beware! It's a "+(Enemy(this)).getKind()+" called "+this.name+
                     ", level "+level+" with "+this.max_health+" health.";
         }
-        return "This is the shopkeeper. He's "+this.name +". You look closer and see that he has "
-                +this.max_health+" health and is level "
-                +level+"! Wow. He must be immortal. You're starting to wonder how long he's been in the game...";
+//        return "This is the shopkeeper. He's "+this.name +". You look closer and see that he has "
+//                +this.max_health+" health and is level "
+//                +level+"! Wow. He must be immortal. You're starting to wonder how long he's been in the game...";
     }
 }

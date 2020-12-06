@@ -1,11 +1,13 @@
 package models;
 
+import interfaces.Battleable;
+
 import java.util.Random;
-abstract class Enemy extends GameCharacter implements interfaces.Battleable {
+abstract class Enemy extends GameCharacter implements Battleable {
     protected int mana;// will be used later to generate special move
 
-    public Enemy(String n, int baseHealth, Move[] moves, int mana) {
-        super(n, baseHealth, moves);
+    public Enemy(String name, int maxHealth, Move[] moves, int mana) {
+        super(name, maxHealth, moves);
         this.mana = mana;
     }
 
@@ -15,9 +17,10 @@ abstract class Enemy extends GameCharacter implements interfaces.Battleable {
         return null;
     }
 
-    public int chooseMove() {
+    public int generateMoveIndex() {
         //randomly selects a move from moves array
         //returns the index
+        // choseMove(generateMoveIndex)
         int upperbound = moves.length;
         Random rand = new Random();
         int index = rand.nextInt(upperbound);
@@ -35,7 +38,7 @@ abstract class Enemy extends GameCharacter implements interfaces.Battleable {
                 return false;
             }
 
-        }
+    }
 
 //    public void GiveDamage(enemyMove) {
 //        if (AttackSuccessful()){
@@ -56,6 +59,10 @@ abstract class Enemy extends GameCharacter implements interfaces.Battleable {
             }
 
         }
+
+    }
+
+    public void takeDamage(int damage){
 
     }
     // abstract void draw()  this will be helpful for graphics, different images

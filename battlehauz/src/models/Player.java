@@ -1,10 +1,14 @@
 package models;
 
 public class Player extends GameCharacter{
-    //player will have coins
-    //player will have max xp
-    //player will have current xp
-    //player will have items array
-    //player will have max number of items
+    private int coins;
 
+    public Player(String name, int maxHealth, int xp) {
+        super(name, maxHealth, xp);
+    }
+
+    @Override
+    public String toString(){
+
+    }
 }

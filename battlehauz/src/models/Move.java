@@ -85,12 +85,13 @@ public class Move {
 
     public void resetUses() {
         if (!baseMove) {
+            this.maxUses *= (100-depreciationPercentage);
             this.remainingUses = maxUses;
             this.timesUsed = 0;
         }
     }
 
-    public int getSellingPrice(){
+    public int calculateSellingPrice(){
         int depreciatedPrice = (int)((double)buyingPrice * depreciationPercentage);
         return buyingPrice - depreciatedPrice;
     }
