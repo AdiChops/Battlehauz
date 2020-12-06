@@ -69,7 +69,7 @@ public class Game {
     }
 
     public void displayCredits(){
-        System.out.println("BattleHauz made by:\n" +
+        System.out.println("BattleHauz made with <3 by:\n" +
                 "Aaditya Chopra\n" +
                 "Elias Hawa \n" +
                 "Veronica Yung\n" +
