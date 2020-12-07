@@ -75,7 +75,7 @@ public abstract class GameCharacter {
         //for now, it's just checking when you try to add a move.
         //can change so it gives an error message of its own.
         for(int i = 0; i < moveCount; i++) {
-            if (moves[i].getName() == move.getName()) {
+            if (moves[i].getName().equals(move.getName())) {
                 return false;
             }
         }
@@ -92,20 +92,4 @@ public abstract class GameCharacter {
         return "";
     }
 
-    @Override
-    public String toString() {
-        if (this instanceof Player) {
-            return "This is you: "+this.name+", level "+level+" with "+(Player(this)).getXP()+"/"
-                    +(Player(this)).getMaxXP()+" XP and "+this.current_health+"/"+this.max_health+
-                    " regenerated health. You have "+(Player(this)).getCoins()+" coins, "+this.moveCount+
-                    " moves in your arsenal, and "+(Player(this)).getItemCount()+" items ready to be used in battle.";
-        }
-        else if (this instanceof Enemy) {
-            return "This is an enemy, beware! It's a "+(Enemy(this)).getKind()+" called "+this.name+
-                    ", level "+level+" with "+this.max_health+" health.";
-        }
-//        return "This is the shopkeeper. He's "+this.name +". You look closer and see that he has "
-//                +this.max_health+" health and is level "
-//                +level+"! Wow. He must be immortal. You're starting to wonder how long he's been in the game...";
-    }
 }
