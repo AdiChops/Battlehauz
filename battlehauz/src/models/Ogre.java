@@ -5,7 +5,7 @@ import interfaces.Battleable;
 import java.util.ArrayList;
 
 public class Ogre extends Enemy {
-        public Ogre(String n, int baseHealth, Moves[] moves, int mana) {
+        public Ogre(String n, int baseHealth, Move[] moves, int mana) {
         super(n, baseHealth, moves, mana);
     }
 
@@ -20,8 +20,4 @@ public class Ogre extends Enemy {
         return index;
     }
 
-    @Override
-    public Move useMove() {
-
-    }
 }

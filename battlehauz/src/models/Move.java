@@ -64,6 +64,7 @@ public class Move {
     public void setRemainingUses(int remainingUses) { this.remainingUses = remainingUses; }
 
     public void setTimesUsed(int timesUsed) { this.timesUsed = timesUsed; }
+    public boolean getBaseMove() {return baseMove;}
 
     public boolean canUse(){
         if(baseMove){

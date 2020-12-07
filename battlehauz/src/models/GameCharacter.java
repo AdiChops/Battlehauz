@@ -81,6 +81,12 @@ public abstract class GameCharacter {
         }
         return true;
     }
+    public int calculateDamage(Move playerMove){
+        //check equipment
+        //if there is equipment, equipment.getBoost()
+        // return playerMove.getDamage() +equipment.getBoost()
+        return 0 ;//for now
+    }
 
     public String speak(char mode){
         return "";

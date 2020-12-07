@@ -3,6 +3,7 @@ package models;
 import interfaces.Battleable;
 
 import java.util.Random;
+
 abstract class Enemy extends GameCharacter implements Battleable {
     protected int mana;// will be used later to generate special move
 
@@ -12,7 +13,7 @@ abstract class Enemy extends GameCharacter implements Battleable {
     }
 
 
-    public String generateName(){
+    public String generateName() {
         //generates name for enemy
         return null;
     }
@@ -31,12 +32,11 @@ abstract class Enemy extends GameCharacter implements Battleable {
         int upperbound = 100;
         Random rand = new Random();
         int prob = rand.nextInt(upperbound);
-        if (prob >=5){
-                return true;
-            }
-            else{
-                return false;
-            }
+        if (prob >= 20) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
 
@@ -51,19 +51,19 @@ abstract class Enemy extends GameCharacter implements Battleable {
 //
 //    }
 
-    public void takeDamage(Move playerMove, Player player) {
+    public void takeDamage(int damage) {
         //calls dies() if dead.
-        if (player.attackSuccessful() == true){
-            if(this.getBaseHealth() >= playerMove.getDamage()){
-                this.baseHealth -= playerMove.getDamage();
-            }
-
+        if (this.getCurrentHealth() >= damage) {
+            this.setCurrentHealth(this.getCurrentHealth() - damage);
         }
 
     }
 
-    public void takeDamage(int damage){
+
+
+    public Move performTurn() {
 
     }
+
     // abstract void draw()  this will be helpful for graphics, different images
 }
