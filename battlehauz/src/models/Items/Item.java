@@ -1,16 +1,18 @@
-package models;
+package models.Items;
 
 public abstract class Item {
     String name;
-    int quantity;
     int buyingPrice;
     int sellingPrice;
 
-    public Item(String iName, int iQuantity, int iBuyingPrice, int iSellingPrice){
+    public Item(String iName, int iBuyingPrice, int iSellingPrice){
         name = iName;
-        quantity = iQuantity;
         buyingPrice = iBuyingPrice;
         sellingPrice = iSellingPrice;
     }
 
+    @Override
+    public String toString() {
+        return "";
+    }
 }

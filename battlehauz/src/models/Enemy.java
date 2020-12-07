@@ -22,7 +22,7 @@ abstract class Enemy extends GameCharacter implements Battleable {
         //randomly selects a move from moves array
         //returns the index
         // choseMove(generateMoveIndex)
-        int upperbound = moves.length;
+        int upperbound = getMoves().length;
         Random rand = new Random();
         int index = rand.nextInt(upperbound);
         return index;

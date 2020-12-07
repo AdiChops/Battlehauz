@@ -1,10 +1,12 @@
 package controllers;
 
+import java.io.IOException;
+
 public class Controller{
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Game game = new Game();
-        game.displayStartUp();
+        views.BattlehauzCLI.displayStartUp();
         game.start();
     }
 
