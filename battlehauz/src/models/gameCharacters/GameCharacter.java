@@ -1,4 +1,6 @@
-package models;
+package models.gameCharacters;
+
+import models.Move;
 
 import java.util.ArrayList;
 

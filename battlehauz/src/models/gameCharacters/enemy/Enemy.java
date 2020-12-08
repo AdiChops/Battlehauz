@@ -1,6 +1,8 @@
-package models;
+package models.gameCharacters.enemy;
 
 import interfaces.Battleable;
+import models.Move;
+import models.gameCharacters.GameCharacter;
 import models.utilities.Turn;
 
 import java.util.Random;

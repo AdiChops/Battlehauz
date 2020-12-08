@@ -1,10 +1,10 @@
-package models;
+package models.gameCharacters;
 
 import interfaces.Battleable;
 import models.Items.Item;
+import models.Move;
 import models.utilities.Turn;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;

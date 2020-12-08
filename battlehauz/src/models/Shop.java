@@ -1,6 +1,7 @@
 package models;
 
 import models.Items.Item;
+import models.gameCharacters.Player;
 import models.utilities.ItemGenerator;
 
 import java.io.BufferedReader;

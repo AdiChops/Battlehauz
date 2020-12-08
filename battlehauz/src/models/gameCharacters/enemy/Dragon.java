@@ -1,4 +1,6 @@
-package models;
+package models.gameCharacters.enemy;
+
+import models.Move;
 
 import java.util.Random;
 

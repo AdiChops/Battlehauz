@@ -1,9 +1,7 @@
 package interfaces;
 
-import models.Enemy;
-import models.GameCharacter;
+import models.gameCharacters.GameCharacter;
 import models.Move;
-import models.Player;
 import models.utilities.Turn;
 
 
