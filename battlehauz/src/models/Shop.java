@@ -98,7 +98,7 @@ public class Shop {
         Move[] userMoves = userAtShop.getMoves();
         if (currentMovesInShop[index].isSellable()) {
             userAtShop.removeMove();
-            userAtShop.setCoins(userAtShop.getCoins() + currentMovesInShop[index].calculateSellingPrice());
+            userAtShop.increaseCoins(currentMovesInShop[index].calculateSellingPrice());
             return true;
         }
         return false;
