@@ -8,14 +8,12 @@ public class Move {
     private int remainingUses; //remaining times you're allowed to use this move
     private int timesUsed; //times move has been used
     private boolean isSellable;
-    private boolean baseMove;
     private int buyingPrice;
     private double depreciationPercentage; //percent that price is depreciated by.
     //boolean isSellable is necessary for the player to see whether or not they can get the selling price.
     //boolean baseMove is not inherently as necessary because isSellable can be used within the method canUse() as well, but added it until we talk about hierarchy again.
 
     public Move(String name, int baseDamage, int XPBoost, int maxUses, int buyingPrice){
-        baseMove = false;
         this.name = name;
         this.baseDamage = baseDamage;
         this.XPBoost = XPBoost;
@@ -28,7 +26,6 @@ public class Move {
     }
 
     public Move(String name, int baseDamage){ //constructor for base moves
-        baseMove = true;
         this.name = name;
         this.baseDamage = baseDamage;
         this.isSellable = false;
@@ -64,10 +61,9 @@ public class Move {
     public void setRemainingUses(int remainingUses) { this.remainingUses = remainingUses; }
 
     public void setTimesUsed(int timesUsed) { this.timesUsed = timesUsed; }
-    public boolean getBaseMove() {return baseMove;}
 
     public boolean canUse(){
-        if(baseMove){
+        if(!isSellable){
             return true;
         }
         else if(remainingUses != 0){
@@ -77,7 +73,7 @@ public class Move {
     }
 
     public void updateMove(){
-        if(!baseMove){
+        if(isSellable){
             this.remainingUses -= 1;
             this.timesUsed += 1;
             depreciationPercentage += 0.1;
@@ -85,7 +81,7 @@ public class Move {
     }
 
     public void resetUses() {
-        if (!baseMove) {
+        if (isSellable) {
             this.maxUses *= (100-depreciationPercentage);
             this.remainingUses = maxUses;
             this.timesUsed = 0;
@@ -108,7 +104,7 @@ public class Move {
                 ", timesUsed=" + timesUsed +
                 ", isSellable=" + isSellable +
                 ", buyingPrice=" + buyingPrice +
-                ", depreciationPercentage=" + depreciationPercentage +
+                ", sellingPrice=" + calculateSellingPrice() +
                 '}';
     }
 }

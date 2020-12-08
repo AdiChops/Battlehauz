@@ -13,10 +13,15 @@ public class Player extends GameCharacter implements Battleable {
     private int[] consumeableBoost = {0,0,0};
     private int[] equipableBoost = {0,0,0};
 
-    public int getCoins() { return coins; }
 
     public Player(String name, int maxHealth, int xp) {
         super(name, maxHealth, xp);
+    }
+
+    public int getCoins() { return coins; }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
     }
 
     @Override
