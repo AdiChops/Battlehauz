@@ -10,7 +10,7 @@ public interface Battleable {
 
     void takeDamage(int damage);
 
-    Move performTurn(int index);
+    Move performTurn();
 
 //    int calculateDamage();
 }
