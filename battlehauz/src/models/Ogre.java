@@ -29,4 +29,8 @@ public class Ogre extends Enemy {
         return index;
     }
 
+    @Override
+    public int calculateDamage(Move move) {
+        return 0;
+    }
 }

@@ -28,6 +28,11 @@ public class Calcifer extends Enemy {
 
     }
 
+    @Override
+    public int calculateDamage(Move move) {
+        return 0;
+    }
+
     //abstract draw method
 
 

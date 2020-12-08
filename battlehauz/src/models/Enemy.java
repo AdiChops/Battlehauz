@@ -8,7 +8,7 @@ public abstract class Enemy extends GameCharacter implements Battleable {
     protected int mana;// will be used later to generate special move
 
     public Enemy(String name, int maxHealth, int mana) {
-        super(name, maxHealth, 100);
+        super(name, maxHealth);
         this.mana = mana;
 
     }
@@ -62,11 +62,13 @@ public abstract class Enemy extends GameCharacter implements Battleable {
 
 
 //
-    public void performTurn( Player player, Move playerMove, Enemy enemy ) {
-        if (player.attackSuccessful()){
-            enemy.takeDamage(player.calculateDamage(playerMove));
+    @Override
+    public void performTurn(int moveIndex, GameCharacter opponent ) {
+        Move nextMove = this.chooseMove(moveIndex);
+        nextMove.updateMove();
+        if(this.attackSuccessful()) {
+            opponent.takeDamage(this.calculateDamage(nextMove));
         }
-
     }
 
     // abstract void draw()  this will be helpful for graphics, different images
