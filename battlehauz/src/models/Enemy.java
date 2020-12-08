@@ -4,7 +4,7 @@ import interfaces.Battleable;
 
 import java.util.Random;
 
-abstract class Enemy extends GameCharacter implements Battleable {
+public abstract class Enemy extends GameCharacter implements Battleable {
     protected int mana;// will be used later to generate special move
 
     public Enemy(String name, int maxHealth, int mana) {
@@ -62,9 +62,12 @@ abstract class Enemy extends GameCharacter implements Battleable {
 
 
 //
-//    public Move performTurn() {
-//
-//    }
+    public void performTurn( Player player, Move playerMove, Enemy enemy ) {
+        if (player.attackSuccessful()){
+            enemy.takeDamage(player.calculateDamage(playerMove));
+        }
+
+    }
 
     // abstract void draw()  this will be helpful for graphics, different images
 }

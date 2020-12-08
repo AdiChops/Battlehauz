@@ -40,8 +40,8 @@ public class Player extends GameCharacter implements Battleable {
     }
 
     @Override
-    public Move performTurn() {
-        return null;
+    public void performTurn(Player player, Move playerMove, Enemy enemy) {
+
     }
 
 

@@ -1,6 +1,8 @@
 package interfaces;
 
+import models.Enemy;
 import models.Move;
+import models.Player;
 
 
 public interface Battleable {
@@ -10,7 +12,7 @@ public interface Battleable {
 
     void takeDamage(int damage);
 
-    Move performTurn();
+    void  performTurn(Player player, Move playerMove, Enemy enemy);
 
 //    int calculateDamage();
 }

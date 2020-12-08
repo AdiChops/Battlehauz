@@ -29,8 +29,4 @@ public class Ogre extends Enemy {
         return index;
     }
 
-    @Override
-    public Move performTurn() {
-        return null;
-    }
 }
