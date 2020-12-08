@@ -4,6 +4,7 @@ import models.Enemy;
 import models.GameCharacter;
 import models.Move;
 import models.Player;
+import models.utilities.Turn;
 
 
 public interface Battleable {
@@ -14,7 +15,7 @@ public interface Battleable {
 //    void takeDamage(int damage);
     int calculateDamage(Move move);
 
-    void performTurn(int moveIndex, GameCharacter opponent);
+    Turn performTurn(int moveIndex, GameCharacter opponent);
 
 //    int calculateDamage();
 }

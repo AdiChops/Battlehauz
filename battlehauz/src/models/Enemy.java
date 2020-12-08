@@ -1,6 +1,7 @@
 package models;
 
 import interfaces.Battleable;
+import models.utilities.Turn;
 
 import java.util.Random;
 
@@ -23,7 +24,7 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         //randomly selects a move from moves array
         //returns the index
         // choseMove(generateMoveIndex)
-        int upperbound = getMoves().length;
+        int upperbound = getMoves().size();
         Random rand = new Random();
         int index = rand.nextInt(upperbound);
         return index;
@@ -63,12 +64,14 @@ public abstract class Enemy extends GameCharacter implements Battleable {
 
 //
     @Override
-    public void performTurn(int moveIndex, GameCharacter opponent ) {
+    public Turn performTurn(int moveIndex, GameCharacter opponent ) {
         Move nextMove = this.chooseMove(moveIndex);
         nextMove.updateMove();
-        if(this.attackSuccessful()) {
+        boolean s = this.attackSuccessful();
+        if(s) {
             opponent.takeDamage(this.calculateDamage(nextMove));
         }
+        return new Turn(nextMove, s);
     }
 
     // abstract void draw()  this will be helpful for graphics, different images

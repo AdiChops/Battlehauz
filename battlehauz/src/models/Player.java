@@ -2,7 +2,9 @@ package models;
 
 import interfaces.Battleable;
 import models.Items.Item;
+import models.utilities.Turn;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
@@ -56,7 +58,7 @@ public class Player extends GameCharacter implements Battleable {
                 + this.getXP() + "XP\n"
                 + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"
                 + this.getCoins() + " coins"
-                + "Your available moves are " + Arrays.toString(getMoves());
+                + "Your available moves are " + Arrays.toString(moves.toArray());
     }
 
     @Override
@@ -72,18 +74,41 @@ public class Player extends GameCharacter implements Battleable {
         this.currentHealth -= damage;
     }
 
+    public boolean removeItem(Item itemToRemove){
+        try{
+            items.remove(itemToRemove);
+            return true;
+        }
+        catch(Exception e){ // TODO: make the exception catching more specific
+            return false;
+        }
+    }
+
+    public boolean removeMove(int moveIndex){
+        try{
+            moves.remove(moveIndex);
+            return true;
+        }
+        catch (Exception e){ // TODO: make the exception catching more specific
+            return false;
+        }
+    }
+
     @Override
-    public void performTurn(int moveIndex, GameCharacter opponent) { // passing in opponent of type GameCharacter, as same method could be used for enemy
+    public Turn performTurn(int moveIndex, GameCharacter opponent) { // passing in opponent of type GameCharacter, as same method could be used for enemy
         try {
             Move nextMove = this.chooseMove(moveIndex);
             nextMove.updateMove();
-            if(attackSuccessful()){
+            boolean s = attackSuccessful();
+            if(s){
                 opponent.takeDamage(this.calculateDamage(nextMove));
                 this.increaseXP(nextMove.getXPBoost());
             }
+            return new Turn(nextMove, s);
         }
         catch(ArrayIndexOutOfBoundsException e){
             System.err.println("That move selection was invalid. Please select a valid move or item.");
+            return null;
         }
     }
 
