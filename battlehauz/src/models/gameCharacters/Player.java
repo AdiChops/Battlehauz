@@ -3,6 +3,7 @@ package models.gameCharacters;
 import interfaces.Battleable;
 import models.Items.Item;
 import models.Move;
+import models.gameCharacters.enemy.Dragon;
 import models.utilities.Turn;
 
 import java.util.Arrays;
@@ -100,9 +101,19 @@ public class Player extends GameCharacter implements Battleable {
             Move nextMove = this.chooseMove(moveIndex);
             nextMove.updateMove();
             boolean s = attackSuccessful();
-            if(s){
+            if(s && !(opponent instanceof Dragon)){ // ogres and calcifers take normal damage from player
                 opponent.takeDamage(this.calculateDamage(nextMove));
                 this.increaseXP(nextMove.getXPBoost());
+            }else{ // if its facing a dragon and move is successful and move is  advanced, deal 10% of player's move damage
+                if(s && nextMove.isSellable()){
+                    opponent.takeDamage((int)(0.1* this.calculateDamage(nextMove)));
+                    // doesn't get XP for using advanced move
+                }
+                else{ // if its a basic move, go as normal
+                    opponent.takeDamage( this.calculateDamage(nextMove));
+                    this.increaseXP(nextMove.getXPBoost());
+
+                }
             }
             return new Turn(nextMove, s);
         }

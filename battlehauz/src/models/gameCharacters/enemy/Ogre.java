@@ -5,13 +5,13 @@ import models.Move;
 import java.util.ArrayList;
 
 public class Ogre extends Enemy {
-    Move move1 = new Move("Bonk", 100, 10, 900, 0);
-    Move move2 = new Move("Belly Tackle", 150, 10, 900, 0);
-    Move move3 = new Move("Dodge", 0, 0, 900, 0);
+    Move move1 = new Move("Bonk", calculateDamage());
+    Move move2 = new Move("Belly Tackle", calculateDamage());
+    Move move3 = new Move("Smelly Armpit", calculateDamage());
 
 
-    public Ogre(String n, int baseHealth, int mana) {
-        super(n, baseHealth, mana);
+    public Ogre(String n, int maxHealth, int mana, int level) {
+        super(n, maxHealth, mana, level);
         addMove(move1);
         addMove(move2);
         addMove(move3);
@@ -29,8 +29,4 @@ public class Ogre extends Enemy {
         return index;
     }
 
-    @Override
-    public int calculateDamage(Move move) {
-        return 0;
-    }
 }
