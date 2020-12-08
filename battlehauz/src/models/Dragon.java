@@ -19,11 +19,11 @@ public class Dragon extends Enemy {
 
     @Override
     public int calculateDamage(Move playerMove) {
-        if (playerMove.getBaseMove()) {//true
+        if (playerMove.isSellable()) {//true
             int newDamage = (int) (playerMove.getBaseDamage() * 0.1);
             return newDamage;
         }
-        return playerMove.getBaseDamage(); // wanna make it 10X more effective or no penatly/
+        return playerMove.getBaseDamage(); // wanna make it 10X more effective or no penalty
     }
 
     @Override

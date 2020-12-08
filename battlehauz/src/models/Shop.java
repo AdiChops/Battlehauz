@@ -95,9 +95,9 @@ public class Shop {
     //it will proceed to remove the move from the user and to add the coins to the user
     //sends boolean to controller for print statement
     public boolean buyBackMove(int index) {
-        Move[] userMoves = userAtShop.getMoves();
+        ArrayList<Move> userMoves = userAtShop.getMoves();
         if (currentMovesInShop[index].isSellable()) {
-            userAtShop.removeMove();
+            userAtShop.removeMove(index);
             userAtShop.increaseCoins(currentMovesInShop[index].calculateSellingPrice());
             return true;
         }

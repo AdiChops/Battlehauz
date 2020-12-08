@@ -21,54 +21,14 @@ import java.util.Scanner;
 
 //remember, a controller is there so that we don't assume where the user input is coming from.
 //Straight from Lanthier's notes, we assume there is no System.out.println or scanner anywhere but here.
-public class Game {
+public class GameController {
 
     private int totalRounds = 0;
     private List<Item> allItems = new ArrayList<>();
 
     public void start() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("How would you like to proceed");
-        System.out.println("1. Enter BattleHauz\n" +
-                "2. Enter the shop\n" +
-                "3. View stats\n" +
-                "4. View credits\n" +
-                "5. Quit game");
-        boolean exit = false;
-        while (!exit) {
-            String choiceS = input.nextLine();
-            try {
-                int choice = Integer.parseInt(choiceS);
-                if (choice == 1){
-                    if (totalRounds == 0){
-                        try{
-                            initializeObjects();
-                        }catch (IOException e){
-                            System.out.println("Couldn't find file");
-                        }
-                    }
-                    exit = true;
-                    //When writing actual functions for the game, remove exit = true;
-                }else if (choice == 2){
-                    exit = true;
-                }else if (choice == 3){
-                    displayStats();
-                    exit = true;
-                }else if (choice == 4){
-                    displayCredits();
-                    exit = true;
-                }else if (choice == 5){
-                    System.exit(0);
-                }else{
-                    throw new InputException("Invalid input. Please enter a number between 1-5.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Please input a number");
-            }
-            catch (InputException e){
-                System.out.println(e.getMessage());
-            }
-        }
+
+
     }
 
     public void initializeObjects() throws IOException {
@@ -186,8 +146,3 @@ public class Game {
 }
 
 
-class InputException extends Exception{
-    public InputException(String s){
-        super(s);
-    }
-}
