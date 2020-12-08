@@ -73,18 +73,16 @@ public class Game {
 
     public void initializeObjects() throws IOException {
         createItems();
+        System.out.println(allItems);
         createCharacters();
     }
 
     public void createItems() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("items.txt"));
-        int lineCount = 0;
-        while (br.readLine() != null) lineCount++;
-        br.close();
-        br = new BufferedReader(new FileReader("items.txt"));
-        for (int i = 0; i < lineCount / 5; i++){
+        while (br.ready()){
             allItems.add(ItemGenerator.generateItems(br));
         }
+
     }
 
     public void createCharacters() {
