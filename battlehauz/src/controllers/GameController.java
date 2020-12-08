@@ -1,15 +1,11 @@
 package controllers;
 
-import models.GameCharacter;
 import models.Items.Item;
-import models.Items.ItemGenerator;
-import models.Player;
+import models.utilities.ItemGenerator;
 
-import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 
 /* move starts with Player choosing move/item
@@ -32,17 +28,8 @@ public class GameController {
     }
 
     public void initializeObjects() throws IOException {
-        createItems();
         System.out.println(allItems);
         createCharacters();
-    }
-
-    public void createItems() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("items.txt"));
-        while (br.ready()){
-            allItems.add(ItemGenerator.generateItems(br));
-        }
-
     }
 
     public void createCharacters() {

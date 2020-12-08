@@ -1,7 +1,11 @@
 package models;
 
 import models.Items.Item;
+import models.utilities.ItemGenerator;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.*;
 
@@ -127,6 +131,13 @@ public class Shop {
             } catch (NoSuchElementException e) {
                 loadQuotes();
             }
+        }
+    }
+
+    public void createItems() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("items.txt"));
+        while (br.ready()){
+            items.add(ItemGenerator.generateItems(br));
         }
     }
 }

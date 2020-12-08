@@ -1,4 +1,9 @@
-package models.Items;
+package models.utilities;
+
+import models.Items.ConsumeableDefensiveItem;
+import models.Items.ConsumeableHealingItem;
+import models.Items.ConsumeableOffensiveItem;
+import models.Items.Item;
 
 import javax.swing.*;
 import java.io.BufferedReader;
