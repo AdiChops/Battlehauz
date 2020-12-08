@@ -13,6 +13,12 @@ public class Player extends GameCharacter implements Battleable {
 
     private int XP;
 
+    public Player(String name, int maxHealth) {
+        super(name, maxHealth);
+        this.XP = 1000;
+        this.coins = 0;
+    }
+
     public int getXP() {
         return XP;
     }
@@ -31,12 +37,6 @@ public class Player extends GameCharacter implements Battleable {
     private int[] equipableBoost = {0,0,0};
 
     public int getCoins() { return coins; }
-
-    public Player(String name, int maxHealth) {
-        super(name, maxHealth);
-        this.XP = 1000;
-        this.coins = 0;
-    }
 
     public void increaseCoins(int amount){
         this.coins += amount;
