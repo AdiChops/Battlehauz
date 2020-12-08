@@ -1,6 +1,9 @@
 package interfaces;
 
+import models.Enemy;
+import models.GameCharacter;
 import models.Move;
+import models.Player;
 
 
 public interface Battleable {
@@ -8,9 +11,10 @@ public interface Battleable {
     // 5% chance for Player to miss move, varying% chance depending on subclass of enemy
     boolean attackSuccessful();
 
-    void takeDamage(int damage);
+//    void takeDamage(int damage);
+    int calculateDamage(Move move);
 
-    Move performTurn();
+    void performTurn(int moveIndex, GameCharacter opponent);
 
 //    int calculateDamage();
 }

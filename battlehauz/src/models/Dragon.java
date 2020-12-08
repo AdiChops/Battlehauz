@@ -15,10 +15,7 @@ public class Dragon extends Enemy {
     }
 
 
-    @Override
-    public Move performTurn() {
-        return null;
-    }
+
 
     @Override
     public int calculateDamage(Move playerMove) {

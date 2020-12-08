@@ -4,11 +4,11 @@ import interfaces.Battleable;
 
 import java.util.Random;
 
-abstract class Enemy extends GameCharacter implements Battleable {
+public abstract class Enemy extends GameCharacter implements Battleable {
     protected int mana;// will be used later to generate special move
 
     public Enemy(String name, int maxHealth, int mana) {
-        super(name, maxHealth, 100);
+        super(name, maxHealth);
         this.mana = mana;
 
     }
@@ -62,9 +62,14 @@ abstract class Enemy extends GameCharacter implements Battleable {
 
 
 //
-//    public Move performTurn() {
-//
-//    }
+    @Override
+    public void performTurn(int moveIndex, GameCharacter opponent ) {
+        Move nextMove = this.chooseMove(moveIndex);
+        nextMove.updateMove();
+        if(this.attackSuccessful()) {
+            opponent.takeDamage(this.calculateDamage(nextMove));
+        }
+    }
 
     // abstract void draw()  this will be helpful for graphics, different images
 }

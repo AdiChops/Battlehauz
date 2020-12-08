@@ -29,9 +29,10 @@ public class Calcifer extends Enemy {
     }
 
     @Override
-    public Move performTurn() {
-        return null;
+    public int calculateDamage(Move move) {
+        return 0;
     }
+
     //abstract draw method
 
 

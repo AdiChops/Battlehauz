@@ -30,7 +30,7 @@ public class Ogre extends Enemy {
     }
 
     @Override
-    public Move performTurn() {
-        return null;
+    public int calculateDamage(Move move) {
+        return 0;
     }
 }

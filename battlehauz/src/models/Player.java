@@ -5,24 +5,49 @@ import models.Items.Item;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Player extends GameCharacter implements Battleable {
 
-    private int coins;
-    private HashMap<Item, Integer> Items;
-    private int[] consumeableBoost = {0,0,0};
-    private int[] equipableBoost = {0,0,0};
+    private int XP;
 
-
-    public Player(String name, int maxHealth, int xp) {
-        super(name, maxHealth, xp);
+    public int getXP() {
+        return XP;
     }
 
-    public int getCoins() { return coins; }
+    public void setXP(int XP) {
+        this.XP = XP;
+    }
 
     public void setCoins(int coins) {
         this.coins = coins;
     }
+
+    private int coins;
+    private HashMap<Item, Integer> items;
+    private int[] consumeableBoost = {0,0,0};
+    private int[] equipableBoost = {0,0,0};
+
+    public int getCoins() { return coins; }
+
+    public Player(String name, int maxHealth) {
+        super(name, maxHealth);
+        this.XP = 1000;
+        this.coins = 0;
+    }
+
+    public void increaseCoins(int amount){
+        this.coins += amount;
+    }
+
+    public void increaseXP(int xpIncrease){
+        this.XP += xpIncrease;
+    }
+    public int calculateDamage(Move move){
+        return move.getBaseDamage(); // other factors will come in
+    }
+
+    public int calculateLevel() { return XP/1000;}
 
     @Override
     public String toString(){
@@ -36,17 +61,30 @@ public class Player extends GameCharacter implements Battleable {
 
     @Override
     public boolean attackSuccessful() {
-        return false;
+        // would depend on other factors
+        Random rnd = new Random();
+        return rnd.nextInt(100) > 5;
     }
 
     @Override
     public void takeDamage(int damage) {
-
+        // items would change this behaviour
+        this.currentHealth -= damage;
     }
 
     @Override
-    public Move performTurn() {
-        return null;
+    public void performTurn(int moveIndex, GameCharacter opponent) { // passing in opponent of type GameCharacter, as same method could be used for enemy
+        try {
+            Move nextMove = this.chooseMove(moveIndex);
+            nextMove.updateMove();
+            if(attackSuccessful()){
+                opponent.takeDamage(this.calculateDamage(nextMove));
+                this.increaseXP(nextMove.getXPBoost());
+            }
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            System.err.println("That move selection was invalid. Please select a valid move or item.");
+        }
     }
 
 

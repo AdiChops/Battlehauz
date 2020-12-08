@@ -1,20 +1,18 @@
 package models;
 
 public abstract class GameCharacter {
-    private String name;
-    private int maxHealth;
-    private int currentHealth;
-    private int XP;
-    private Move[] moves;
-    private int moveCount;
-    private final static int MAX_MOVES = 9; //how many types of moves they can have
+    protected String name;
+    protected int maxHealth;
+    protected int currentHealth;
+    protected Move[] moves;
+    protected int moveCount;
+    protected final static int MAX_MOVES = 9; //how many types of moves they can have
 
-    public GameCharacter(String name, int maxHealth, int xp){
+    public GameCharacter(String name, int maxHealth){
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
         this.moves = new Move[MAX_MOVES];
-        this.XP = xp;
         this.moveCount = 0;
     }
 
@@ -42,19 +40,10 @@ public abstract class GameCharacter {
         this.currentHealth = currentHealth;
     }
 
-    public int getXP() {
-        return XP;
-    }
-
-    public void setXP(int XP) {
-        this.XP = XP;
-    }
-
     public Move[] getMoves() {
         return moves;
     }
 
-    public int calculateLevel() { return XP/1000;}
 
     public boolean isAlive() { return currentHealth > 0; }
 
@@ -81,11 +70,21 @@ public abstract class GameCharacter {
         }
         return true;
     }
-    public int calculateDamage(Move playerMove){
-        //check equipment
-        //if there is equipment, equipment.getBoost()
-        // return playerMove.getDamage() +equipment.getBoost()
-        return 0 ;//for now
+
+    public Move chooseMove(int index){
+        if(index < MAX_MOVES && index >= 0)
+            return moves[index];
+        else
+            return null; // returning null if invalid index was selected
+    }
+
+    public void takeDamage(int damage) {
+        // basic takeDamage
+        // to expand in other classes
+        if (this.getCurrentHealth() >= damage) {
+            this.setCurrentHealth(this.getCurrentHealth() - damage);
+        }
+
     }
 
     public String speak(char mode){
