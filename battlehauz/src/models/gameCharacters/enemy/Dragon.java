@@ -12,8 +12,8 @@ public class Dragon extends Enemy {
     Move move3 = new Move("Claw", calculateDamage());
     // Item
 
-    public Dragon(String name, int maxHealth, int mana, int level) {
-        super(name, maxHealth, mana, level);
+    public Dragon(String name, int mana, int level) {
+        super(name, 2000, mana, level);
         addMove(move1);
         addMove(move2);
         addMove(move3);

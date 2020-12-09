@@ -7,8 +7,8 @@ import java.util.Random;
 public class Calcifer extends Enemy {
 
 
-    public Calcifer(String name, int maxHealth, int mana, int level) {
-        super(name, maxHealth, mana, level);
+    public Calcifer(String name, int mana, int level) {
+        super(name, 1200, mana, level);
         addMove(new Move("Fireball", calculateDamage()));
         addMove(new Move("Lava Floor", calculateDamage()));
         addMove(new Move("Core Rage", calculateDamage()));
