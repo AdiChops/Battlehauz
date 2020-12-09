@@ -1,6 +1,6 @@
 package models.Items;
 
-public abstract class EquipableItem extends Item{
+public class EquipableItem extends Item{
 
     private boolean isEquiped;
 

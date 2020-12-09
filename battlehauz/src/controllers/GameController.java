@@ -38,7 +38,7 @@ public class GameController {
 
     public void goToShop(){
 //        System.out.println("Your character enters the shop. Here, they see the shopkeeper: Dave.");
-//        System.out.println(shop.welcomeUser(Player player)); //will return a quote but also initialize everything in there for now
+//        System.out.println(shop.enterShop(Player player)); //will return a quote but also initialize everything in there for now
 //        System.out.println("1. Take a look at the moves offered in the shop.");
 //        System.out.println("2. Take a look at the items they have.");
 //        System.out.println("3. Sell a move back to the shop.");
