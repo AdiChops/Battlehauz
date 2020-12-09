@@ -69,7 +69,7 @@ public class Shop {
 
     //checks if user has enough coins
     //tries to add the move (duplicates, too many moves)
-    //if move is successfully added, substracts coins for the user and returns true
+    //if move is successfully added, subtracts coins for the user and returns true
     //else, returns false
     public boolean purchaseMoveAtIndex(int index){
         if (currentMovesInShop[index].getBuyingPrice() < userAtShop.getCoins()){
@@ -102,9 +102,9 @@ public class Shop {
     // if it's false, it's a base move
     public boolean buyBackMove(int index) {
         ArrayList<Move> userMoves = userAtShop.getMoves();
-        if (currentMovesInShop[index].isSellable()) {
+        if (userMoves.get(index).isSellable()) {
+            userAtShop.increaseCoins(userMoves.get(index).calculateSellingPrice());
             userAtShop.removeMove(index);
-            userAtShop.increaseCoins(currentMovesInShop[index].calculateSellingPrice());
             return true;
         }
         return false;
