@@ -104,7 +104,7 @@ public class Player extends GameCharacter implements Battleable {
                 this.increaseXP(nextMove.getXPBoost());
             }else{ // if its facing a dragon and move is successful and move is  advanced, deal 10% of player's move damage
                 if(s && nextMove.isSellable()){
-                    opponent.takeDamage((int)(0.1* this.calculateDamage(nextMove)));
+                    opponent.takeDamage((int)(0.5 * this.calculateDamage(nextMove)));
                     // doesn't get XP for using advanced move
                 }
                 else{ // if its a basic move, go as normal
