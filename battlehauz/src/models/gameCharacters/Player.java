@@ -46,9 +46,7 @@ public class Player extends GameCharacter implements Battleable {
     public void increaseXP(int xpIncrease){
         this.XP += xpIncrease;
     }
-    public int calculateDamage(Move move){
-        return move.getBaseDamage(); // other factors will come in
-    }
+//    public int calculateDamage(Move move){ return move.getBaseDamage();} // other factors will come in }
 
     public int calculateLevel() { return XP/1000;}
 

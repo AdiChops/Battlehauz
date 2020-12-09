@@ -18,11 +18,19 @@ public abstract class Enemy extends GameCharacter implements Battleable {
 
     }
 
-
+    /***
+     * generates enemy name
+     *
+     * @return enemy name
+     */
     public String generateName() {
         return name;
     }
 
+    /***
+     * randomly generates the order of enemy moves
+     * @return returns the index of move
+     */
     public int generateMoveIndex() {
         //randomly selects a move from moves array
         //returns the index
@@ -32,6 +40,10 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         return rand.nextInt(upperbound);
     }
 
+    /***
+     * randomly generates probability of hitting player
+     * @return boolean that determines if the attack is successful
+     */
     public boolean attackSuccessful() {
         int upperbound = 100;
         Random rand = new Random();
@@ -42,32 +54,23 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         return false;
 
     }
+
+    /***
+     * generates a random number proportional to player's level
+     * @return returns the damage points of an enemy's move
+     */
     // calculate damage of enemy's move
     public int calculateDamage() {
         int max = 500 * level;
         int min = 50 * level;
-        return (int) (Math.random()*(max-min)+min);
-
-    }
-    //required
-    public int calculateDamage(Move move) {
-        return 0;
+        return (int) (Math.random() * (max - min) + min);
 
     }
 
-
-
-    //    public void GiveDamage(enemyMove) {
-//        if (AttackSuccessful()){
-//            if (Player.getBaseHealth() >= enemyMove.getDamage()) {
-//                Player.getBaseHealth() -= enemyMove.getDamage();
-//            } else {
-//                dies();
-//            }
-//        }
-//
-//    }
-    // how much of player's damage points
+    /***
+     * updates enemy's  health
+     * @param damage the amount of damage points that will be taken from enemy's health
+     */
     public void takeDamage(int damage) {
         //calls dies() if dead.
         if (this.getCurrentHealth() >= damage) {
@@ -77,7 +80,12 @@ public abstract class Enemy extends GameCharacter implements Battleable {
     }
 
 
-    //
+    /***
+     * steps to decide if opponent will take damage
+     * @param moveIndex used to get move
+     * @param opponent  used to direct damage onto opponent
+     * @return
+     */
     @Override
     public Turn performTurn(int moveIndex, GameCharacter opponent) {
         Move nextMove = this.chooseMove(moveIndex);
@@ -88,7 +96,6 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         }
         return new Turn(nextMove, s);
     }
-
 
 
     // abstract void draw()  this will be helpful for graphics, different images

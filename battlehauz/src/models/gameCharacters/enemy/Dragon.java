@@ -19,15 +19,11 @@ public class Dragon extends Enemy {
         addMove(move3);
     }
 
-//
-//    @Override
-//    public int calculateDamage(Move playerMove) {
-//        if (!playerMove.isSellable()) {//true
-//            int newDamage = (int) (playerMove.getBaseDamage() * 0.1);
-//            return newDamage;
-//        }
-//        return playerMove.getBaseDamage(); // wanna make it 10X more effective or no penalty
-//    }
+
+    /***
+     * randomly generates probability of hitting player, chance of missing is reduced to 5%
+     * @return boolean that determines if the attack is successful
+     */
 
     @Override
     public boolean attackSuccessful() {
@@ -42,13 +38,6 @@ public class Dragon extends Enemy {
 
     }
 
-    public void takeDamage(int damage) {
-        //calls dies() if dead.
-        if (this.getCurrentHealth() >= damage) {
-            this.setCurrentHealth(this.getCurrentHealth() - damage);
-        }
-
-    }
 
 
 }

@@ -15,6 +15,11 @@ public class Calcifer extends Enemy {
 
     }
 
+    /***
+     * randomly generates probability of hitting player, chance of missing is reduced to 10%
+     *
+     * @return boolean that determines if the attack is successful
+     */
     @Override
     public boolean attackSuccessful() {
         int upperbound = 100;

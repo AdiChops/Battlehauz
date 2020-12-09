@@ -18,6 +18,10 @@ public class Ogre extends Enemy {
 
     }
 
+    /***
+     * ogres have a fixed/predictable sequence of moves rather than randomized
+     * @return index of move
+     */
     public int generateMoveIndex() {
         //method overload, same move pattern instead of randomized
         ArrayList<Integer> sequence = new ArrayList<Integer>();

@@ -11,7 +11,7 @@ public interface Battleable {
     boolean attackSuccessful();
 
 //    void takeDamage(int damage);
-    int calculateDamage(Move move);
+//    int calculateDamage(Move move);
 
     Turn performTurn(int moveIndex, GameCharacter opponent);
 
