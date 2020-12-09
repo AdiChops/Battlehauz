@@ -11,8 +11,11 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Player extends GameCharacter implements Battleable {
-
+    private int coins;
     private int XP;
+    private HashMap<Item, Integer> items;
+    private int[] consumeableBoost = {0,0,0};
+    private int[] equipableBoost = {0,0,0};
 
     public Player(String name, int maxHealth) {
         super(name, maxHealth);
@@ -32,11 +35,6 @@ public class Player extends GameCharacter implements Battleable {
         this.coins = coins;
     }
 
-    private int coins;
-    private HashMap<Item, Integer> items;
-    private int[] consumeableBoost = {0,0,0};
-    private int[] equipableBoost = {0,0,0};
-
     public int getCoins() { return coins; }
 
     public void increaseCoins(int amount){
@@ -50,15 +48,7 @@ public class Player extends GameCharacter implements Battleable {
 
     public int calculateLevel() { return XP/1000;}
 
-    @Override
-    public String toString(){
-        return"Full Summary\n ------------------------------ \n"+
-                this.getName() + "\nYou are level " + this.calculateLevel() + "\n"
-                + this.getXP() + "XP\n"
-                + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"
-                + this.getCoins() + " coins"
-                + "Your available moves are " + Arrays.toString(moves.toArray());
-    }
+    public HashMap<Item, Integer> getItems() { return items; }
 
     @Override
     public boolean attackSuccessful() {
@@ -120,6 +110,16 @@ public class Player extends GameCharacter implements Battleable {
             return null;
         }
     }
+
+    public String toString(){
+        return"Full Summary\n ------------------------------ \n"+
+                this.getName() + "\nYou are level " + this.calculateLevel() + "\n"
+                + this.getXP() + "XP\n"
+                + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"
+                + this.getCoins() + " coins"
+                + "Your available moves are " + Arrays.toString(moves.toArray());
+    }
+
 
 
 }

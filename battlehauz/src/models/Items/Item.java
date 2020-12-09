@@ -11,6 +11,14 @@ public abstract class Item {
         sellingPrice = iSellingPrice;
     }
 
+    public int getBuyingPrice() {
+        return buyingPrice;
+    }
+
+    public int getSellingPrice() {
+        return sellingPrice;
+    }
+
     @Override
     public String toString() {
         return "";
