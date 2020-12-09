@@ -5,16 +5,12 @@ import models.Move;
 import java.util.ArrayList;
 
 public class Ogre extends Enemy {
-    Move move1 = new Move("Bonk", calculateDamage());
-    Move move2 = new Move("Belly Tackle", calculateDamage());
-    Move move3 = new Move("Smelly Armpit", calculateDamage());
-
 
     public Ogre(String n, int maxHealth, int mana, int level) {
         super(n, maxHealth, mana, level);
-        addMove(move1);
-        addMove(move2);
-        addMove(move3);
+        addMove(new Move("Bonk", calculateDamage()));
+        addMove(new Move("Belly Tackle", calculateDamage()));
+        addMove(new Move("Smelly Armpit", calculateDamage()));
 
     }
 

@@ -46,9 +46,7 @@ public abstract class GameCharacter {
         return moves;
     }
 
-
     public boolean isAlive() { return currentHealth > 0; }
-
 
     public boolean addMove(Move move){
         if (checkMove(move)) {
@@ -64,8 +62,8 @@ public abstract class GameCharacter {
         //this method checks if the move is already in the inventory of the user.
         //for now, it's just checking when you try to add a move.
         //can change so it gives an error message of its own.
-        for(int i = 0; i < moves.size(); i++) {
-            if (moves.get(i).getName().equals(move.getName())) {
+        for (Move value : moves) {
+            if (value.getName().equals(move.getName())) {
                 return false;
             }
         }

@@ -24,4 +24,8 @@ public class WordsGeneration {
             }
         }
     }
+
+    public static void rollingTextPrint(String text){
+
+    }
 }

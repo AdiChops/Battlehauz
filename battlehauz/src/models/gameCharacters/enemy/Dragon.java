@@ -7,16 +7,12 @@ import models.utilities.Turn;
 import java.util.Random;
 
 public class Dragon extends Enemy {
-    Move move1 = new Move(" Breath of Death", calculateDamage());
-    Move move2 = new Move("Dark Magic", calculateDamage());
-    Move move3 = new Move("Claw", calculateDamage());
-    // Item
 
     public Dragon(String name, int maxHealth, int mana, int level) {
         super(name, maxHealth, mana, level);
-        addMove(move1);
-        addMove(move2);
-        addMove(move3);
+        addMove(new Move(" Breath of Death", calculateDamage()));
+        addMove(new Move("Dark Magic", calculateDamage()));
+        addMove(new Move("Claw", calculateDamage()));
     }
 
 
@@ -30,15 +26,8 @@ public class Dragon extends Enemy {
         int upperbound = 100;
         Random rand = new Random();
         int prob = rand.nextInt(upperbound);
-        if (prob >= 5) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return prob >= 5;
     }
-
-
 
 }
 
