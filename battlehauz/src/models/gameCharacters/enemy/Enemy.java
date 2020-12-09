@@ -48,15 +48,13 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         int upperbound = 100;
         Random rand = new Random();
         int prob = rand.nextInt(upperbound);
-        if (prob >= 20) {
-            return true;
-        }
-        return false;
+        return prob >= 20;
 
     }
 
     /***
      * generates a random number proportional to player's level
+     * This is used to calculate the damage of enemy moves when they are created
      * @return returns the damage points of an enemy's move
      */
     // calculate damage of enemy's move
@@ -68,7 +66,7 @@ public abstract class Enemy extends GameCharacter implements Battleable {
     }
 
     /***
-     * updates enemy's  health
+     * updates enemy's health
      * @param damage the amount of damage points that will be taken from enemy's health
      */
     public void takeDamage(int damage) {
@@ -76,7 +74,6 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         if (this.getCurrentHealth() >= damage) {
             this.setCurrentHealth(this.getCurrentHealth() - damage);
         }
-
     }
 
 

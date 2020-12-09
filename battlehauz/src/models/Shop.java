@@ -21,7 +21,8 @@ public class Shop {
     private static final Random RND = new Random();
 
     public Shop() throws IOException{
-        quotes = new LinkedList<String>();
+        items = new ArrayList<>();
+        quotes = new LinkedList<>();
         loadItems();
     }
 
@@ -86,6 +87,7 @@ public class Shop {
     public boolean purchaseItemAtIndex(int index){
         if(items.get(index).getBuyingPrice() < userAtShop.getCoins()){
             userAtShop.addItem(items.get(index));
+            userAtShop.setCoins(userAtShop.getCoins() - items.get(index).getBuyingPrice());
             if (items.get(index) instanceof EquipableItem){
                 items.remove(index);
             }
@@ -122,7 +124,7 @@ public class Shop {
         HashMap<Item, Integer> userItems = userAtShop.getItems();
         return false;
         //having trouble with this one, will come back later.
-        }
+    }
 
 
     //uses the queue of quotes to remove the first element and return it as a String

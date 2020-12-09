@@ -5,6 +5,8 @@ public abstract class Item {
     int buyingPrice;
     int sellingPrice;
 
+    public String getName() { return name; }
+
     public Item(String iName, int iBuyingPrice, int iSellingPrice){
         name = iName;
         buyingPrice = iBuyingPrice;
@@ -23,4 +25,6 @@ public abstract class Item {
     public String toString() {
         return "";
     }
+
+    public abstract int useItem();
 }
