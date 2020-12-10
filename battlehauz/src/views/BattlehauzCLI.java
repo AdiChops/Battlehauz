@@ -54,12 +54,13 @@ public class BattlehauzCLI {
                     case 'B':{
                         System.out.println("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
                         System.out.println(game.displayRules());
+                        //Game starts and continues while player is alive
                         while(game.playerIsAlive()){
-                            game.enterBattleFloor();
+                            game.enterBattleFloor(); //generate enemies for floor
                             System.out.println("\nYou have entered floor " + game.getCurrentFloor() + " of the Battlehauz.");
-                            while(game.hasMoreEnemies()){
-                                System.out.println(game.startBattle());
-                                while(game.currentEnemyIsAlive()){
+                            while(game.hasMoreEnemies()){ //while the floor still has enemies
+                                System.out.println(game.startBattle()); //game.startBattle sets the currentEnemy as the first enemy in the list
+                                while(game.currentEnemyIsAlive()){ //while the currentEnemy is still alive
                                     System.out.println(game.displayPlayerShortSummary());
                                     System.out.print("Which move would you like to select > ");
                                     String moveChoiceS = INPUT.next();
@@ -71,7 +72,6 @@ public class BattlehauzCLI {
                                     catch(NumberFormatException e){
                                         System.err.println("Oops! Please enter a valid number.");
                                     }
-
                                 }
                             } // game.hasSMoreEnemies, completing floor
                             game.nextFloor();

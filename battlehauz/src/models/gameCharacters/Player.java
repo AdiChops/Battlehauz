@@ -6,6 +6,7 @@ import models.Move;
 import models.gameCharacters.enemy.Dragon;
 import models.utilities.Turn;
 
+import javax.swing.*;
 import java.util.*;
 
 public class Player extends GameCharacter implements Battleable {
@@ -168,15 +169,18 @@ public class Player extends GameCharacter implements Battleable {
             nextMove.updateMove();
             boolean s = attackSuccessful();
             this.increaseXP(nextMove.getXPBoost());
-            if(s && !(opponent instanceof Dragon)){ // ogres and calcifers take normal damage from player
-                opponent.takeDamage(this.calculateDamage(nextMove) + (this.calculateDamage(nextMove) * consumeableBoost[1]));
-            }else{ // if its facing a dragon and move is successful and move is  advanced, deal 10% of player's move damage
-                if(s && nextMove.isSellable()){
-                    opponent.takeDamage((int)(0.5 * (this.calculateDamage(nextMove) + (this.calculateDamage(nextMove) * consumeableBoost[1]))));
-                    // doesn't get XP for using advanced move
-                }
-                else{ // if its a basic move, go as normal
+            JOptionPane.showMessageDialog(null, s);
+            if (s){
+                if(!(opponent instanceof Dragon)){ // ogres and calcifers take normal damage from player
                     opponent.takeDamage(this.calculateDamage(nextMove) + (this.calculateDamage(nextMove) * consumeableBoost[1]));
+                }else{ // if its facing a dragon and move is successful and move is  advanced, deal 10% of player's move damage
+                    if(nextMove.isSellable()){
+                        opponent.takeDamage((int)(0.5 * (this.calculateDamage(nextMove) + (this.calculateDamage(nextMove) * consumeableBoost[1]))));
+                        // doesn't get XP for using advanced move
+                    }
+                    else{ // if its a basic move, go as normal
+                        opponent.takeDamage(this.calculateDamage(nextMove) + (this.calculateDamage(nextMove) * consumeableBoost[1]));
+                    }
                 }
             }
             return new Turn(nextMove, s);
