@@ -2,6 +2,8 @@ package views;
 
 import controllers.GameController;
 import controllers.InputException;
+import models.items.ConsumeableOffensiveItem;
+import models.utilities.WordsHelper;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -53,33 +55,63 @@ public class BattlehauzCLI {
             try {
                 switch(choice){
                     case 'B':{
-                        System.out.println("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
+                        WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
                         System.out.println(game.displayRules());
                         //Game starts and continues while player is alive
                         while(game.playerIsAlive()){
                             game.enterBattleFloor(); //generate enemies for floor
-                            System.out.println("\nYou have entered floor " + game.getCurrentFloor() + " of the Battlehauz.");
+                            WordsHelper.rollingTextPrint("\nYou have entered floor " + game.getCurrentFloor() + " of the Battlehauz.");
                             while(game.hasMoreEnemies()){ //while the floor still has enemies
-                                System.out.println(game.startBattle()); //game.startBattle sets the currentEnemy as the first enemy in the queue
+                                WordsHelper.rollingTextPrint(game.startBattle()); //game.startBattle sets the currentEnemy as the first enemy in the list
                                 while(game.currentEnemyIsAlive()){ //while the currentEnemy is still alive
-//                                    System.out.println("What would you like to do >");
-//                                    System.out.println(game.displayerPlayerOptions());
+                                    do{
+                                        System.out.println(game.displayPlayerOptions());
+                                        System.out.print("What would you like to do > ");
+                                        String actionChoiceS = INPUT.next();
+                                        try{
+                                            int actionChoice = Integer.parseInt(actionChoiceS);
+                                            if (actionChoice < 0 || actionChoice > 2) throw new InputException("");
+                                            switch (actionChoice){
+                                                case 1:
+                                                    System.out.println(game.displayPlayerShortSummary());
+                                                    System.out.print("Which move would you like to select > ");
+                                                    String moveChoiceS = INPUT.next();
+                                                    try{
+                                                        int moveChoice = Integer.parseInt(moveChoiceS);
+                                                        if (moveChoice < 0 || moveChoice > game.getGamePlayer().getMoves().size()) throw new InputException("That move doesn't exist! Pick a valid move index!");
+                                                        System.out.println(game.doPlayerTurn(moveChoice));
+                                                        System.out.println(game.displayEnemyStatus());
+                                                    } catch(NumberFormatException e){
+                                                        System.err.println("Oops! Please enter a valid number.");
+                                                    } catch (InputException e) {
+                                                        System.err.println(e.getMessage());
+                                                    }
+                                                    break;
+                                                case 2:
+                                                    //Adding some dummy items will remove later
+                                                    game.getGamePlayer().addItem(new ConsumeableOffensiveItem("Jimmy John's hot stick", 7, 7, 7));
+                                                    game.getGamePlayer().addItem(new ConsumeableOffensiveItem("Jimmy John's hot stick", 7, 7, 7));
+                                                    game.getGamePlayer().addItem(new ConsumeableOffensiveItem("Jimmy John's hot stick", 7, 7, 7));
+                                                    System.out.println(game.displayPlayerInventory());
+                                                    System.out.print("Which item would you like to use > ");
+                                                    String itemChoiceS = INPUT.next();
+                                                    try{
+                                                        int itemChoice = Integer.parseInt(itemChoiceS);
+                                                        if (itemChoice < 0 || itemChoice > game.getGamePlayer().getOwnedItemNames().size()) throw new InputException("That move doesn't exist! Pick a valid move index!");
 
-                                    System.out.println(game.displayPlayerShortSummary());
-                                    System.out.print("Which move would you like to select > ");
-                                    String moveChoiceS = INPUT.next();
-                                    try{
-                                        int moveChoice = Integer.parseInt(moveChoiceS);
-                                        if (moveChoice < 0 || moveChoice > game.getGamePlayer().getMoves().size()){
-                                            throw new InputException("");
+                                                    }catch(NumberFormatException e){
+                                                        System.err.println("Oops! Please enter a valid number.");
+                                                    } catch (InputException e) {
+                                                        System.err.println(e.getMessage());
+                                                    }
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.err.println("Oops! Please enter a valid number.");
+                                        } catch (InputException e){
+                                            System.err.println("That action doesn't exist! Pick a valid action index!");
                                         }
-                                        System.out.println(game.doPlayerTurn(moveChoice));
-                                        System.out.println(game.displayEnemyStatus());
-                                    } catch(NumberFormatException e){
-                                        System.err.println("Oops! Please enter a valid number.");
-                                    } catch (InputException e){
-                                        System.err.println("That move doesn't exist! Pick a valid move index!");
-                                    }
+                                    }while (game.isPlayersTurn());
                                 }
                             } // game.hasMoreEnemies, completing floor
                             game.nextFloor();

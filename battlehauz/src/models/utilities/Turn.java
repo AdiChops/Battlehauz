@@ -1,14 +1,23 @@
 package models.utilities;
 
+import models.items.Item;
 import models.Move;
 
 // Class that is used to return when an opponent performs their turn
 public class Turn {
     private final Move usedMove;
     private final boolean success;
+    private final Item usedItem;
 
     public Turn(Move m, boolean s){
         this.usedMove = m;
+        this.usedItem = null;
+        this.success = s;
+    }
+
+    public Turn(Item i, boolean s){
+        this.usedMove = null;
+        this.usedItem = i;
         this.success = s;
     }
 

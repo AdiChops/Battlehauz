@@ -1,4 +1,4 @@
-package models.Items;
+package models.items;
 
 public class EquipableItem extends Item{
 

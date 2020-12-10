@@ -1,16 +1,14 @@
 package controllers;
 
-import models.Items.Item;
+import models.items.Item;
 import models.gameCharacters.Player;
 import models.gameCharacters.enemy.Calcifer;
 import models.gameCharacters.enemy.Dragon;
 import models.gameCharacters.enemy.Enemy;
 import models.gameCharacters.enemy.Ogre;
-import models.utilities.ItemGenerator;
 import models.utilities.Turn;
-import models.utilities.WordsGeneration;
+import models.utilities.WordsHelper;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,6 +36,7 @@ public class GameController {
     public Player getGamePlayer(){
         return this.gamePlayer;
     }
+    private boolean playersTurn = false;
 
     public String start(String name) {
         this.gamePlayer = new Player(name);
@@ -48,11 +47,13 @@ public class GameController {
         try {
             moveIndex--;
             Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
+            playerTurnEnd();
             return "You " + currentTurn.toString();
         }
         catch(ArrayIndexOutOfBoundsException e){
             throw new NumberFormatException();
         }
+
     }
 
     private int numberOfEnemies(){
@@ -64,13 +65,13 @@ public class GameController {
         Enemy nextEnemy;
         for(int i = 1; i <= numEnemies; i++){
             if(i%3 == 0){
-                nextEnemy = new Dragon(WordsGeneration.generateEnemyName(),currentFloor);
+                nextEnemy = new Dragon(WordsHelper.generateEnemyName(),currentFloor);
             }// Dragon case
             else if(i%3 == 1){
-                nextEnemy = new Calcifer(WordsGeneration.generateEnemyName(), currentFloor);
+                nextEnemy = new Calcifer(WordsHelper.generateEnemyName(), currentFloor);
             }//Calcifer case
             else{
-                nextEnemy = new Ogre(WordsGeneration.generateEnemyName(), currentFloor);
+                nextEnemy = new Ogre(WordsHelper.generateEnemyName(), currentFloor);
             }// Ogre case
             enemiesToFight.add(nextEnemy);
         }
@@ -78,7 +79,16 @@ public class GameController {
 
     public String startBattle(){
         currentEnemy = enemiesToFight.remove();
+        playerTurnStart();
         return "\nYou have encountered the " + currentEnemy.toString() + "!";
+    }
+
+    public void playerTurnStart(){
+        playersTurn = true;
+    }
+
+    public void playerTurnEnd(){
+        playersTurn = false;
     }
 
     public int getCurrentFloor(){
@@ -92,6 +102,8 @@ public class GameController {
     public boolean playerIsAlive(){
         return gamePlayer.isAlive();
     }
+
+    public boolean isPlayersTurn() { return playersTurn; }
 
     public boolean currentEnemyIsAlive() {
         return currentEnemy.isAlive();
@@ -194,10 +206,21 @@ public class GameController {
         return gamePlayer.shortSummary();
     }
 
-    public String displayerPlayerOptions(){
+    public String displayPlayerOptions(){
         return "1. Attack\n" +
                 "2. Use Item";
     }
+
+    public String displayPlayerInventory(){
+        int counter = 1;
+        String stringToReturn = "Items in inventory: \n";
+        for (Item i: gamePlayer.getOwnedItemNames()){
+            stringToReturn += counter + ". " + i.getName() + ": " + gamePlayer.getItems().get(i) + "\n";
+        }
+        return stringToReturn;
+    }
+
+
 
     public String displayEnemyStatus() {
         return currentEnemy.getName() + " is at " + currentEnemy.getCurrentHealth() + "/" + currentEnemy.getMaxHealth() + " health.";

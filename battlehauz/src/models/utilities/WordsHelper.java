@@ -1,7 +1,9 @@
 package models.utilities;
+import controllers.InputException;
+
 import java.util.Random;
 
-public class WordsGeneration {
+public class WordsHelper {
     private static String[] beginQuotes;
     private static String[] winQuotes;
     private static String[] lossQuotes;
@@ -38,7 +40,23 @@ public class WordsGeneration {
         return nameAdjectives[adjIndex] + " " + names[nameIndex];
     }
 
-    public static void rollingTextPrint(String text){
+    public static void rollingTextPrint(String text)  {
+        String[] dialogue = text.split(" ");
+        for (String s: dialogue){
+            System.out.print(s + " ");
+            try{
+                if (s.contains(".") || s.contains("!") || s.contains("?")){
+                    Thread.sleep(1000);
+                }else if (s.contains(",")){
+                    Thread.sleep(500);
+                }else{
+                    Thread.sleep(250);
+                }
+            }catch (InterruptedException e){
 
+            }
+
+        }
+        System.out.println("");
     }
 }

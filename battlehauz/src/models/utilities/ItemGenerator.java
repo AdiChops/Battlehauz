@@ -1,11 +1,10 @@
 package models.utilities;
 
-import models.Items.ConsumeableDefensiveItem;
-import models.Items.ConsumeableHealingItem;
-import models.Items.ConsumeableOffensiveItem;
-import models.Items.Item;
+import models.items.ConsumeableDefensiveItem;
+import models.items.ConsumeableHealingItem;
+import models.items.ConsumeableOffensiveItem;
+import models.items.Item;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 

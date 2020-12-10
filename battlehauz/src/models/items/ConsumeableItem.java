@@ -1,4 +1,4 @@
-package models.Items;
+package models.items;
 
 public abstract class ConsumeableItem extends Item {
 

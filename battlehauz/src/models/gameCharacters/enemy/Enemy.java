@@ -61,7 +61,6 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         int max = 500 * level;
         int min = 50 * level;
         return (int) (Math.random() * (max - min) + min);
-
     }
 
     /***

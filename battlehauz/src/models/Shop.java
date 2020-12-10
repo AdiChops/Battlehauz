@@ -1,7 +1,7 @@
 package models;
 
-import models.Items.EquipableItem;
-import models.Items.Item;
+import models.items.EquipableItem;
+import models.items.Item;
 import models.gameCharacters.Player;
 import models.utilities.ItemGenerator;
 import java.io.BufferedReader;

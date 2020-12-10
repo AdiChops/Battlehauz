@@ -95,6 +95,6 @@ public class Move {
 
     @Override
     public String toString() { //will update later
-        return getName() + " | Base Damage: " + getBaseDamage() + " | " + ((isSellable)?getRemainingUses():"Unlimited") + " Uses";
+        return getName() + " | Base Damage: " + getBaseDamage() + " | " + ((isSellable)?getRemainingUses():"Unlimited") + " Uses | XP Boost: " + getXPBoost();
     }
 }

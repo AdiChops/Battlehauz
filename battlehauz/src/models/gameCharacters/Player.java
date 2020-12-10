@@ -1,24 +1,25 @@
 package models.gameCharacters;
 
 import interfaces.Battleable;
-import models.Items.*;
+import models.items.*;
 import models.Move;
 import models.gameCharacters.enemy.Dragon;
 import models.utilities.Turn;
 
-import javax.swing.*;
 import java.util.*;
 
 public class Player extends GameCharacter implements Battleable {
     private int coins;
     private int XP;
-    private static HashMap<Item, Integer> items;
+    private HashMap<Item, Integer> items;
     private ArrayList<Item> ownedItemNames;
     private double[] consumeableBoost = {0,0};
-    private double[] equipableBoost = {0,0};
+    private double[] permanentBoost = {0,0,0};
 
     public Player(String name) {
         super(name);
+        items = new HashMap<>();
+        ownedItemNames = new ArrayList<>();
         this.XP = 1000;
         this.coins = 0;
         this.addMove(new Move("Taunt", 150));
@@ -58,9 +59,9 @@ public class Player extends GameCharacter implements Battleable {
         this.XP += xpIncrease;
     }
 
-
-
     public HashMap<Item, Integer> getItems() { return items; }
+
+    public ArrayList<Item> getOwnedItemNames() { return ownedItemNames; }
 
     /////////////////////////////////////////////////////
 
@@ -81,7 +82,8 @@ public class Player extends GameCharacter implements Battleable {
     @Override
     public void takeDamage(int damage) {
         // items would change this behaviour
-        this.currentHealth -= (damage - (damage * consumeableBoost[2]));
+        this.currentHealth -= (damage - (damage * (consumeableBoost[1] + permanentBoost[1])));
+        this.currentHealth += (permanentBoost[2]);
     }
 
     @Override
@@ -91,8 +93,16 @@ public class Player extends GameCharacter implements Battleable {
 
     public boolean removeItem(Item itemToRemove){
         try{
-            items.remove(itemToRemove);
-            ownedItemNames.remove(itemToRemove);
+            for (Item i: items.keySet()){
+                if (i.getName().equals(itemToRemove.getName())){
+                    items.replace(i, items.get(i) - 1);
+                    if (items.get(i) == 0){
+                        items.remove(i);
+                        ownedItemNames.remove(i);
+                    }
+                    break;
+                }
+            }
             return true;
         }
         catch(Exception e){ // TODO: make the exception catching more specific
@@ -125,6 +135,7 @@ public class Player extends GameCharacter implements Battleable {
                 break;
             }
         }
+
         if (!hasItem) {
             items.put(itemToAdd, 1);
             ownedItemNames.add(itemToAdd);

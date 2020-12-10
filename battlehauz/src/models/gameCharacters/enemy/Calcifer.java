@@ -6,7 +6,6 @@ import java.util.Random;
 
 public class Calcifer extends Enemy {
 
-
     public Calcifer(String name, int level) {
         super(name, 1200, level);
         addMove(new Move("Fireball", calculateDamage()));
