@@ -12,7 +12,7 @@ public abstract class Enemy extends GameCharacter implements Battleable {
     protected int level;
 
     public Enemy(String name, int maxHealth, int level) {
-        super(name, maxHealth);
+        super(name, maxHealth * level);
         this.level = level;
 
     }
