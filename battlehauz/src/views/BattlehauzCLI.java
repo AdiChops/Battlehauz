@@ -60,7 +60,7 @@ public class BattlehauzCLI {
                             game.enterBattleFloor(); //generate enemies for floor
                             System.out.println("\nYou have entered floor " + game.getCurrentFloor() + " of the Battlehauz.");
                             while(game.hasMoreEnemies()){ //while the floor still has enemies
-                                System.out.println(game.startBattle()); //game.startBattle sets the currentEnemy as the first enemy in the list
+                                System.out.println(game.startBattle()); //game.startBattle sets the currentEnemy as the first enemy in the queue
                                 while(game.currentEnemyIsAlive()){ //while the currentEnemy is still alive
 //                                    System.out.println("What would you like to do >");
 //                                    System.out.println(game.displayerPlayerOptions());
@@ -81,7 +81,7 @@ public class BattlehauzCLI {
                                         System.err.println("That move doesn't exist! Pick a valid move index!");
                                     }
                                 }
-                            } // game.hasSMoreEnemies, completing floor
+                            } // game.hasMoreEnemies, completing floor
                             game.nextFloor();
                         }
                         break;
@@ -111,31 +111,6 @@ public class BattlehauzCLI {
                 System.err.println(e.getMessage());
             }// end-catch
         }while (choice != 'Q'); // do-while
-
-//                int choice = Integer.parseInt(choiceS);
-//                if (choice == 1){
-//                    if (totalRounds == 0){
-//                        try{
-//                            initializeObjects();
-//                        }catch (IOException e){
-//                            System.out.println("Couldn't find file");
-//                        }
-//                    }
-//                    exit = true;
-//                    //When writing actual functions for the game, remove exit = true;
-//                }else if (choice == 2){
-//                    exit = true;
-//                }else if (choice == 3){
-//                    displayStats();
-//                    exit = true;
-//                }else if (choice == 4){
-//                    displayCredits(game);
-//                    exit = true;
-//                }else if (choice == 5){
-//                    System.exit(0);
-//                }else{
-//                    throw new InputException("Invalid input. Please enter a number between 1-5.");
-//                }
     }// main()
 
     private static void displayCredits(GameController game){
