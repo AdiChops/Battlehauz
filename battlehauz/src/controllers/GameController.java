@@ -29,7 +29,6 @@ import java.util.Queue;
 public class GameController {
 
     private int currentFloor = 1;
-    private List<Item> allItems = new ArrayList<>();
     private Queue<Enemy> enemiesToFight = new LinkedList<Enemy>();
     private Enemy currentEnemy;
     private Player gamePlayer;
