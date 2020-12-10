@@ -3,6 +3,7 @@ package views;
 import controllers.GameController;
 import controllers.InputException;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -61,16 +62,23 @@ public class BattlehauzCLI {
                             while(game.hasMoreEnemies()){ //while the floor still has enemies
                                 System.out.println(game.startBattle()); //game.startBattle sets the currentEnemy as the first enemy in the list
                                 while(game.currentEnemyIsAlive()){ //while the currentEnemy is still alive
+//                                    System.out.println("What would you like to do >");
+//                                    System.out.println(game.displayerPlayerOptions());
+
                                     System.out.println(game.displayPlayerShortSummary());
                                     System.out.print("Which move would you like to select > ");
                                     String moveChoiceS = INPUT.next();
                                     try{
                                         int moveChoice = Integer.parseInt(moveChoiceS);
+                                        if (moveChoice < 0 || moveChoice > game.getGamePlayer().getMoves().size()){
+                                            throw new InputException("");
+                                        }
                                         System.out.println(game.doPlayerTurn(moveChoice));
                                         System.out.println(game.displayEnemyStatus());
-                                    }
-                                    catch(NumberFormatException e){
+                                    } catch(NumberFormatException e){
                                         System.err.println("Oops! Please enter a valid number.");
+                                    } catch (InputException e){
+                                        System.err.println("That move doesn't exist! Pick a valid move index!");
                                     }
                                 }
                             } // game.hasSMoreEnemies, completing floor

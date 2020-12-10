@@ -93,7 +93,7 @@ public abstract class GameCharacter {
 
     }
     public int calculateDamage(Move move){
-        return move.getBaseDamage();
+        return 0;
     }
 
     public String speak(char mode){

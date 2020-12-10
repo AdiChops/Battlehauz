@@ -14,8 +14,8 @@ public class Player extends GameCharacter implements Battleable {
     private int XP;
     private static HashMap<Item, Integer> items;
     private ArrayList<Item> ownedItemNames;
-    private int[] consumeableBoost = {0,0};
-    private int[] equipableBoost = {0,0};
+    private double[] consumeableBoost = {0,0};
+    private double[] equipableBoost = {0,0};
 
     public Player(String name) {
         super(name);
@@ -57,9 +57,8 @@ public class Player extends GameCharacter implements Battleable {
     public void increaseXP(int xpIncrease){
         this.XP += xpIncrease;
     }
-//    public int calculateDamage(Move move){ return move.getBaseDamage();} // other factors will come in }
 
-    public int calculateLevel() { return XP/1000;}
+
 
     public HashMap<Item, Integer> getItems() { return items; }
 
@@ -84,6 +83,11 @@ public class Player extends GameCharacter implements Battleable {
         // items would change this behaviour
         this.currentHealth -= (damage - (damage * consumeableBoost[2]));
     }
+
+    @Override
+    public int calculateDamage(Move move){ return (move.getBaseDamage() + (int)(move.getBaseDamage() * consumeableBoost[0]));} // other factors will come in }
+
+    public int calculateLevel() { return XP/1000;}
 
     public boolean removeItem(Item itemToRemove){
         try{
@@ -169,18 +173,12 @@ public class Player extends GameCharacter implements Battleable {
             nextMove.updateMove();
             boolean s = attackSuccessful();
             this.increaseXP(nextMove.getXPBoost());
-            JOptionPane.showMessageDialog(null, s);
             if (s){
-                if(!(opponent instanceof Dragon)){ // ogres and calcifers take normal damage from player
-                    opponent.takeDamage(this.calculateDamage(nextMove) + (this.calculateDamage(nextMove) * consumeableBoost[1]));
-                }else{ // if its facing a dragon and move is successful and move is  advanced, deal 10% of player's move damage
-                    if(nextMove.isSellable()){
-                        opponent.takeDamage((int)(0.5 * (this.calculateDamage(nextMove) + (this.calculateDamage(nextMove) * consumeableBoost[1]))));
-                        // doesn't get XP for using advanced move
-                    }
-                    else{ // if its a basic move, go as normal
-                        opponent.takeDamage(this.calculateDamage(nextMove) + (this.calculateDamage(nextMove) * consumeableBoost[1]));
-                    }
+                if (opponent instanceof Dragon && nextMove.isSellable()){
+                    //Dragon enemies take 50% less damage from advanced moves
+                    opponent.takeDamage((int)(0.5 * this.calculateDamage(nextMove)));
+                }else{
+                    opponent.takeDamage(this.calculateDamage(nextMove));
                 }
             }
             return new Turn(nextMove, s);
@@ -189,6 +187,14 @@ public class Player extends GameCharacter implements Battleable {
             System.err.println("That move selection was invalid. Please select a valid move or item.");
             return null;
         }
+    }
+
+    private String availableMoves(){
+        StringBuilder returnString = new StringBuilder();
+        for(int i = 0; i < moves.size(); i++){
+            returnString.append((i+1) + ": " + moves.get(i).toString() + "\n");
+        }
+        return returnString.toString();
     }
 
     public String toString(){
@@ -204,14 +210,6 @@ public class Player extends GameCharacter implements Battleable {
         return "\n" + this.getName() + "\n" + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"+
                 "Your available moves are: \n" +
                 this.availableMoves();
-    }
-
-    private String availableMoves(){
-        StringBuilder returnString = new StringBuilder();
-        for(int i = 0; i < moves.size(); i++){
-            returnString.append((i+1) + ": " + moves.get(i).toString() + "\n");
-        }
-        return returnString.toString();
     }
 
 }

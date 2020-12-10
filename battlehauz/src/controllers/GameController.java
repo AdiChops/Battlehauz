@@ -45,15 +45,6 @@ public class GameController {
         return "Welcome to the Battlehauz " + name + "!";
     }
 
-    public void initializeObjects() throws IOException {
-        System.out.println(allItems);
-        createCharacters();
-    }
-
-    public void createCharacters() {
-
-    }
-
     public String doPlayerTurn(int moveIndex) throws NumberFormatException{
         try {
             moveIndex--;
@@ -202,6 +193,11 @@ public class GameController {
 
     public String displayPlayerShortSummary() {
         return gamePlayer.shortSummary();
+    }
+
+    public String displayerPlayerOptions(){
+        return "1. Attack\n" +
+                "2. Use Item";
     }
 
     public String displayEnemyStatus() {
