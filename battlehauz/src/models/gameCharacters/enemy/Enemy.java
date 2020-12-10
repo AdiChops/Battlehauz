@@ -11,9 +11,8 @@ public abstract class Enemy extends GameCharacter implements Battleable {
     protected int mana;// will be used later to generate special move
     protected int level;
 
-    public Enemy(String name, int maxHealth, int mana, int level) {
+    public Enemy(String name, int maxHealth, int level) {
         super(name, maxHealth);
-        this.mana = mana;
         this.level = level;
 
     }
@@ -74,6 +73,9 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         if (this.getCurrentHealth() >= damage) {
             this.setCurrentHealth(this.getCurrentHealth() - damage);
         }
+        else{
+            this.setCurrentHealth(0);
+        }
     }
 
 
@@ -92,6 +94,11 @@ public abstract class Enemy extends GameCharacter implements Battleable {
             opponent.takeDamage(this.calculateDamage());
         }
         return new Turn(nextMove, s);
+    }
+
+    @Override
+    public String toString(){
+        return getClass().getSimpleName() +  " of the name " + this.getName() + ", with " + this.getCurrentHealth() + " health";
     }
 
 

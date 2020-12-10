@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Dragon extends Enemy {
 
-    public Dragon(String name, int mana, int level) {
-        super(name, 2000, mana, level);
+    public Dragon(String name, int level) {
+        super(name, 2000, level);
         addMove(new Move(" Breath of Death", calculateDamage()));
         addMove(new Move("Dark Magic", calculateDamage()));
         addMove(new Move("Claw", calculateDamage()));

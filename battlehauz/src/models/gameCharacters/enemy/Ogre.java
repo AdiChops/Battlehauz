@@ -10,8 +10,8 @@ public class Ogre extends Enemy {
     Move move3 = new Move("Smelly Armpit", calculateDamage());
 
 
-    public Ogre(String n, int mana, int level) {
-        super(n, 1000, mana, level);
+    public Ogre(String n, int level) {
+        super(n, 1000, level);
         addMove(move1);
         addMove(move2);
         addMove(move3);

@@ -52,8 +52,30 @@ public class BattlehauzCLI {
             try {
                 switch(choice){
                     case 'B':{
-                        System.out.println("Ah, so you have chosen to enter the BattleHauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
+                        System.out.println("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
+                        System.out.println(game.displayRules());
+                        while(game.playerIsAlive()){
+                            game.enterBattleFloor();
+                            System.out.println("\nYou have entered floor " + game.getCurrentFloor() + " of the Battlehauz.");
+                            while(game.hasMoreEnemies()){
+                                System.out.println(game.startBattle());
+                                while(game.currentEnemyIsAlive()){
+                                    System.out.println(game.displayPlayerShortSummary());
+                                    System.out.print("Which move would you like to select > ");
+                                    String moveChoiceS = INPUT.next();
+                                    try{
+                                        int moveChoice = Integer.parseInt(moveChoiceS);
+                                        System.out.println(game.doPlayerTurn(moveChoice));
+                                        System.out.println(game.displayEnemyStatus());
+                                    }
+                                    catch(NumberFormatException e){
+                                        System.err.println("Oops! Please enter a valid number.");
+                                    }
 
+                                }
+                            } // game.hasSMoreEnemies, completing floor
+                            game.nextFloor();
+                        }
                         break;
                     }
                     case 'S':{

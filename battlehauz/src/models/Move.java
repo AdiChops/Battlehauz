@@ -95,16 +95,6 @@ public class Move {
 
     @Override
     public String toString() { //will update later
-        return "Move{" +
-                "name='" + name + '\'' +
-                ", baseDamage=" + baseDamage +
-                ", XPBoost=" + XPBoost +
-                ", maxUses=" + maxUses +
-                ", remainingUses=" + remainingUses +
-                ", timesUsed=" + timesUsed +
-                ", isSellable=" + isSellable +
-                ", buyingPrice=" + buyingPrice +
-                ", sellingPrice=" + calculateSellingPrice() +
-                '}';
+        return getName() + " | Base Damage: " + getBaseDamage() + " | " + ((isSellable)?getRemainingUses():"Unlimited") + " Uses";
     }
 }

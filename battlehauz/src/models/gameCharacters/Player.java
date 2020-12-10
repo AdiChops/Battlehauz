@@ -4,7 +4,6 @@ import interfaces.Battleable;
 import models.Items.*;
 import models.Move;
 import models.gameCharacters.enemy.Dragon;
-import models.gameCharacters.enemy.Enemy;
 import models.utilities.Turn;
 
 import java.util.*;
@@ -21,6 +20,9 @@ public class Player extends GameCharacter implements Battleable {
         super(name);
         this.XP = 1000;
         this.coins = 0;
+        this.addMove(new Move("Taunt", 150));
+        this.addMove(new Move("Sucker Punch", 200));
+        this.addMove(new Move("Drop Kick", 250));
     }
 
     public Player(String name, int maxHealth) {
@@ -192,6 +194,20 @@ public class Player extends GameCharacter implements Battleable {
                 + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"
                 + this.getCoins() + " coins\n"
                 + "Your available moves are " + Arrays.toString(moves.toArray());
+    }
+
+    public String shortSummary(){
+        return "\n" + this.getName() + "\n" + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"+
+                "Your available moves are: \n" +
+                this.availableMoves();
+    }
+
+    private String availableMoves(){
+        StringBuilder returnString = new StringBuilder();
+        for(int i = 0; i < moves.size(); i++){
+            returnString.append((i+1) + ": " + moves.get(i).toString() + "\n");
+        }
+        return returnString.toString();
     }
 
 }

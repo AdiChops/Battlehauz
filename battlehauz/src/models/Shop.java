@@ -137,7 +137,7 @@ public class Shop {
                 System.out.println(quotes.remove());
                 return;
             } catch (NoSuchElementException e) {
-                loadQuotes();
+                //loadQuotes();
             }
         }
     }

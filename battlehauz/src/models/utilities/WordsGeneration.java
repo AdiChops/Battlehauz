@@ -5,6 +5,13 @@ public class WordsGeneration {
     private static String[] beginQuotes;
     private static String[] winQuotes;
     private static String[] lossQuotes;
+    private static final String[] nameAdjectives = {"Horrible", "Pickle", "Scary", "Despicable", "Untouchable", "Creepy", "Feared", "Amazing",
+            "Incredible", "Legendary", "The Great", "Terrible", "Wicked", "Crazy"};
+    private static final String[] names = {"Adi", "Zara", "Erica", "Dawson", "Preethi", "Elias", "Justina", "Anish", "Max", "Veronica", "Judy", "Rachel",
+            "Evan", "Sarah", "Forest", "Amelie", "Rick", "Kelsey", "Jarvis", "Michael", "Dave",
+            "Bill", "Jack", "Sally", "Donald", "Jeff", "Ahmed", "Dwight", "Toby", "Ed", "Rob", "Victor", "Justin",
+            "Amy", "Pamela", "Bert", "Eric", "Bob", "David", "Haley", "Christina", "Chris", "George", "Ned",
+            "Bart", "Lisa", "Claire", "Sophia", "Gloria", "Patrick", "Kevin", "Kaley", "Carl", "Victoria", "William"};
     private static final Random RND = new Random();
     public static String generateQuote(char mode){
         switch(mode){
@@ -23,6 +30,12 @@ public class WordsGeneration {
                 return "Whoa!";
             }
         }
+    }
+
+    public static String generateEnemyName(){
+        int adjIndex = RND.nextInt(nameAdjectives.length);
+        int nameIndex = RND.nextInt(names.length);
+        return nameAdjectives[adjIndex] + " " + names[nameIndex];
     }
 
     public static void rollingTextPrint(String text){

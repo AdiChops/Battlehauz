@@ -9,6 +9,11 @@ public class EquipableItem extends Item{
        isEquiped = false;
     }
 
+    @Override
+    public int useItem() {
+        return 0; // TODO: fix useItem()
+    }
+
     public void equip(){
         isEquiped = true;
     }

@@ -19,4 +19,9 @@ public class Turn {
     public boolean isSuccess() {
         return success;
     }
+
+    @Override
+    public String toString(){
+        return "used " + getUsedMove().getName() + ((isSuccess())?"":"\nWhoa! The move didn't hit!");
+    }
 }

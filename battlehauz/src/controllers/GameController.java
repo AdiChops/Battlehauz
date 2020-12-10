@@ -2,11 +2,19 @@ package controllers;
 
 import models.Items.Item;
 import models.gameCharacters.Player;
+import models.gameCharacters.enemy.Calcifer;
+import models.gameCharacters.enemy.Dragon;
+import models.gameCharacters.enemy.Enemy;
+import models.gameCharacters.enemy.Ogre;
 import models.utilities.ItemGenerator;
+import models.utilities.Turn;
+import models.utilities.WordsGeneration;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 
 /* move starts with Player choosing move/item
@@ -20,8 +28,10 @@ import java.util.List;
 //Straight from Lanthier's notes, we assume there is no System.out.println or scanner anywhere but here.
 public class GameController {
 
-    private static int currentFloor = 0;
+    private int currentFloor = 1;
     private List<Item> allItems = new ArrayList<>();
+    private Queue<Enemy> enemiesToFight = new LinkedList<Enemy>();
+    private Enemy currentEnemy;
     private Player gamePlayer;
     public void setGamePlayer(Player player){
         this.gamePlayer = player;
@@ -42,6 +52,63 @@ public class GameController {
 
     public void createCharacters() {
 
+    }
+
+    public String doPlayerTurn(int moveIndex) throws NumberFormatException{
+        try {
+            moveIndex--;
+            Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
+            return "You " + currentTurn.toString();
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            throw new NumberFormatException();
+        }
+    }
+
+    private int numberOfEnemies(){
+        return currentFloor+2;
+    }
+
+    private void generateEnemyQueue(){
+        int numEnemies = numberOfEnemies();
+        Enemy nextEnemy;
+        for(int i = 1; i <= numEnemies; i++){
+            if(i%3 == 0){
+                nextEnemy = new Dragon(WordsGeneration.generateEnemyName(),currentFloor);
+            }// Dragon case
+            else if(i%3 == 1){
+                nextEnemy = new Calcifer(WordsGeneration.generateEnemyName(), currentFloor);
+            }//Calcifer case
+            else{
+                nextEnemy = new Ogre(WordsGeneration.generateEnemyName(), currentFloor);
+            }// Ogre case
+            enemiesToFight.add(nextEnemy);
+        }
+    }
+
+    public String startBattle(){
+        currentEnemy = enemiesToFight.remove();
+        return "\nYou have encountered the " + currentEnemy.toString() + "!";
+    }
+
+    public int getCurrentFloor(){
+        return currentFloor;
+    }
+
+    public void enterBattleFloor(){
+        generateEnemyQueue();
+    }
+
+    public boolean playerIsAlive(){
+        return gamePlayer.isAlive();
+    }
+
+    public boolean currentEnemyIsAlive() {
+        return currentEnemy.isAlive();
+    }
+
+    public boolean hasMoreEnemies(){
+        return !enemiesToFight.isEmpty();
     }
 
     public void goToShop(){
@@ -126,10 +193,28 @@ public class GameController {
 
     }
 
+    public String displayRules(){
+        return "\nThe rules of the Battlehauz are simple. You fight an increasing number of enemies at each floor (one-by-one).\n" +
+                "You and the enemy take turns choosing a move (you also have the option to choose an item to help your next move instead of a move).\n" +
+                "You keep fighting enemies and moving up floors until you run out of health\n" +
+                "(or a more dark way of saying it, the only way to leave the Battlehauz is DEATH). Have fun :)\n";
+    }
+
+    public String displayPlayerShortSummary() {
+        return gamePlayer.shortSummary();
+    }
+
+    public String displayEnemyStatus() {
+        return currentEnemy.getName() + " is at " + currentEnemy.getCurrentHealth() + "/" + currentEnemy.getMaxHealth() + " health.";
+    }
+
     public String displayStats(){
         return gamePlayer.toString();
     }
 
+    public void nextFloor(){
+        currentFloor++;
+    }
 
     public String credits(){
         return "\nBattleHauz made with <3 by:\n" +
@@ -138,7 +223,6 @@ public class GameController {
                 "Veronica Yung\n" +
                 "Zara Ali";
     }
-
 }
 
 
