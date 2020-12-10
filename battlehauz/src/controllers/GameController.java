@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Items.Item;
+import models.gameCharacters.Player;
 import models.utilities.ItemGenerator;
 
 import java.io.*;
@@ -19,12 +20,19 @@ import java.util.List;
 //Straight from Lanthier's notes, we assume there is no System.out.println or scanner anywhere but here.
 public class GameController {
 
-    private int totalRounds = 0;
+    private static int currentFloor = 0;
     private List<Item> allItems = new ArrayList<>();
+    private Player gamePlayer;
+    public void setGamePlayer(Player player){
+        this.gamePlayer = player;
+    }
+    public Player getGamePlayer(){
+        return this.gamePlayer;
+    }
 
-    public void start() {
-
-
+    public String start(String name) {
+        this.gamePlayer = new Player(name);
+        return "Welcome to the Battlehauz " + name + "!";
     }
 
     public void initializeObjects() throws IOException {
@@ -118,16 +126,17 @@ public class GameController {
 
     }
 
-    public void displayStats(){
-
+    public String displayStats(){
+        return gamePlayer.toString();
     }
 
-    public void displayCredits(){
-        System.out.println("BattleHauz made with <3 by:\n" +
+
+    public String credits(){
+        return "\nBattleHauz made with <3 by:\n" +
                 "Aaditya Chopra\n" +
                 "Elias Hawa \n" +
                 "Veronica Yung\n" +
-                "Zara Ali");
+                "Zara Ali";
     }
 
 }
