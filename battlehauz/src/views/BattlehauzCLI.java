@@ -37,7 +37,6 @@ public class BattlehauzCLI {
                     "Q - Quit game\n");
             System.out.print("> ");
             String choiceS = proceedScanner.nextLine();
-            JOptionPane.showMessageDialog(null, choiceS);
             return choiceS.toUpperCase().charAt(0);
         }
         catch(StringIndexOutOfBoundsException e){
@@ -56,68 +55,71 @@ public class BattlehauzCLI {
         do{
             choice = proceed();
             try {
-                switch(choice){
-                    case 'B':{
+                switch (choice) {
+                    case 'B' -> {
                         game.getGamePlayer().addItem(new ConsumeableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
                         game.getGamePlayer().addItem(new ConsumeableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
                         game.getGamePlayer().addItem(new ConsumeableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
                         WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
                         System.out.println(game.displayRules());
                         //Game starts and continues while player is alive
-                        while(game.playerIsAlive()){
+                        while (game.playerIsAlive()) {
                             game.enterBattleFloor(); //generate enemies for floor
                             WordsHelper.rollingTextPrint("\nYou have entered floor " + game.getCurrentFloor() + " of the Battlehauz.");
-                            while(game.hasMoreEnemies() && game.playerIsAlive()){ //while the floor still has enemies
+                            while (game.hasMoreEnemies() && game.playerIsAlive()) { //while the floor still has enemies
                                 WordsHelper.rollingTextPrint(game.startBattle()); //game.startBattle sets the currentEnemy as the first enemy in the list
-                                while(game.currentEnemyIsAlive() && game.playerIsAlive()){ //while the currentEnemy is still alive
+                                while (game.currentEnemyIsAlive() && game.playerIsAlive()) { //while the currentEnemy is still alive
                                     System.out.println(game.displayerCurrentFightersStatus() + "\n");
-                                    do{
+                                    do {
                                         System.out.println(game.displayPlayerOptions());
                                         System.out.print("What would you like to do > ");
                                         String actionChoiceS = INPUT.next();
                                         System.out.println();
-                                        try{
+                                        try {
                                             int actionChoice = Integer.parseInt(actionChoiceS);
-                                            if (actionChoice < 0 || actionChoice > 2) throw new InputException("");
-                                            switch (actionChoice){
-                                                case 1:
+                                            if (actionChoice <= 0 || actionChoice > 2) throw new InputException("");
+                                            //Adding some dummy items will remove later
+                                            switch (actionChoice) {
+                                                case 1 -> {
+                                                    System.out.println("Which move would you like to select?");
                                                     System.out.println(game.displayPlayerMoves());
-                                                    System.out.print("Which move would you like to select > ");
+                                                    System.out.print("> ");
                                                     String moveChoiceS = INPUT.next();
-                                                    try{
+                                                    try {
                                                         int moveChoice = Integer.parseInt(moveChoiceS);
-                                                        if (moveChoice < 0 || moveChoice > game.getGamePlayer().getMoves().size()) throw new InputException("That move doesn't exist! Pick a valid move index!");
+                                                        if (moveChoice < 0 || moveChoice > game.getGamePlayer().getMoves().size())
+                                                            throw new InputException("That move doesn't exist! Pick a valid move index!");
                                                         System.out.println(game.doPlayerTurn(moveChoice));
                                                         System.out.println(game.displayEnemyStatus());
-                                                    } catch(NumberFormatException e){
-                                                        System.err.println("Oops! Please enter a valid number.");
+                                                    } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                                                        System.err.println("Oops! Please enter a valid move index.");
                                                     } catch (InputException e) {
                                                         System.err.println(e.getMessage());
                                                     }
-                                                    break;
-                                                case 2:
-                                                    //Adding some dummy items will remove later
+                                                }
+                                                case 2 -> {
                                                     System.out.println(game.displayPlayerInventory());
                                                     System.out.print("Which item would you like to use > ");
                                                     String itemChoiceS = INPUT.next();
-                                                    try{
+                                                    try {
                                                         int itemChoice = Integer.parseInt(itemChoiceS);
-                                                        if (itemChoice < 0 || itemChoice > game.getGamePlayer().getOwnedItemNames().size()) throw new InputException("That item doesn't exist! Pick a valid item index!");
+                                                        if (itemChoice < 0 || itemChoice > game.getGamePlayer().getOwnedItemNames().size())
+                                                            throw new InputException("That item doesn't exist! Pick a valid item index!");
                                                         System.out.println(game.playerUseItem(itemChoice));
-                                                    }catch(NumberFormatException e){
+                                                    } catch (NumberFormatException e) {
                                                         System.err.println("Oops! Please enter a valid number.");
                                                     } catch (InputException e) {
                                                         System.err.println(e.getMessage());
                                                     }
-                                                    break;
+                                                }
                                             }
-                                        }catch(NumberFormatException e){
+                                        } catch (NumberFormatException e) {
                                             System.err.println("Oops! Please enter a valid number.");
-                                        } catch (InputException e){
+                                        } catch (InputException e) {
                                             System.err.println("That action doesn't exist! Pick a valid action index!");
                                         }
-                                    }while (game.isPlayersTurn());
-                                    if (game.currentEnemyIsAlive()){
+                                    } while (game.isPlayersTurn());
+                                    if (game.currentEnemyIsAlive()) {
                                         System.out.println(game.doEnemyTurn());
                                         System.out.println();
                                     }
@@ -126,25 +128,20 @@ public class BattlehauzCLI {
                             game.nextFloor();
                         }
                         game.restorePlayerHealth();
-                        break;
                     }
-                    case 'S':{
+                    case 'S' -> {
                         // TODO: enter shop
-                        break;
                     }
-                    case 'F':{
+                    case 'F' -> {
                         displayStats(game);
-                        break;
                     }
-                    case 'A':{
+                    case 'A' -> {
                         displayCredits(game);
-                        break;
                     }
-                    case 'Q': {
+                    case 'Q' -> {
                         quit(game);
-                        break;
                     }
-                    default:{
+                    default -> {
                         throw new InputException("Oops! Please enter a valid choice.");
                     }
                 }

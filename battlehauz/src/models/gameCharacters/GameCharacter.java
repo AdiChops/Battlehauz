@@ -78,10 +78,7 @@ public abstract class GameCharacter {
     }
 
     public Move chooseMove(int index){
-        if(index < MAX_MOVES && index >= 0)
-            return moves.get(index);
-        else
-            return null; // returning null if invalid index was selected
+        return moves.get(index);
     }
 
     public void takeDamage(int damage) {

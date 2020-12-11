@@ -3,6 +3,8 @@ package models.gameCharacters.enemy;
 import models.Move;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Ogre extends Enemy {
     Move move1 = new Move("Bonk", generateDamage());
@@ -24,10 +26,10 @@ public class Ogre extends Enemy {
      */
     public int generateMoveIndex() {
         //method overload, same move pattern instead of randomized
-        ArrayList<Integer> sequence = new ArrayList<Integer>();
+        Queue<Integer> sequence = new LinkedList<>();
         //add the move name into this sequence array
-        int index = sequence.remove(0);
-        sequence.add(sequence.size() - 1, index);
+        int index = sequence.remove();
+        sequence.add(index);
         //immediately add to back of array
 
         return index;

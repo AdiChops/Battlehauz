@@ -43,7 +43,7 @@ public class GameController {
         return "Welcome to the Battlehauz " + name + "!";
     }
 
-    public String doPlayerTurn(int moveIndex){
+    public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException{
         moveIndex--;
         Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
         playerTurnEnd();
