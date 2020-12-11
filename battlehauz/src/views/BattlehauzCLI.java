@@ -37,7 +37,6 @@ public class BattlehauzCLI {
                     "Q - Quit game\n");
             System.out.print("> ");
             String choiceS = proceedScanner.nextLine();
-            JOptionPane.showMessageDialog(null, choiceS);
             return choiceS.toUpperCase().charAt(0);
         }
         catch(StringIndexOutOfBoundsException e){
@@ -82,7 +81,7 @@ public class BattlehauzCLI {
                                             switch (actionChoice){
                                                 case 1:
                                                     System.out.println(game.displayPlayerMoves());
-                                                    System.out.print("Which move would you like to select > ");
+                                                    System.out.print("Which move would you like to select");
                                                     String moveChoiceS = INPUT.next();
                                                     try{
                                                         int moveChoice = Integer.parseInt(moveChoiceS);
@@ -98,16 +97,18 @@ public class BattlehauzCLI {
                                                 case 2:
                                                     //Adding some dummy items will remove later
                                                     System.out.println(game.displayPlayerInventory());
-                                                    System.out.print("Which item would you like to use > ");
-                                                    String itemChoiceS = INPUT.next();
-                                                    try{
-                                                        int itemChoice = Integer.parseInt(itemChoiceS);
-                                                        if (itemChoice < 0 || itemChoice > game.getGamePlayer().getOwnedItemNames().size()) throw new InputException("That item doesn't exist! Pick a valid item index!");
-                                                        System.out.println(game.playerUseItem(itemChoice));
-                                                    }catch(NumberFormatException e){
-                                                        System.err.println("Oops! Please enter a valid number.");
-                                                    } catch (InputException e) {
-                                                        System.err.println(e.getMessage());
+                                                    if (!game.displayPlayerInventory().equals("You have no items you can use!")){
+                                                        System.out.print("Which item would you like to use > ");
+                                                        String itemChoiceS = INPUT.next();
+                                                        try{
+                                                            int itemChoice = Integer.parseInt(itemChoiceS);
+                                                            if (itemChoice < 0 || itemChoice > game.getGamePlayer().getOwnedItemNames().size()) throw new InputException("That item doesn't exist! Pick a valid item index!");
+                                                            System.out.println(game.playerUseItem(itemChoice));
+                                                        }catch(NumberFormatException e){
+                                                            System.err.println("Oops! Please enter a valid number.");
+                                                        } catch (InputException e) {
+                                                            System.err.println(e.getMessage());
+                                                        }
                                                     }
                                                     break;
                                             }
