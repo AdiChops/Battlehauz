@@ -14,13 +14,13 @@ public class ItemGenerator {
         String itemClassification = in.readLine();
         if (itemClassification.equals("co")) {
             return new ConsumeableOffensiveItem(in.readLine(), Integer.parseInt(in.readLine()),
-                Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
+                Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
         } else if (itemClassification.equals("cd")){
             return new ConsumeableDefensiveItem(in.readLine(), Integer.parseInt(in.readLine()),
-                Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
+                Integer.parseInt(in.readLine()), Double.parseDouble((in.readLine())));
         } else if (itemClassification.equals("ch")){
             return new ConsumeableHealingItem(in.readLine(), Integer.parseInt(in.readLine()),
-                    Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
+                    Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
         }else{
             return null;
         }

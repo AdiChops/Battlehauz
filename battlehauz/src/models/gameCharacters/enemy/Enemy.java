@@ -57,7 +57,7 @@ public abstract class Enemy extends GameCharacter implements Battleable {
      * @return returns the damage points of an enemy's move
      */
     // calculate damage of enemy's move
-    public int calculateDamage() {
+    public int generateDamage() {
         int max = 175 * level;
         int min = 50 * level;
         return (int) (Math.random() * (max - min) + min);
@@ -90,7 +90,7 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         nextMove.updateMove();
         boolean s = this.attackSuccessful();
         if (s) {
-            opponent.takeDamage(this.calculateDamage());
+            opponent.takeDamage(this.generateDamage());
         }
         return new Turn(nextMove, s);
     }

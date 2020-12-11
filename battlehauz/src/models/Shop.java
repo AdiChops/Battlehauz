@@ -1,6 +1,6 @@
 package models;
 
-import models.items.EquipableItem;
+//import models.items.EquipableItem;
 import models.items.Item;
 import models.gameCharacters.Player;
 import models.utilities.ItemGenerator;
@@ -31,9 +31,9 @@ public class Shop {
         while (br.ready()){
             items.add(ItemGenerator.generateItems(br));
         }
-        items.add(new EquipableItem("Ring of Regeneration", 800, 400));
-        items.add(new EquipableItem("Ring of Offence", 800, 400));
-        items.add(new EquipableItem("Ring of Defence", 800, 400));
+//        items.add(new EquipableItem("Ring of Regeneration", 800, 400));
+//        items.add(new EquipableItem("Ring of Offence", 800, 400));
+//        items.add(new EquipableItem("Ring of Defence", 800, 400));
         }
 
     //everytime the user enters the shop, generates 5 moves that will stay in the shop for the session.
@@ -88,9 +88,9 @@ public class Shop {
         if(items.get(index).getBuyingPrice() < userAtShop.getCoins()){
             userAtShop.addItem(items.get(index));
             userAtShop.setCoins(userAtShop.getCoins() - items.get(index).getBuyingPrice());
-            if (items.get(index) instanceof EquipableItem){
-                items.remove(index);
-            }
+//            if (items.get(index) instanceof EquipableItem){
+//                items.remove(index);
+//            }
             return true;
         }
         return false;

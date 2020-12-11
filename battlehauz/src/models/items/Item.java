@@ -26,5 +26,5 @@ public abstract class Item {
         return "";
     }
 
-    public abstract int useItem();
+    public abstract double useItem();
 }

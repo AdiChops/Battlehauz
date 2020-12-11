@@ -1,23 +1,21 @@
 package models.items;
 
+import java.text.DecimalFormat;
+
 public class ConsumeableDefensiveItem extends ConsumeableItem{
 
-    private int defenseBoost;
+    private double defenseBoost;
 
-    public int useItem() { return defenseBoost; }
+    public double useItem() { return defenseBoost; }
 
-    public ConsumeableDefensiveItem(String iName, int iBuyingPrice, int iSellingPrice, int iDamageBoost){
+    public ConsumeableDefensiveItem(String iName, int iBuyingPrice, int iSellingPrice, double iDamageBoost){
         super(iName, iBuyingPrice, iSellingPrice);
         defenseBoost = iDamageBoost;
     }
 
     @Override
     public String toString() {
-        return "ConsumeableDefensiveItem{" +
-                "defenseBoost=" + defenseBoost +
-                ", name='" + name + '\'' +
-                ", buyingPrice=" + buyingPrice +
-                ", sellingPrice=" + sellingPrice +
-                '}';
+        DecimalFormat df = new DecimalFormat("##.#");
+        return "You will take " + df.format(defenseBoost * 100) + "% less damage on your next turn!";
     }
 }

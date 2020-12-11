@@ -6,6 +6,6 @@ public abstract class ConsumeableItem extends Item {
         super(iName, iBuyingPrice, iSellingPrice);
     }
 
-    public abstract int useItem();
+    public abstract double useItem();
 
 }

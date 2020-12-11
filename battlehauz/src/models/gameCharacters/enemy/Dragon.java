@@ -1,8 +1,6 @@
 package models.gameCharacters.enemy;
 
 import models.Move;
-import models.gameCharacters.GameCharacter;
-import models.utilities.Turn;
 
 import java.util.Random;
 
@@ -10,9 +8,9 @@ public class Dragon extends Enemy {
 
     public Dragon(String name, int level) {
         super(name, 2000, level);
-        addMove(new Move(" Breath of Death", calculateDamage()));
-        addMove(new Move("Dark Magic", calculateDamage()));
-        addMove(new Move("Claw", calculateDamage()));
+        addMove(new Move(" Breath of Death", generateDamage()));
+        addMove(new Move("Dark Magic", generateDamage()));
+        addMove(new Move("Claw", generateDamage()));
     }
 
 

@@ -1,23 +1,21 @@
 package models.items;
 
+import java.text.DecimalFormat;
+
 public class ConsumeableHealingItem extends ConsumeableItem{
 
-    private int healingBoost;
+    private double healingBoost;
 
-    public int useItem() { return healingBoost; }
+    public double useItem() { return healingBoost; }
 
-    public ConsumeableHealingItem(String iName, int iBuyingPrice, int iSellingPrice, int iHealingBoost){
+    public ConsumeableHealingItem(String iName, int iBuyingPrice, int iSellingPrice, double iHealingBoost){
         super(iName, iBuyingPrice, iSellingPrice);
         healingBoost = iHealingBoost;
     }
 
     @Override
     public String toString() {
-        return "ConsumeableHealingItem{" +
-                "healingBoost=" + healingBoost +
-                ", name='" + name + '\'' +
-                ", buyingPrice=" + buyingPrice +
-                ", sellingPrice=" + sellingPrice +
-                '}';
+        DecimalFormat df = new DecimalFormat("##.#");
+        return "You were healed for " + df.format(healingBoost * 100) + " health!";
     }
 }

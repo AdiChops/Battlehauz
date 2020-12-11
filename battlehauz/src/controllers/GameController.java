@@ -43,17 +43,23 @@ public class GameController {
         return "Welcome to the Battlehauz " + name + "!";
     }
 
-    public String doPlayerTurn(int moveIndex) throws NumberFormatException{
-        try {
-            moveIndex--;
-            Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
-            playerTurnEnd();
-            return "You " + currentTurn.toString();
-        }
-        catch(ArrayIndexOutOfBoundsException e){
-            throw new NumberFormatException();
-        }
+    public String doPlayerTurn(int moveIndex){
+        moveIndex--;
+        Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
+        playerTurnEnd();
+        return "You " + currentTurn.toStringMove();
+    }
 
+    public String playerUseItem(int itemIndex){
+        Turn currentTurn = gamePlayer.useItem(itemIndex);
+        playerTurnEnd();
+        return "You " + currentTurn.toStringItem();
+    }
+
+    public String doEnemyTurn(){
+        Turn currentTurn = currentEnemy.performTurn(currentEnemy.generateMoveIndex(), gamePlayer);
+        playerTurnStart();
+        return currentEnemy.getName() + " " + currentTurn.toStringMove();
     }
 
     private int numberOfEnemies(){
@@ -206,12 +212,15 @@ public class GameController {
         return gamePlayer.shortSummary();
     }
 
+    public String displayPlayerMoves(){ return gamePlayer.availableMoves(); }
+
     public String displayPlayerOptions(){
         return "1. Attack\n" +
                 "2. Use Item";
     }
 
     public String displayPlayerInventory(){
+        if (gamePlayer.getOwnedItemNames().size() == 0) return "You have no items you can use!";
         int counter = 1;
         String stringToReturn = "Items in inventory: \n";
         for (Item i: gamePlayer.getOwnedItemNames()){
@@ -220,7 +229,10 @@ public class GameController {
         return stringToReturn;
     }
 
-
+    public String displayerCurrentFightersStatus(){
+        return "Your current health: " + gamePlayer.getCurrentHealth() + "/" + gamePlayer.getMaxHealth() +"\n" +
+                currentEnemy.getName() + "'s health: " + currentEnemy.getCurrentHealth() + "/" + currentEnemy.getMaxHealth();
+    }
 
     public String displayEnemyStatus() {
         return currentEnemy.getName() + " is at " + currentEnemy.getCurrentHealth() + "/" + currentEnemy.getMaxHealth() + " health.";
@@ -228,6 +240,10 @@ public class GameController {
 
     public String displayStats(){
         return gamePlayer.toString();
+    }
+
+    public void restorePlayerHealth(){
+        gamePlayer.fullRestore();
     }
 
     public void nextFloor(){

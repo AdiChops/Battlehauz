@@ -2,44 +2,44 @@ co
 Strength Supplement
 100
 30
-15
+0.15
 co
 Power Piece of Pizza
 250
 90
-25
+0.25
 co
 A Can of Spinach
 750
 300
-50
+0.50
 cd
 Bone Density Modifier
 100
 30
-15
+0.15
 cd
 Belgium's Beefy Banana
 250
 90
-25
+0.25
 cd
 Grandma's Secret Recipe
 750
 300
-50
+0.50
 ch
 Milk Jug
 100
 30
-15
+0.15
 ch
 A Good Ol' Sandwich
 250
 90
-25
+0.25
 ch
 Potion of Eldermore
 750
 300
-50
+0.50

@@ -25,12 +25,17 @@ public class Turn {
         return usedMove;
     }
 
+    public Item getUsedItem(){ return usedItem; }
+
     public boolean isSuccess() {
         return success;
     }
 
-    @Override
-    public String toString(){
+    public String toStringMove(){
         return "used " + getUsedMove().getName() + ((isSuccess())?"":"\nWhoa! The move didn't hit!");
+    }
+
+    public String toStringItem(){
+        return "used " + getUsedItem().getName() + ". " + getUsedItem();
     }
 }

@@ -5,9 +5,9 @@ import models.Move;
 import java.util.ArrayList;
 
 public class Ogre extends Enemy {
-    Move move1 = new Move("Bonk", calculateDamage());
-    Move move2 = new Move("Belly Tackle", calculateDamage());
-    Move move3 = new Move("Smelly Armpit", calculateDamage());
+    Move move1 = new Move("Bonk", generateDamage());
+    Move move2 = new Move("Belly Tackle", generateDamage());
+    Move move3 = new Move("Smelly Armpit", generateDamage());
 
 
     public Ogre(String n, int level) {

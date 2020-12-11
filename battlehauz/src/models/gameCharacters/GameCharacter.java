@@ -90,10 +90,6 @@ public abstract class GameCharacter {
         if (this.getCurrentHealth() >= damage) {
             this.setCurrentHealth(this.getCurrentHealth() - damage);
         }
-
-    }
-    public int calculateDamage(Move move){
-        return 0;
     }
 
     public String speak(char mode){

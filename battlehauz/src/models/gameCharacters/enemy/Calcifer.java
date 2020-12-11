@@ -8,9 +8,9 @@ public class Calcifer extends Enemy {
 
     public Calcifer(String name, int level) {
         super(name, 1200, level);
-        addMove(new Move("Fireball", calculateDamage()));
-        addMove(new Move("Lava Floor", calculateDamage()));
-        addMove(new Move("Core Rage", calculateDamage()));
+        addMove(new Move("Fireball", generateDamage()));
+        addMove(new Move("Lava Floor", generateDamage()));
+        addMove(new Move("Core Rage", generateDamage()));
 
     }
 

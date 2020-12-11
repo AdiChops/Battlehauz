@@ -6,6 +6,7 @@ import models.Move;
 import models.gameCharacters.enemy.Dragon;
 import models.utilities.Turn;
 
+import javax.swing.*;
 import java.util.*;
 
 public class Player extends GameCharacter implements Battleable {
@@ -84,30 +85,33 @@ public class Player extends GameCharacter implements Battleable {
         // items would change this behaviour
         this.currentHealth -= (damage - (damage * (consumeableBoost[1] + permanentBoost[1])));
         this.currentHealth += (permanentBoost[2]);
+        if (this.currentHealth < 0) this.currentHealth = 0;
     }
 
-    @Override
     public int calculateDamage(Move move){ return (move.getBaseDamage() + (int)(move.getBaseDamage() * consumeableBoost[0]));} // other factors will come in }
 
     public int calculateLevel() { return XP/1000;}
 
     public boolean removeItem(Item itemToRemove){
-        try{
-            for (Item i: items.keySet()){
-                if (i.getName().equals(itemToRemove.getName())){
-                    items.replace(i, items.get(i) - 1);
-                    if (items.get(i) == 0){
-                        items.remove(i);
-                        ownedItemNames.remove(i);
-                    }
-                    break;
-                }
-            }
-            return true;
+
+//        for (Item i: items.keySet()) {
+//            if (i.getName().equals(itemToRemove.getName())) {
+//                items.replace(i, items.get(i) - 1);
+//                if (items.get(i) == 0) {
+//                    items.remove(i);
+//                    ownedItemNames.remove(i);
+//                }
+//                break;
+//            }
+//        }
+        items.replace(itemToRemove, items.get(itemToRemove) - 1);
+        if (items.get(itemToRemove) == 0) {
+            items.remove(itemToRemove);
+            ownedItemNames.remove(itemToRemove);
         }
-        catch(Exception e){ // TODO: make the exception catching more specific
-            return false;
-        }
+        return true;
+
+
     }
 
     public boolean removeMove(int moveIndex){
@@ -148,7 +152,7 @@ public class Player extends GameCharacter implements Battleable {
      * If the item is a healing item, the healing is applied right away
      * @param itemIndex index of item selected by user show in view
      */
-    public void useItem(int itemIndex){
+    public Turn useItem(int itemIndex){
         Item itemToUse = ownedItemNames.get(itemIndex - 1);
         if (itemToUse instanceof ConsumeableOffensiveItem){
             consumeableBoost[0] = itemToUse.useItem();
@@ -160,10 +164,12 @@ public class Player extends GameCharacter implements Battleable {
                 if (currentHealth == maxHealth) break;
             }
         }
-        items.replace(itemToUse, items.get(itemToUse) - 1);
-        if (items.get(itemToUse) == 0){
-            removeItem(itemToUse);
-        }
+        removeItem(itemToUse);
+//        if (items.get(itemToUse) <= 0){
+//            JOptionPane.showMessageDialog(null, items);
+//            removeItem(itemToUse);
+//        }
+        return new Turn(itemToUse, true);
     }
 
     /***
@@ -192,6 +198,7 @@ public class Player extends GameCharacter implements Battleable {
                     opponent.takeDamage(this.calculateDamage(nextMove));
                 }
             }
+            resetBoosts();
             return new Turn(nextMove, s);
         }
         catch(ArrayIndexOutOfBoundsException e){
@@ -200,7 +207,12 @@ public class Player extends GameCharacter implements Battleable {
         }
     }
 
-    private String availableMoves(){
+    public void resetBoosts(){
+        consumeableBoost[0] = 0;
+        consumeableBoost[1] = 0;
+    }
+
+    public String availableMoves(){
         StringBuilder returnString = new StringBuilder();
         for(int i = 0; i < moves.size(); i++){
             returnString.append((i+1) + ": " + moves.get(i).toString() + "\n");
@@ -214,13 +226,17 @@ public class Player extends GameCharacter implements Battleable {
                 + this.getXP() + "XP\n"
                 + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"
                 + this.getCoins() + " coins\n"
-                + "Your available moves are " + Arrays.toString(moves.toArray());
+                + "Your available moves are \n" + availableMoves();
     }
 
     public String shortSummary(){
         return "\n" + this.getName() + "\n" + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"+
                 "Your available moves are: \n" +
                 this.availableMoves();
+    }
+
+    public void fullRestore(){
+        setCurrentHealth(maxHealth);
     }
 
 }
