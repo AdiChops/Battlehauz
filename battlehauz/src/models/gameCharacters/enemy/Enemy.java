@@ -58,7 +58,7 @@ public abstract class Enemy extends GameCharacter implements Battleable {
      */
     // calculate damage of enemy's move
     public int calculateDamage() {
-        int max = 500 * level;
+        int max = 175 * level;
         int min = 50 * level;
         return (int) (Math.random() * (max - min) + min);
     }
