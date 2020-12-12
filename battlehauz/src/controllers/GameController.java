@@ -9,9 +9,7 @@ import models.gameCharacters.enemy.Ogre;
 import models.utilities.Turn;
 import models.utilities.WordsHelper;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 
@@ -30,9 +28,7 @@ public class GameController {
     private final Queue<Enemy> enemiesToFight = new LinkedList<>();
     private Enemy currentEnemy;
     private Player gamePlayer;
-    public void setGamePlayer(Player player){
-        this.gamePlayer = player;
-    }
+
     public Player getGamePlayer(){
         return this.gamePlayer;
     }
@@ -219,8 +215,10 @@ public class GameController {
     public String displayPlayerMoves(){ return gamePlayer.availableMoves(); }
 
     public String displayPlayerOptions(){
-        return "1. Attack\n" +
-                "2. Use Item";
+        return """
+                  1. Attack
+                  2. Use Item
+                  """;
     }
 
     public String displayPlayerInventory(){
@@ -251,6 +249,23 @@ public class GameController {
 
     public void nextFloor(){
         currentFloor++;
+    }
+
+    public String enemyLoss(){
+        int coins = increasePlayerCoins();
+        return enemyTalk('L') + "\nYou got " + coins + " coins!";
+    }
+
+    private int increasePlayerCoins(){
+        int coins;
+        switch (enemiesToFight.size()) {
+            case 0 -> coins= 25 * currentFloor;
+            case 1 -> coins= 20 * currentFloor;
+            case 2 -> coins= 15 * currentFloor;
+            default -> coins= 10 * currentFloor;
+        }
+        gamePlayer.increaseCoins(coins);
+        return coins;
     }
 
     public String enemyTalk(char mode){
