@@ -9,7 +9,8 @@ public class ConsumableOffensiveItem extends ConsumableItem {
     }
 
     public String getShopSummary(){
-        return "Name: " + name + " | Type: Offensive consumable | Boost: " +getBoost()*100+ "% damage increase when used.";
+        return "Name: " + name + " | Type: Offensive consumable | Boost: " +getBoost()*100+ "% damage increase when used. " +
+                "\nBuying Price: "+getBuyingPrice()+ " coins | Selling Price: "+getSellingPrice()+" coins.";
     }
 
     @Override

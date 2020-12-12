@@ -9,7 +9,8 @@ public class ConsumableDefensiveItem extends ConsumableItem {
     }
 
     public String getShopSummary(){
-        return "Name: " + name + " | Type: Defensive consumable | Boost: " +getBoost()*100+ "% incoming damage decreased when used.";
+        return "Name: " + name + " | Type: Defensive consumable | Boost: " +getBoost()*100+ "% incoming damage decreased when used. " +
+                "\nBuying Price: "+getBuyingPrice()+ " coins | Selling Price: "+getSellingPrice()+" coins.";
     }
 
     @Override

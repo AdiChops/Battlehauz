@@ -9,7 +9,8 @@ public class ConsumableHealingItem extends ConsumableItem {
     }
 
     public String getShopSummary(){
-        return "Name: " + name + " | Type: Healing consumable | Boost: " +getBoost()*100+ "% health restored when used.";
+        return "Name: " + name + " | Type: Healing consumable | Boost: " +getBoost()*100+ "% health restored when used. " +
+                "\nBuying Price: "+getBuyingPrice()+ " coins | Selling Price: "+getSellingPrice()+" coins.";
     }
 
     @Override

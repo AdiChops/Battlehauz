@@ -25,6 +25,14 @@ public class Shop {
         loadItems();
     }
 
+    public boolean isPotionBoostPurchased() {
+        return potionBoostPurchased;
+    }
+
+    public void setPotionBoostPurchased(boolean potionBoostPurchased) {
+        this.potionBoostPurchased = potionBoostPurchased;
+    }
+
     private void loadItems() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("items.txt"));
         while (br.ready()) {
@@ -57,7 +65,7 @@ public class Shop {
         StringBuffer buffer = new StringBuffer();
         int moveIndex = 1;
         for(Move m: currentMovesInShop){
-            buffer.append(moveIndex+": "+m.shopSummary()+"\n");
+            buffer.append(moveIndex+": "+m.getShopSummary()+"\n");
         }
         return buffer.toString();
     }
@@ -119,9 +127,8 @@ public class Shop {
         if (moveToBuy.isSellable()) {
             userAtShop.increaseCoins(userMoves.get(index).calculateSellingPrice());
             userAtShop.removeMove(index);
-            return "You sold the move "+moveToBuy.getName()+" for "+moveToBuy.calculateSellingPrice()+" coins.";
         }
-        return "You're trying to sell a basic move. These aren't sellable. Try again with an store-bought advanced move.";
+        return "You sold the move "+moveToBuy.getName()+" for "+moveToBuy.calculateSellingPrice()+" coins.";
     }
 
     public String buyBackItem(int index){
@@ -131,5 +138,20 @@ public class Shop {
             return "You sold 1 of the item "+itemToBuy.getName()+" for "+itemToBuy.getSellingPrice()+" coins.";
         }
         return "You sold "+itemToBuy.getName()+". However, because you have 0 in quantity left, you got no coins added.";
+    }
+
+    public int getSizeOfShopInventory(int i){
+        if(i == 1){
+            return currentMovesInShop.size();
+        }
+        if(i == 2){
+            return consumableItemsInShop.size();
+        }
+        if(i == 3){
+            return potionBoostsInShop.size();
+        }
+        else{
+            return 0;
+        }
     }
 }
