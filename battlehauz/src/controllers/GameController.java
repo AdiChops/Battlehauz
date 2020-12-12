@@ -1,5 +1,7 @@
 package controllers;
 
+import models.Move;
+import models.Shop;
 import models.items.Item;
 import models.gameCharacters.Player;
 import models.gameCharacters.enemy.Calcifer;
@@ -9,9 +11,10 @@ import models.gameCharacters.enemy.Ogre;
 import models.utilities.Turn;
 import models.utilities.WordsHelper;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 
@@ -26,238 +29,308 @@ import java.util.Queue;
 //Straight from Lanthier's notes, we assume there is no System.out.println or scanner anywhere but here.
 public class GameController {
 
-    private int currentFloor = 1;
-    private Queue<Enemy> enemiesToFight = new LinkedList<Enemy>();
+    private int currentFloor;
+    private Queue<Enemy> enemiesToFight;
     private Enemy currentEnemy;
     private Player gamePlayer;
-    public void setGamePlayer(Player player){
-        this.gamePlayer = player;
+    private Shop shop;
+    private boolean playersTurn = false;
+
+    public GameController() throws IOException {
+        shop = new Shop();
+        enemiesToFight = new LinkedList<Enemy>();
+        currentFloor = 1;
     }
-    public Player getGamePlayer(){
+
+    public Player getGamePlayer() {
         return this.gamePlayer;
     }
-    private boolean playersTurn = false;
+
+    public Shop getShop() {
+        return shop;
+    }
 
     public String start(String name) {
         this.gamePlayer = new Player(name);
-        return "Welcome to the Battlehauz " + name + "!";
+        return "Welcome to the Battlehauz, " + name + "!";
     }
 
-    public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException{
+    public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException {
         moveIndex--;
         Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
         playerTurnEnd();
         return "You " + currentTurn.toStringMove();
     }
 
-    public String playerUseItem(int itemIndex){
+    public String playerUseItem(int itemIndex) {
         Turn currentTurn = gamePlayer.useItem(itemIndex);
         playerTurnEnd();
         return "You " + currentTurn.toStringItem();
     }
 
-    public String doEnemyTurn(){
+    public String doEnemyTurn() {
         Turn currentTurn = currentEnemy.performTurn(currentEnemy.generateMoveIndex(), gamePlayer);
         playerTurnStart();
         return currentEnemy.getName() + " " + currentTurn.toStringMove();
     }
 
-    private int numberOfEnemies(){
-        return currentFloor+2;
+    private int numberOfEnemies() {
+        return currentFloor + 2;
     }
 
-    private void generateEnemyQueue(){
+    private void generateEnemyQueue() {
         enemiesToFight.clear();
         int numEnemies = numberOfEnemies();
         Enemy nextEnemy;
-        for(int i = 1; i <= numEnemies; i++){
-            if(i%3 == 0){
-                nextEnemy = new Dragon(WordsHelper.generateEnemyName(),currentFloor);
+        for (int i = 1; i <= numEnemies; i++) {
+            if (i % 3 == 0) {
+                nextEnemy = new Dragon(WordsHelper.generateEnemyName(), currentFloor);
             }// Dragon case
-            else if(i%3 == 1){
+            else if (i % 3 == 2) {
                 nextEnemy = new Calcifer(WordsHelper.generateEnemyName(), currentFloor);
             }//Calcifer case
-            else{
+            else {
                 nextEnemy = new Ogre(WordsHelper.generateEnemyName(), currentFloor);
             }// Ogre case
             enemiesToFight.add(nextEnemy);
         }
     }
 
-    public String startBattle(){
+    public String startBattle() {
         currentEnemy = enemiesToFight.remove();
         playerTurnStart();
         return "\nYou have encountered the " + currentEnemy.toString() + "!";
     }
 
-    public void playerTurnStart(){
+    public void playerTurnStart() {
         playersTurn = true;
     }
 
-    public void playerTurnEnd(){
+    public void playerTurnEnd() {
         playersTurn = false;
     }
 
-    public int getCurrentFloor(){
+    public int getCurrentFloor() {
         return currentFloor;
     }
 
-    public void enterBattleFloor(){
+    public void enterBattleFloor() {
         generateEnemyQueue();
     }
 
-    public boolean playerIsAlive(){
+    public boolean playerIsAlive() {
         return gamePlayer.isAlive();
     }
 
-    public boolean isPlayersTurn() { return playersTurn; }
+    public boolean isPlayersTurn() {
+        return playersTurn;
+    }
 
     public boolean currentEnemyIsAlive() {
         return currentEnemy.isAlive();
     }
 
-    public boolean hasMoreEnemies(){
+    public boolean hasMoreEnemies() {
         return !enemiesToFight.isEmpty();
     }
 
-    public void goToShop(){
-//        System.out.println("Your character enters the shop. Here, they see the shopkeeper: Dave.");
-//        System.out.println(shop.enterShop(Player player)); //will return a quote but also initialize everything in there for now
-//        System.out.println("1. Take a look at the moves offered in the shop.");
-//        System.out.println("2. Take a look at the items they have.");
-//        System.out.println("3. Sell a move back to the shop.");
-//        System.out.println("4. Sell an item back to the shop.");
-//        System.out.println("5. Return back to the main menu.");
 
-//        OPTION ONE: BUY MOVE
-//        System.out.println(player); //prints out the to string method with their stats including level and coins.
-//        System.out.println("Get more powerful! Check out these moves. Or save your coins for later and come back for stronger ones...");
-//        moves = shop.displayMoves() (returns five moves in an array list)
-//        counter = 0;
-//        for (Move m: moves):
-//          counter++l
-//          System.out.println(counter +”: “+m);
-//        System.out.println(“Input the move number you would like to purchase. Put 6 to quit.”)
-//        choice = in.nextLine()
-//        if (choice != 6):
-//          if (shop.purchaseMove(choice)) == true:
-//              System.out.println(“Success! You have now inputted the move into your list of moves.);
-//		    else:
-//              System.out.println(“Failed to purchase. You have a duplicate of this move, too many moves, or not enough coins. Go sell a move before you attempt again.”)
-//        Loop back to the options.
-//
-//
-//        OPTION TWO: SELL MOVE
-//        System.out.println(player); //prints out the to string method with their stats including level and coins.
-//        System.out.println("Interested in the items, hmm? The shop offers many kinds: equipable ones, consumable ones..."); //more explanation to be added
-//        items = shop.displayItems()
-//        counter = 0;
-//        for (Item m: items):
-//          counter++
-//          System.out.println(counter +”: “+m);
-//        System.out.println(“Input the item number you would like to purchase. Put 6 to quit.”)
-//        choice = in.nextLine()
-//        if (choice != 6):
-//          if (shop.purchaseItem(choice) == true):
-//              System.out.println(“Success! You have now inputted the move into your list of items.);
-//		  else:
-//          depends on rules.
-//        Loop back to options.
-//
-//
-//        OPTION THREE: SELL MOVE
-//        moves = player.getMoves() //returns moves array
-//        counter = 0;
-//        for (Move m: moves):
-//          counter++;
-//          System.out.println(counter +”: “+m);
-//        System.out.println(“Input the move number you would like to sell. Put 6 to go back.”)
-//        choice = in.nextLine()
-//        if (choice != 6):
-//          if ((shop.buyBackMove(choice)) == true):
-//              System.out.println(“Success!” Here’s your new stats, including added coins from selling the coins and new move list: “);
-//              System.out.println(player);
-//		  else:
-//              System.out.println(“You tried to sell a base move. These can’t be sold.”)
-//        Loop back to options.
-//
-//
-//        OPTION FOUR: SELL ITEM
-//        items = player.getItems()
-//        counter = 0;
-//        for (Item m: items):
-//          counter++
-//          System.out.println(counter +”: “+m);
-//        System.out.println(“Input the item number you would like to sell. Put 6 to quit.”)
-//        choice = in.nextLine()
-//        if (choice != 6):
-//          if (shop.purchaseItem(choice) == true):
-//              System.out.println(“Success! You have now inputted the item into your list of items.);
-//		  else:
-//          depends on rules.
-//        Loop back to options.
+    public String displayRules() {
+        return """
 
-//        OPTION FIVE: Return to menu
-//        start()
-
-    }
-
-    public String displayRules(){
-        return "\nThe rules of the Battlehauz are simple. You fight an increasing number of enemies at each floor (one-by-one).\n" +
-                "You and the enemy take turns choosing a move (you also have the option to choose an item to help your next move instead of a move).\n" +
-                "You keep fighting enemies and moving up floors until you run out of health\n" +
-                "(or a more dark way of saying it, the only way to leave the Battlehauz is DEATH). Have fun :)\n";
+                The rules of the Battlehauz are simple. You fight an increasing number of enemies at each floor (one-by-one).
+                You and the enemy take turns choosing a move (you also have the option to choose an item to help your next move instead of a move).
+                You keep fighting enemies and moving up floors until you run out of health
+                (or a more dark way of saying it, the only way to leave the Battlehauz is DEATH). Have fun :)
+                """;
     }
 
     public String displayPlayerShortSummary() {
         return gamePlayer.shortSummary();
     }
 
-    public String displayPlayerMoves(){ return gamePlayer.availableMoves(); }
-
-    public String displayPlayerOptions(){
-        return "1. Attack\n" +
-                "2. Use Item";
+    public String displayPlayerMoves() {
+        return gamePlayer.availableMoves();
     }
 
-    public String displayPlayerInventory(){
+    public String displayPlayerOptions() {
+        return """
+                1. Attack
+                2. Use Item
+                """;
+    }
+
+    public String displayPlayerInventory() {
         if (gamePlayer.getOwnedItemNames().size() == 0) return "You have no items you can use!";
         int counter = 1;
-        String stringToReturn = "Items in inventory: \n";
-        for (Item i: gamePlayer.getOwnedItemNames()){
-            stringToReturn += counter + ". " + i.getName() + ": " + gamePlayer.getItems().get(i) + "\n";
+        StringBuilder stringToReturn = new StringBuilder("Items in inventory: \n");
+        for (Item i : gamePlayer.getOwnedItemNames()) {
+            stringToReturn.append(counter).append(". ").append(i.getName()).append(": ").append(gamePlayer.getItems().get(i)).append("\n");
         }
-        return stringToReturn;
+        return stringToReturn.toString();
     }
 
-    public String displayerCurrentFightersStatus(){
-        return "Your current health: " + gamePlayer.getCurrentHealth() + "/" + gamePlayer.getMaxHealth() +"\n" +
-                currentEnemy.getName() + "'s health: " + currentEnemy.getCurrentHealth() + "/" + currentEnemy.getMaxHealth();
+    public String displayerCurrentFightersStatus() {
+        return "Your " + gamePlayer.currentFighterStatus() + "\n" + displayEnemyStatus();
     }
 
     public String displayEnemyStatus() {
-        return currentEnemy.getName() + " is at " + currentEnemy.getCurrentHealth() + "/" + currentEnemy.getMaxHealth() + " health.";
+        return currentEnemy.getName() + "'s " + currentEnemy.currentFighterStatus() + "\n";
     }
 
-    public String displayStats(){
+    public String displayStats() {
         return gamePlayer.toString();
     }
 
-    public void restorePlayerHealth(){
+    public void restorePlayerHealth() {
         gamePlayer.fullRestore();
     }
 
-    public void nextFloor(){
+    public void nextFloor() {
         currentFloor++;
     }
 
-    public String credits(){
-        return "\nBattleHauz made with <3 by:\n" +
-                "Aaditya Chopra\n" +
-                "Elias Hawa \n" +
-                "Veronica Yung\n" +
-                "Zara Ali";
+    public String enemyLoss() {
+        return enemyTalk('L') + "\n";
+    }
+
+    public String displayPlayerRewards() {
+        int coins = increasePlayerCoins();
+        int initialLevel = gamePlayer.calculateLevel();
+        int xp = increasePlayerXP();
+        return "You got " + coins + " coins and " + xp + "XP!\n" +
+                gamePlayer.displayLevelUp(initialLevel); //if the player levels up, additional things will be displayed
+    }
+
+    private int increasePlayerCoins() {
+        int coins;
+        switch (enemiesToFight.size()) {
+            case 0 -> coins = 25 * currentFloor;
+            case 1 -> coins = 20 * currentFloor;
+            case 2 -> coins = 15 * currentFloor;
+            default -> coins = 10 * currentFloor;
+        }
+        gamePlayer.increaseCoins(coins);
+        return coins;
+    }
+
+    private int increasePlayerXP() {
+        int xp;
+        switch (enemiesToFight.size()) {
+            case 0 -> xp = 300 * currentFloor;
+            case 1 -> xp = 200 * currentFloor;
+            case 2 -> xp = 150 * currentFloor;
+            default -> xp = 100 * currentFloor;
+        }
+        gamePlayer.increaseXP(xp);
+        return xp;
+    }
+
+    public String enemyTalk(char mode) {
+        return currentEnemy.getName() + ": " + currentEnemy.speak(mode) + "\n";
+    }
+
+    //*************************************************[this is where the shop functions start]*************************************************
+    public String enterShop() {
+        shop.enterShop(gamePlayer);
+        //TODO: should generate a conversation between the shopkeeper and the player and return it
+        return "Welcome!";
+    }
+
+    public String displayShopOptions() {
+        return ("""
+                1. Buy a move
+                2. Buy a consumable item
+                3. Buy a potion boost
+                4. Sell a move back to the shop.
+                5. Sell a consumable item back to the shop.
+                6. Return back to the main menu.""");
+    }
+
+    public String displayMovesInShop() {
+        return shop.displaySummaryofMovesInShop();
+    }
+
+    public String displayConsumableItemsInShop() {
+        return shop.displaySummaryofConsumableItemsInShop();
+    }
+
+    public String displayPotionBoostsInShop() {
+        return shop.displaySummaryOfPotionBoostsInShop();
+    }
+
+    public boolean boostHasNotBeenPurchasedCheck() {
+        if (!shop.isPotionBoostPurchased()) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getSizeOfDisplayedMenu(int i) {
+        if (i <= 3) {
+            return shop.getSizeOfShopInventory(i);
+        } else if (i == 4) {
+            return gamePlayer.getMoves().size();
+        } else {
+            return gamePlayer.getOwnedItemNames().size();
+        }
+    }
+
+    public String displayPlayersMoveInventory() {
+        ArrayList<Move> moves = gamePlayer.getMoves();
+        StringBuffer buffer = new StringBuffer();
+        int moveIndex = 1;
+        for (Move m : moves) {
+            buffer.append(moveIndex + ": " + m.getShopSummary() + "\n");
+            moveIndex++;
+        }
+        return buffer.toString();
+    }
+
+    public String displayPlayersItemInventory() {
+        ArrayList<Item> items = gamePlayer.getOwnedItemNames();
+        HashMap<Item, Integer> itemsQuantity = gamePlayer.getItems();
+        StringBuffer buffer = new StringBuffer();
+        int itemIndex = 1;
+        for (Item i : items) {
+            buffer.append(itemIndex + ": " + i.getShopSummary() + " | Quantity: " + itemsQuantity.get(i) + "\n");
+            itemIndex++;
+        }
+        return buffer.toString();
+    }
+
+    public String buyMove(int index) {
+        return shop.purchaseMoveAtIndex(index - 1);
+    }
+
+    public String buyConsumableItem(int index) {
+        return shop.purchaseConsumableItemAtIndex(index - 1);
+    }
+
+    public String buyPotionBoost(int index) {
+        return shop.purchasePotionBoostAtIndex(index - 1);
+    }
+
+    public String sellMoveToShop(int index) {
+        return shop.buyBackMove(index - 1);
+    }
+
+    public String sellItemToShop(int index) {
+        return shop.buyBackItem(index - 1);
+    }
+
+    //*************************************************[this is where the shop functions end]*************************************************
+
+    public String credits() {
+        return """
+                BattleHauz made with <3 by:
+                Aaditya Chopra
+                Elias Hawa\s
+                Veronica Yung
+                Zara Ali""";
     }
 }
+
+
 
 

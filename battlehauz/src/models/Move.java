@@ -25,11 +25,11 @@ public class Move {
         depreciationPercentage = 0.0;
     }
 
-    public Move(String name, int baseDamage){ //constructor for base moves
+    public Move(String name, int baseDamage, int xpBoost){ //constructor for base moves
         this.name = name;
         this.baseDamage = baseDamage;
         this.isSellable = false;
-        this.XPBoost = 0;
+        this.XPBoost = xpBoost;
         this.maxUses = 0; //idk random number
         this.buyingPrice = 0;
         remainingUses = 0;
@@ -66,10 +66,7 @@ public class Move {
         if(!isSellable){
             return true;
         }
-        else if(remainingUses != 0){
-            return false;
-        }
-        return true;
+        else return remainingUses == 0;
     }
 
     public void updateMove(){
@@ -93,7 +90,7 @@ public class Move {
         return buyingPrice - depreciatedPrice;
     }
 
-    public String shopSummary(){
+    public String getShopSummary(){
         return getName() + " | Base Damage: " + getBaseDamage() + " | " + ((isSellable)?getRemainingUses():"Unlimited") + " Uses | XP Boost: " + getXPBoost() + " | Buying Price: "+getBuyingPrice()+" coins | Selling Price: "+calculateSellingPrice();
     }
 

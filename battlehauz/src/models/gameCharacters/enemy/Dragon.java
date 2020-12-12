@@ -8,9 +8,9 @@ public class Dragon extends Enemy {
 
     public Dragon(String name, int level) {
         super(name, 2000, level);
-        addMove(new Move("Breath of Death", generateDamage()));
-        addMove(new Move("Dark Magic", generateDamage()));
-        addMove(new Move("Claw", generateDamage()));
+        addMove(new Move("Breath of Death", generateDamage(), 0));
+        addMove(new Move("Dark Magic", generateDamage(), 0));
+        addMove(new Move("Claw", generateDamage(), 0));
     }
 
 

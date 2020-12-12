@@ -43,3 +43,48 @@ Boost Juicst
 750
 300
 0.50
+po
+Potion of Strength I
+500
+225
+0.20
+po
+Potion of Strength II
+1500
+675
+0.30
+po
+Potion of Strength III
+2500
+1125
+0.40
+pd
+Potion of Fortitude I
+500
+225
+0.20
+pd
+Potion of Fortitude II
+1500
+675
+0.30
+pd
+Potion of Fortitude III
+2500
+1125
+0.40
+ph
+Potion of Regeneration I
+500
+225
+0.20
+ph
+Potion of Regeneration II
+1500
+675
+0.30
+ph
+Potion of Regeneration III
+2500
+1125
+0.40

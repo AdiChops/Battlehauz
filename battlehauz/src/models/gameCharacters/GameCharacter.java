@@ -15,14 +15,14 @@ public abstract class GameCharacter {
         this.name = name;
         this.maxHealth = 1000;
         this.currentHealth = 1000;
-        this.moves = new ArrayList<Move>();
+        this.moves = new ArrayList<>();
     }
 
     public GameCharacter(String name, int maxHealth){
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
-        this.moves = new ArrayList<Move>();
+        this.moves = new ArrayList<>();
     }
 
     public String getName() {
@@ -87,6 +87,28 @@ public abstract class GameCharacter {
         if (this.getCurrentHealth() >= damage) {
             this.setCurrentHealth(this.getCurrentHealth() - damage);
         }
+    }
+
+    protected String progressBar(){
+        double percentage = ((double)currentHealth/(double)maxHealth)*100;
+        StringBuilder barBuilder = new StringBuilder("[");
+        for(int i=0; i <20; i++){
+            if(percentage == 0)
+                barBuilder.append("  ");
+            else{
+                if(i <= percentage/5)
+                    barBuilder.append("==");
+                else
+                    barBuilder.append("..");
+            }
+        }
+        barBuilder.append("]");
+        return barBuilder.toString();
+    }
+
+    public String currentFighterStatus(){
+        return "current health: " + getCurrentHealth() + "/" + getMaxHealth() +"\n" +
+                progressBar();
     }
 
     public String speak(char mode){

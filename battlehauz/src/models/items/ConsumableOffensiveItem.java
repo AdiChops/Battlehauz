@@ -9,12 +9,13 @@ public class ConsumableOffensiveItem extends ConsumableItem {
     }
 
     public String getShopSummary(){
-        return "Name: " + name + " | Type: Offensive consumable | Boost: " +getBoost()*100+ "% damage increase when used.";
+        return "Name: " + name + " | Type: Offensive consumable | Boost: " +useItem()*100+ "% damage increase when used. " +
+                "\nBuying Price: "+getBuyingPrice()+ " coins | Selling Price: "+getSellingPrice()+" coins.";
     }
 
     @Override
     public String toString() {
         DecimalFormat df = new DecimalFormat("##.#");
-        return "You will deal " + df.format(getBoost() * 100) + "% more damage on your next turn!";
+        return "You will deal " + df.format(useItem() * 100) + "% more damage on your next turn!";
     }
 }
