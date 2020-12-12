@@ -88,6 +88,7 @@ public class Player extends GameCharacter implements Battleable {
         if (items.get(itemToRemove) == 0) {
             items.remove(itemToRemove);
             ownedItemNames.remove(itemToRemove);
+            return false; //returns false to tell the player at shop that they sold it for 0 coins.
         }
         return true;
 
