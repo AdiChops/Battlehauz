@@ -219,7 +219,7 @@ public class GameController {
     //*************************************************[this is where the shop functions start]*************************************************
     public String enterShop(){
         shop.enterShop(gamePlayer);
-        //should generate a conversation between the shopkeeper and the player and return it
+        //TODO: should generate a conversation between the shopkeeper and the player and return it
         return "";
     }
 
