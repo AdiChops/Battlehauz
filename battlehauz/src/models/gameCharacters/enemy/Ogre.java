@@ -7,9 +7,9 @@ import java.util.Queue;
 
 
 public class Ogre extends Enemy {
-    Move move1 = new Move("Bonk", generateDamage());
-    Move move2 = new Move("Belly Tackle", generateDamage());
-    Move move3 = new Move("Smelly Armpit", generateDamage());
+    Move move1 = new Move("Bonk", generateDamage(), 0);
+    Move move2 = new Move("Belly Tackle", generateDamage(), 0);
+    Move move3 = new Move("Smelly Armpit", generateDamage(), 0);
 
 
     public Ogre(String n, int level) {
