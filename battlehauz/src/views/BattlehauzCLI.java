@@ -168,7 +168,7 @@ public class BattlehauzCLI {
             System.out.println();
             try {
                 shopChoice = Integer.parseInt(shopChoiceS);
-                if (shopChoice <= 0 || shopChoice > 6) throw new InputException("");
+                if (shopChoice <= 0 || shopChoice > 7) throw new InputException("");
                 //there's six options on the shop menu, with the 6th being return to main menu
                 switch (shopChoice) {
                     case 1 -> { //Buying a move
@@ -294,13 +294,17 @@ public class BattlehauzCLI {
                             }
                         }while(!itemSellChoiceS.equals("q"));
                     }
+                    case 6 -> {
+                        WordsHelper.rollingTextPrint(game.getShop().getRandomDialogue());
+                        System.out.println();
+                    }
                 }
             } catch (NumberFormatException e) {
                 System.err.println("Oops! Please enter a valid number.");
             } catch (InputException e) {
                 System.err.println("That menu item doesn't exist! Pick a menu index!");
             }
-        } while (shopChoice != 6);
+        } while (shopChoice != 7);
 
     }
 

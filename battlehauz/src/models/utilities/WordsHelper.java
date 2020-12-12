@@ -2,6 +2,7 @@ package models.utilities;
 import controllers.InputException;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class WordsHelper {
     private static final String[] beginQuotes = {"Our battle will be legendary!",
@@ -62,6 +63,7 @@ public class WordsHelper {
     public static void rollingTextPrint(String text)  {
         text += "\n";
         String[] dialogue = text.split(" ");
+        Scanner enterPrompter = new Scanner(System.in);
         for (String s: dialogue){
             System.out.print(s + " ");
             try{
@@ -69,13 +71,13 @@ public class WordsHelper {
                     Thread.sleep(1000);
                 }else if (s.contains(",")){
                     Thread.sleep(500);
+                }else if (s.contains(">")){
+                    enterPrompter.nextLine();
                 }else{
                     Thread.sleep(250);
                 }
             }catch (InterruptedException ignored){
-
             }
-
         }
     }
 

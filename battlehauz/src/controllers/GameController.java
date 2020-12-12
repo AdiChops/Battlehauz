@@ -115,6 +115,7 @@ public class GameController {
     }
 
     public void enterBattleFloor() {
+        shop.setPotionBoostPurchased(false);
         generateEnemyQueue();
     }
 
@@ -244,7 +245,8 @@ public class GameController {
                 3. Buy a potion boost
                 4. Sell a move back to the shop.
                 5. Sell a consumable item back to the shop.
-                6. Return back to the main menu.""");
+                6. Speak with shopkeeper
+                7. Return back to the main menu.""");
     }
 
     public String displayMovesInShop() {

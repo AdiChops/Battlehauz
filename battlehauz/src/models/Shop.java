@@ -17,14 +17,17 @@ public class Shop {
     private final ArrayList <Item> consumableItemsInShop;
     private final ArrayList<Item> potionBoostsInShop;
     private ArrayList<Move> currentMovesInShop;
+    private ArrayList<String> shopkeeperDialogue;
     private boolean potionBoostPurchased;
     private static final Random RND = new Random();
 
     public Shop() throws IOException{
         potionBoostsInShop = new ArrayList<>();
         consumableItemsInShop = new ArrayList<>();
+        shopkeeperDialogue = new ArrayList<>();
         potionBoostPurchased = false;
         loadItems();
+        loadQuotes();
     }
 
     public boolean isPotionBoostPurchased() {
@@ -41,6 +44,13 @@ public class Shop {
             Item curItem = ItemGenerator.generateItems(br);
             if (curItem instanceof ConsumableItem) consumableItemsInShop.add(curItem);
             else potionBoostsInShop.add(curItem);
+        }
+    }
+
+    private void loadQuotes() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("dialogueOptions.txt"));
+        while(br.ready()){
+            shopkeeperDialogue.add(br.readLine());
         }
     }
 
@@ -160,5 +170,9 @@ public class Shop {
         else{
             return 0;
         }
+    }
+
+    public String getRandomDialogue(){
+        return shopkeeperDialogue.get(RND.nextInt(shopkeeperDialogue.size()));
     }
 }
