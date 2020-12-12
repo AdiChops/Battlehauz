@@ -2,11 +2,11 @@ package models.items;
 
 public class Potion extends Item{
 
-    private boolean isEquiped;
+    private boolean isEquipped;
 
     public Potion(String iName, int iBuyingPrice, int iSellingPrice){
        super(iName, iBuyingPrice, iSellingPrice);
-       isEquiped = false;
+       isEquipped = false;
     }
 
     @Override
@@ -20,11 +20,11 @@ public class Potion extends Item{
     }
 
     public void equip(){
-        isEquiped = true;
+        isEquipped = true;
     }
 
     public void unEquip(){
-        isEquiped = false;
+        isEquipped = false;
     }
 
 }
