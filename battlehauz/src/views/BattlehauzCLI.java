@@ -5,7 +5,6 @@ import controllers.InputException;
 import models.items.ConsumableOffensiveItem;
 import models.utilities.WordsHelper;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -77,7 +76,7 @@ public class BattlehauzCLI {
                                 System.out.println();
                                 WordsHelper.rollingTextPrint(game.enemyTalk('B'));
                                 while (game.currentEnemyIsAlive() && game.playerIsAlive()) { //while the currentEnemy is still alive
-                                    System.out.println(game.displayerCurrentFightersStatus() + "\n");
+                                    System.out.println(game.displayCurrentFightersStatus() + "\n");
                                     do {
                                         System.out.println("What would you like to do?");
                                         System.out.println(game.displayPlayerOptions() + "\n");
@@ -96,7 +95,7 @@ public class BattlehauzCLI {
                                                     String moveChoiceS = INPUT.next();
                                                     try {
                                                         int moveChoice = Integer.parseInt(moveChoiceS);
-                                                        if (moveChoice < 0 || moveChoice > game.getGamePlayer().getMoves().size())
+                                                        if (moveChoice < 0 || moveChoice > game.getGamePlayer().getMoves().size()) //TODO: direct model access. Fix.
                                                             throw new InputException("That move doesn't exist! Pick a valid move index!");
                                                         System.out.println(game.doPlayerTurn(moveChoice));
                                                         if (game.getGamePlayer().levelUpHasBeenDetected()) WordsHelper.rollingTextPrint(game.getGamePlayer().displayLevelUp());
@@ -114,7 +113,7 @@ public class BattlehauzCLI {
                                                             System.out.print("Which item would you like to use > ");
                                                             String itemChoiceS = INPUT.next();
                                                             int itemChoice = Integer.parseInt(itemChoiceS);
-                                                            if (itemChoice < 0 || itemChoice > game.getGamePlayer().getOwnedItemNames().size())
+                                                            if (itemChoice < 0 || itemChoice > game.getGamePlayer().getOwnedItemNames().size()) //TODO: direct model access. Fix.
                                                                 throw new InputException("That item doesn't exist! Pick a valid item index!");
                                                             System.out.println(game.playerUseItem(itemChoice));
                                                         } catch (NumberFormatException e) {
@@ -157,9 +156,7 @@ public class BattlehauzCLI {
     }// main()
 
     private static void goToShop(GameController game) {
-        WordsHelper.rollingTextPrint("Your character enters the shop. Here, they see the shopkeeper: Dave.");
-        WordsHelper.rollingTextPrint(game.enterShop()); //TODO: function needs to be completed
-        //TODO: when user decides to go back using 'Q', should loop back here
+        WordsHelper.rollingTextPrint(game.enterShop());
         int shopChoice = 0;
         do {
             System.out.println(game.displayShopOptions() + "\n"); //displays the options to the user
@@ -182,7 +179,7 @@ public class BattlehauzCLI {
                             } else {
                                 try {
                                     int moveChoice = Integer.parseInt(moveChoiceS);
-                                    if (moveChoice <= 0 || moveChoice > 5) throw new InputException("");
+                                    if (moveChoice <= 0 || moveChoice > game.getSizeOfDisplayedMenu(1)) throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.buyMove(moveChoice));
                                     //Tries to buys the move. Returns a fail/success String.
                                 } catch (NumberFormatException e) {
@@ -204,7 +201,7 @@ public class BattlehauzCLI {
                             } else {
                                 try {
                                     int consumableChoice = Integer.parseInt(consumableChoiceS);
-                                    if (consumableChoice <= 0 || consumableChoice > 9) throw new InputException("");
+                                    if (consumableChoice <= 0 || consumableChoice > game.getSizeOfDisplayedMenu(2)) throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.buyConsumableItem(consumableChoice));
                                     //Tries to buys the item. Returns a fail/success String.
                                 } catch (NumberFormatException e) {
@@ -229,7 +226,7 @@ public class BattlehauzCLI {
                                 } else {
                                     try {
                                         int potionChoice = Integer.parseInt(potionChoiceS);
-                                        if (potionChoice <= 0 || potionChoice > 9) throw new InputException("");
+                                        if (potionChoice <= 0 || potionChoice > game.getSizeOfDisplayedMenu(3)) throw new InputException("");
                                         WordsHelper.rollingTextPrint(game.buyPotionBoost(potionChoice));
                                         //Tries to buys the potion boost. Returns a fail/success String.
                                     } catch (NumberFormatException e) {
@@ -259,7 +256,7 @@ public class BattlehauzCLI {
                             } else {
                                 try {
                                     int moveSellChoice = Integer.parseInt(moveSellChoiceS);
-                                    if (moveSellChoice <= 0 || moveSellChoice > game.getGamePlayer().getMoves().size()) throw new InputException("");
+                                    if (moveSellChoice <= 0 || moveSellChoice > game.getSizeOfDisplayedMenu(4)) throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.sellMoveToShop(moveSellChoice));
                                     //Tries to sell the move. Returns a fail/success String.
                                 } catch (NumberFormatException e) {
@@ -283,7 +280,7 @@ public class BattlehauzCLI {
                             } else {
                                 try {
                                     shopChoice = Integer.parseInt(shopChoiceS);
-                                    if (shopChoice <= 0 || shopChoice > game.getGamePlayer().getOwnedItemNames().size()) throw new InputException("");
+                                    if (shopChoice <= 0 || shopChoice > game.getSizeOfDisplayedMenu(5)) throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.sellItemToShop(shopChoice));
                                     //Tries to sell the consumable item. Returns a fail/success String.
                                 } catch (NumberFormatException e) {
@@ -305,7 +302,6 @@ public class BattlehauzCLI {
                 System.err.println("That menu item doesn't exist! Pick a menu index!");
             }
         } while (shopChoice != 7);
-
     }
 
     private static void displayCredits(GameController game) {

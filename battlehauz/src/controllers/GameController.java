@@ -171,7 +171,7 @@ public class GameController {
         return stringToReturn.toString();
     }
 
-    public String displayerCurrentFightersStatus() {
+    public String displayCurrentFightersStatus() {
         return "Your " + gamePlayer.currentFighterStatus() + "\n" + displayEnemyStatus();
     }
 
@@ -234,8 +234,7 @@ public class GameController {
     //*************************************************[this is where the shop functions start]*************************************************
     public String enterShop() {
         shop.enterShop(gamePlayer);
-        //TODO: should generate a conversation between the shopkeeper and the player and return it
-        return "Welcome!";
+        return "Your character enters the shop. Here, they see the shopkeeper: Dave. Welcome!";
     }
 
     public String displayShopOptions() {
@@ -262,20 +261,18 @@ public class GameController {
     }
 
     public boolean boostHasNotBeenPurchasedCheck() {
-        if (!shop.isPotionBoostPurchased()) {
-            return true;
-        }
-        return false;
+        return !shop.isPotionBoostPurchased();
     }
 
-    public int getSizeOfDisplayedMenu(int i) {
+    public int getSizeOfDisplayedMenu(int i) { //TODO: look at this
         if (i <= 3) {
             return shop.getSizeOfShopInventory(i);
         } else if (i == 4) {
             return gamePlayer.getMoves().size();
-        } else {
+        } else if (i == 5){
             return gamePlayer.getOwnedItemNames().size();
         }
+        return 0;
     }
 
     public String displayPlayersMoveInventory() {
