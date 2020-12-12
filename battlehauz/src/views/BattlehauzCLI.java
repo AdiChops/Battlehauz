@@ -61,7 +61,7 @@ public class BattlehauzCLI {
             try {
                 switch (choice) {
                     case 'B' -> {
-                        game.getShop().setPotionBoostPurchased(false);
+                        game.getShop().setPotionBoostPurchased(false); //TODO: fix model access
                         game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
                         game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
                         game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
