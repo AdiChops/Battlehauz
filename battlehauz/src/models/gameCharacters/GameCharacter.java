@@ -15,14 +15,14 @@ public abstract class GameCharacter {
         this.name = name;
         this.maxHealth = 1000;
         this.currentHealth = 1000;
-        this.moves = new ArrayList<Move>();
+        this.moves = new ArrayList<>();
     }
 
     public GameCharacter(String name, int maxHealth){
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
-        this.moves = new ArrayList<Move>();
+        this.moves = new ArrayList<>();
     }
 
     public String getName() {
