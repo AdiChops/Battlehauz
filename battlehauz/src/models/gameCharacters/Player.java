@@ -165,8 +165,8 @@ public class Player extends GameCharacter implements Battleable {
         Move nextMove = this.chooseMove(moveIndex);
         nextMove.updateMove();
         boolean s = attackSuccessful();
-        this.increaseXP(nextMove.getXPBoost());
         if (s){
+            this.increaseXP(nextMove.getXPBoost());
             if (opponent instanceof Dragon && nextMove.isSellable()){
                 //Dragon enemies take 50% less damage from advanced moves
                 opponent.takeDamage((int)(0.5 * this.calculateDamage(nextMove)));
