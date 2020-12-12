@@ -82,4 +82,9 @@ public class WordsHelper {
     public static String generateMoveName(){
         return moveAdjectives[RND.nextInt(moveAdjectives.length)] + moveNames[RND.nextInt(moveNames.length)];
     }
+
+    public static String capitalize(String original){
+        if (Character.isUpperCase(original.charAt(0))) return original;
+        return Character.toUpperCase(original.charAt(0)) + original.substring(1);
+    }
 }

@@ -18,6 +18,15 @@ public class ItemGenerator {
         } else if (itemClassification.equals("ch")){
             return new ConsumableHealingItem(in.readLine(), Integer.parseInt(in.readLine()),
                     Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
+        }else if(itemClassification.equals("po")){
+            return new OffensivePotion(in.readLine(), Integer.parseInt(in.readLine()),
+                    Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
+        }else if (itemClassification.equals("pd")){
+            return new DefensivePotion(in.readLine(), Integer.parseInt(in.readLine()),
+                    Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
+        }else if (itemClassification.equals("ph")){
+            return new HealingPotion(in.readLine(), Integer.parseInt(in.readLine()),
+                    Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
         }else{
             return null;
         }

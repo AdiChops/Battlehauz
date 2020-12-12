@@ -1,30 +1,17 @@
 package models.items;
 
-public class Potion extends Item{
+public abstract class Potion extends Item{
 
-    private boolean isEquipped;
+    private double boost;
 
-    public Potion(String iName, int iBuyingPrice, int iSellingPrice){
+    public Potion(String iName, int iBuyingPrice, int iSellingPrice, double iBoost){
        super(iName, iBuyingPrice, iSellingPrice);
-       isEquipped = false;
+       boost = iBoost;
     }
 
-    @Override
     public double useItem() {
-        return 0; // TODO: fix useItem()
+        return boost; // TODO: fix useItem()
     }
 
-    @Override
-    public String getShopSummary() {
-        return null;
-    }
-
-    public void equip(){
-        isEquipped = true;
-    }
-
-    public void unEquip(){
-        isEquipped = false;
-    }
 
 }

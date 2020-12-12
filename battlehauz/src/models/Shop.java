@@ -4,6 +4,8 @@ import models.items.ConsumableItem;
 import models.items.Item;
 import models.utilities.ItemGenerator;
 import models.utilities.WordsHelper;
+
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,7 +49,7 @@ public class Shop {
         int generatedMoveCount = 0;
         while (generatedMoveCount < 5) {
             String moveName = WordsHelper.generateMoveName();
-            int damage = RND.nextInt() * ((500*userAtShop.calculateLevel() - 50*userAtShop.calculateLevel() + 1) + 50*userAtShop.calculateLevel());
+            int damage = RND.nextInt(((500*userAtShop.calculateLevel() - 50*userAtShop.calculateLevel() + 1) + 50*userAtShop.calculateLevel())) + 1;
             int maxTimes = (userAtShop.calculateLevel()*1000)/damage;
             int xpBoost = RND.nextInt(((userAtShop.calculateLevel()*1000)-damage)/10);
             int buyingPrice = (damage / 15) * 5 + (xpBoost/20); // 5 coins/50 damage + 1 coin per 20 XP Boosts
@@ -66,24 +68,27 @@ public class Shop {
         int moveIndex = 1;
         for(Move m: currentMovesInShop){
             buffer.append(moveIndex+": "+m.getShopSummary()+"\n");
+            moveIndex++;
         }
         return buffer.toString();
     }
 
     public String displaySummaryofConsumableItemsInShop(){
         StringBuffer buffer = new StringBuffer();
-        int moveIndex = 1;
+        int consumableItemIndex = 1;
         for(Item i: consumableItemsInShop){
-            buffer.append(moveIndex+": "+ i.getShopSummary()+"\n");
+            buffer.append(consumableItemIndex+": "+ i.getShopSummary()+"\n");
+            consumableItemIndex++;
         }
         return buffer.toString();
     }
 
     public String displaySummaryOfPotionBoostsInShop(){
         StringBuffer buffer = new StringBuffer();
-        int moveIndex = 1;
+        int potionIndex = 1;
         for(Item i: potionBoostsInShop){
-            buffer.append(moveIndex+": "+ i.getShopSummary()+"\n");
+            buffer.append(potionIndex+": "+ i.getShopSummary()+"\n");
+            potionIndex++;
         }
         return buffer.toString();
     }

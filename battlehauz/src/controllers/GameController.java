@@ -34,6 +34,7 @@ public class GameController {
     private Enemy currentEnemy;
     private Player gamePlayer;
     private Shop shop;
+    private boolean playersTurn = false;
 
     public GameController()throws IOException {
         shop = new Shop();
@@ -44,7 +45,8 @@ public class GameController {
     public Player getGamePlayer(){
         return this.gamePlayer;
     }
-    private boolean playersTurn = false;
+
+    public Shop getShop() { return shop; }
 
     public String start(String name) {
         this.gamePlayer = new Player(name);
@@ -270,6 +272,7 @@ public class GameController {
         int moveIndex = 1;
         for (Move m : moves) {
             buffer.append(moveIndex + ": " + m.getShopSummary() + "\n");
+            moveIndex++;
         }
         return buffer.toString();
     }
@@ -281,6 +284,7 @@ public class GameController {
         int itemIndex = 1;
         for(Item i: items){
             buffer.append(itemIndex + ": " + i.getShopSummary() + " | Quantity: "+itemsQuantity.get(i)+"\n");
+            itemIndex++;
         }
         return buffer.toString();
     }
@@ -309,7 +313,6 @@ public class GameController {
 
     public String credits(){
         return """
-                
                 BattleHauz made with <3 by:
                 Aaditya Chopra
                 Elias Hawa\s
