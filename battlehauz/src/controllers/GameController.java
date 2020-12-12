@@ -253,7 +253,8 @@ public class GameController {
 
     public String enemyLoss(){
         int coins = increasePlayerCoins();
-        return enemyTalk('L') + "\nYou got " + coins + " coins!";
+        int xp = increasePlayerXP();
+        return enemyTalk('L') + "\nYou got " + coins + " coins and " + xp + "XP!";
     }
 
     private int increasePlayerCoins(){
@@ -266,6 +267,18 @@ public class GameController {
         }
         gamePlayer.increaseCoins(coins);
         return coins;
+    }
+
+    private int increasePlayerXP(){
+        int xp;
+        switch (enemiesToFight.size()) {
+            case 0 -> xp= 300 * currentFloor;
+            case 1 -> xp= 200 * currentFloor;
+            case 2 -> xp= 150 * currentFloor;
+            default -> xp= 100 * currentFloor;
+        }
+        gamePlayer.increaseXP(xp);
+        return xp;
     }
 
     public String enemyTalk(char mode){
