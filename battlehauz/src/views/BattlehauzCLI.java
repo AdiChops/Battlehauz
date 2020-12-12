@@ -2,11 +2,9 @@ package views;
 
 import controllers.GameController;
 import controllers.InputException;
-import models.items.ConsumeableOffensiveItem;
+import models.items.ConsumableOffensiveItem;
 import models.utilities.WordsHelper;
 
-import javax.swing.*;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class BattlehauzCLI {
@@ -57,9 +55,9 @@ public class BattlehauzCLI {
             try {
                 switch (choice) {
                     case 'B' -> {
-                        game.getGamePlayer().addItem(new ConsumeableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
-                        game.getGamePlayer().addItem(new ConsumeableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
-                        game.getGamePlayer().addItem(new ConsumeableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
+                        game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
+                        game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
+                        game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
                         WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
                         System.out.println(game.displayRules());
                         //Game starts and continues while player is alive

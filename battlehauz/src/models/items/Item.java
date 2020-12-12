@@ -27,4 +27,6 @@ public abstract class Item {
     }
 
     public abstract double useItem();
+
+    public abstract String getShopSummary();
 }

@@ -39,7 +39,7 @@ A Good Ol' Sandwich
 90
 0.25
 ch
-Potion of Eldermore
+Boost Juicst
 750
 300
 0.50

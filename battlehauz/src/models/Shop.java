@@ -1,5 +1,5 @@
 package models;
-import models.items.ConsumeableItem;
+import models.items.ConsumableItem;
 import models.utilities.WordsHelper;
 //import models.items.EquipableItem;
 import models.items.Item;
@@ -15,21 +15,24 @@ import java.util.Random;
 public class Shop {
     private Player userAtShop;
     private final ArrayList <Item> consumableItemsInShop;
-    private ArrayList<Item> allItems;
+    private final ArrayList<Item> potionsInShop;
     private ArrayList<Move> currentMovesInShop;
+    private boolean potionPurchased = false;
     private static final Random RND = new Random();
 
     public Shop() throws IOException{
-        consumableItemsInShop = loadItems();
+        potionsInShop = new ArrayList<>();
+        consumableItemsInShop = new ArrayList<>();
+        loadItems();
     }
 
-    private static ArrayList<Item> loadItems() throws IOException {
-        ArrayList <Item> items = new ArrayList<>();
+    private void loadItems() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("items.txt"));
         while (br.ready()) {
-            items.add(ItemGenerator.generateItems(br));
+            Item curItem = ItemGenerator.generateItems(br);
+            if (curItem instanceof ConsumableItem) consumableItemsInShop.add(curItem);
+            else potionsInShop.add(curItem);
         }
-        return items;
     }
 
     //everytime the user enters the shop, generates 5 moves that will stay in the shop for the session.
@@ -77,38 +80,37 @@ public class Shop {
         StringBuffer buffer = new StringBuffer();
         int moveIndex = 1;
         for(Item i: consumableItemsInShop){
-            //buffer.append(moveIndex+": "+(ConsumeableItem)i.shopSummary()+"\n");
+            buffer.append(moveIndex+": "+ i.getShopSummary()+"\n");
         }
         return buffer.toString();
     }
-
 
     //checks if user has enough coins
     //tries to add the move (duplicates, too many moves)
     //if move is successfully added, subtracts coins for the user and returns true
     //else, returns false
-    public boolean purchaseMoveAtIndex(int index){
-        if (currentMovesInShop[index].getBuyingPrice() < userAtShop.getCoins()){
-            if (userAtShop.addMove(currentMovesInShop[index])) {
-                userAtShop.setCoins(userAtShop.getCoins() - currentMovesInShop[index].getBuyingPrice());
-                return true;
+    public String purchaseMoveAtIndex(int index){
+        if (currentMovesInShop.get(index).getBuyingPrice() < userAtShop.getCoins()){
+            if (userAtShop.addMove(currentMovesInShop.get(index))) {
+                userAtShop.setCoins(userAtShop.getCoins() - currentMovesInShop.get(index).getBuyingPrice());
+                return "You purchased " + currentMovesInShop.get(index).getName() + " for " + currentMovesInShop.get(index).getBuyingPrice();
+            }else{
+                return "You do not have enough space to add another move \n" +
+                        "Sell one of your existing moves to buy another";
             }
         }
-        return false;
+        return "Insufficient funds";
     }
 
     //depends on how items will be displayed and rules for items
     //will discuss in a bit during meeting
-    public boolean purchaseItemAtIndex(int index){
-        if(items.get(index).getBuyingPrice() < userAtShop.getCoins()){
-            userAtShop.addItem(items.get(index));
-            userAtShop.setCoins(userAtShop.getCoins() - items.get(index).getBuyingPrice());
-            if (items.get(index) instanceof EquipableItem){
-                items.remove(index);
-            }
-            return true;
+    public String purchaseConsumableItemAtIndex(int index){
+        if(consumableItemsInShop.get(index).getBuyingPrice() < userAtShop.getCoins()){
+            userAtShop.addItem(consumableItemsInShop.get(index));
+            userAtShop.setCoins(userAtShop.getCoins() - consumableItemsInShop.get(index).getBuyingPrice());
+            return "You purchase " + consumableItemsInShop.get(index).getName() + " for " + consumableItemsInShop.get(index).getName();
         }
-        return false;
+        return "Insufficient funds";
     }
 
     //should display all of the user's moves in the controller first through print statements

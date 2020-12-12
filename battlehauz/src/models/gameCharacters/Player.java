@@ -6,7 +6,6 @@ import models.Move;
 import models.gameCharacters.enemy.Dragon;
 import models.utilities.Turn;
 
-import javax.swing.*;
 import java.util.*;
 
 public class Player extends GameCharacter implements Battleable {
@@ -26,14 +25,6 @@ public class Player extends GameCharacter implements Battleable {
         this.addMove(new Move("Taunt", 150));
         this.addMove(new Move("Sucker Punch", 200));
         this.addMove(new Move("Drop Kick", 250));
-    }
-
-    public Player(String name, int maxHealth) {
-        super(name, maxHealth);
-        items = new HashMap<>();
-        ownedItemNames = new ArrayList<>();
-        this.XP = 1000;
-        this.coins = 0;
     }
 
     ////////////GETTER AND SETTER METHODS////////////////
@@ -93,17 +84,6 @@ public class Player extends GameCharacter implements Battleable {
     public int calculateLevel() { return XP/1000;}
 
     public boolean removeItem(Item itemToRemove){
-
-//        for (Item i: items.keySet()) {
-//            if (i.getName().equals(itemToRemove.getName())) {
-//                items.replace(i, items.get(i) - 1);
-//                if (items.get(i) == 0) {
-//                    items.remove(i);
-//                    ownedItemNames.remove(i);
-//                }
-//                break;
-//            }
-//        }
         items.replace(itemToRemove, items.get(itemToRemove) - 1);
         if (items.get(itemToRemove) == 0) {
             items.remove(itemToRemove);
@@ -154,12 +134,13 @@ public class Player extends GameCharacter implements Battleable {
      */
     public Turn useItem(int itemIndex){
         Item itemToUse = ownedItemNames.get(itemIndex - 1);
-        if (itemToUse instanceof ConsumeableOffensiveItem){
+        if (itemToUse instanceof ConsumableOffensiveItem){
             consumeableBoost[0] = itemToUse.useItem();
-        }else if (itemToUse instanceof ConsumeableDefensiveItem){
+        }else if (itemToUse instanceof ConsumableDefensiveItem){
             consumeableBoost[1] = itemToUse.useItem();
-        }else if (itemToUse instanceof ConsumeableHealingItem){
-            for (int healPoints = 0; healPoints < itemToUse.useItem(); healPoints++){
+        }else if (itemToUse instanceof ConsumableHealingItem){
+            int totalHealing = (int)itemToUse.useItem();
+            for (int healPoints = 0; healPoints < totalHealing; healPoints++){
                 currentHealth += 1;
                 if (currentHealth == maxHealth) break;
             }
