@@ -146,10 +146,6 @@ public class Player extends GameCharacter implements Battleable {
             }
         }
         removeItem(itemToUse);
-//        if (items.get(itemToUse) <= 0){
-//            JOptionPane.showMessageDialog(null, items);
-//            removeItem(itemToUse);
-//        }
         return new Turn(itemToUse, true);
     }
 
@@ -162,30 +158,24 @@ public class Player extends GameCharacter implements Battleable {
      * damageDealt = (baseDamage + (baseDamage * consumable attack damage boost))
      * @param moveIndex Index of move selected show in view
      * @param opponent GameCharacter class of oponent
-     * @return
+     * @return Turn summary
      */
     @Override
-    public Turn performTurn(int moveIndex, GameCharacter opponent) { // passing in opponent of type GameCharacter, as same method could be used for enemy
-        try {
-            Move nextMove = this.chooseMove(moveIndex);
-            nextMove.updateMove();
-            boolean s = attackSuccessful();
-            this.increaseXP(nextMove.getXPBoost());
-            if (s){
-                if (opponent instanceof Dragon && nextMove.isSellable()){
-                    //Dragon enemies take 50% less damage from advanced moves
-                    opponent.takeDamage((int)(0.5 * this.calculateDamage(nextMove)));
-                }else{
-                    opponent.takeDamage(this.calculateDamage(nextMove));
-                }
+    public Turn performTurn(int moveIndex, GameCharacter opponent) throws ArrayIndexOutOfBoundsException{ // passing in opponent of type GameCharacter, as same method could be used for enemy
+        Move nextMove = this.chooseMove(moveIndex);
+        nextMove.updateMove();
+        boolean s = attackSuccessful();
+        this.increaseXP(nextMove.getXPBoost());
+        if (s){
+            if (opponent instanceof Dragon && nextMove.isSellable()){
+                //Dragon enemies take 50% less damage from advanced moves
+                opponent.takeDamage((int)(0.5 * this.calculateDamage(nextMove)));
+            }else{
+                opponent.takeDamage(this.calculateDamage(nextMove));
             }
-            resetBoosts();
-            return new Turn(nextMove, s);
         }
-        catch(ArrayIndexOutOfBoundsException e){
-            System.err.println("That move selection was invalid. Please select a valid move or item.");
-            return null;
-        }
+        resetBoosts();
+        return new Turn(nextMove, s);
     }
 
     public void resetBoosts(){
@@ -212,6 +202,7 @@ public class Player extends GameCharacter implements Battleable {
 
     public String shortSummary(){
         return "\n" + this.getName() + "\n" + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"+
+                this.progressBar()+ "\n"+
                 "Your available moves are: \n" +
                 this.availableMoves();
     }

@@ -89,6 +89,28 @@ public abstract class GameCharacter {
         }
     }
 
+    protected String progressBar(){
+        double percentage = ((double)currentHealth/(double)maxHealth)*100;
+        StringBuilder barBuilder = new StringBuilder("[");
+        for(int i=0; i <20; i++){
+            if(percentage == 0)
+                barBuilder.append("  ");
+            else{
+                if(i <= percentage/5)
+                    barBuilder.append("==");
+                else
+                    barBuilder.append("..");
+            }
+        }
+        barBuilder.append("]");
+        return barBuilder.toString();
+    }
+
+    public String currentFighterStatus(){
+        return "current health: " + getCurrentHealth() + "/" + getMaxHealth() +"\n" +
+                progressBar();
+    }
+
     public String speak(char mode){
         return "";
     }

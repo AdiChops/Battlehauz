@@ -74,7 +74,7 @@ public class GameController {
             if(i%3 == 0){
                 nextEnemy = new Dragon(WordsHelper.generateEnemyName(),currentFloor);
             }// Dragon case
-            else if(i%3 == 1){
+            else if(i%3 == 2){
                 nextEnemy = new Calcifer(WordsHelper.generateEnemyName(), currentFloor);
             }//Calcifer case
             else{
@@ -231,12 +231,11 @@ public class GameController {
     }
 
     public String displayerCurrentFightersStatus(){
-        return "Your current health: " + gamePlayer.getCurrentHealth() + "/" + gamePlayer.getMaxHealth() +"\n" +
-                currentEnemy.getName() + "'s health: " + currentEnemy.getCurrentHealth() + "/" + currentEnemy.getMaxHealth();
+        return "Your " + gamePlayer.currentFighterStatus() + "\n" + displayEnemyStatus();
     }
 
     public String displayEnemyStatus() {
-        return currentEnemy.getName() + " is at " + currentEnemy.getCurrentHealth() + "/" + currentEnemy.getMaxHealth() + " health.";
+        return currentEnemy.getName() + "'s " + currentEnemy.currentFighterStatus() + "\n";
     }
 
     public String displayStats(){
