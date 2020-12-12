@@ -93,7 +93,9 @@ public class Move {
         return buyingPrice - depreciatedPrice;
     }
 
-
+    public String shopSummary(){
+        return getName() + " | Base Damage: " + getBaseDamage() + " | " + ((isSellable)?getRemainingUses():"Unlimited") + " Uses | XP Boost: " + getXPBoost() + " | Buying Price: "+getBuyingPrice()+" coins | Selling Price: "+calculateSellingPrice();
+    }
 
     @Override
     public String toString() { //will update later

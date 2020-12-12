@@ -14,7 +14,11 @@ public class WordsHelper {
             "Bill", "Jack", "Sally", "Donald", "Jeff", "Ahmed", "Dwight", "Toby", "Ed", "Rob", "Victor", "Justin",
             "Amy", "Pamela", "Bert", "Eric", "Bob", "David", "Haley", "Christina", "Chris", "George", "Ned",
             "Bart", "Lisa", "Claire", "Sophia", "Gloria", "Patrick", "Kevin", "Kaley", "Carl", "Victoria", "William"};
+    private static final String [] moveAdjectives = new String[]{"Blinding", "Gut", "Core", "Soul", "Full", "Top", "Rhythmic", "Awful", "Schemed", "Bottom"};
+    private static final String [] moveNames = new String[]{"Punch", "Kick", "Taunt", "Roll", "Chop", "Snap", "Cut", "Scald", "Slap", "Burn", "Roast", "Toast", "Wring", "Hit"};
     private static final Random RND = new Random();
+
+
     public static String generateQuote(char mode){
         switch(mode){
             case 'B':{ // A quote when the enemy appears and the battle begins
@@ -58,5 +62,10 @@ public class WordsHelper {
 
         }
         System.out.println("");
+    }
+
+    public static String generateMoveName(){
+        String moveName = moveAdjectives[RND.nextInt(moveAdjectives.length)] + moveNames[RND.nextInt(moveNames.length)];
+        return moveName;
     }
 }
