@@ -298,7 +298,7 @@ public class GameController {
     }
 
     public String sellMoveToShop(int index) {
-        return shop.buyBackItem(index-1);
+        return shop.buyBackMove(index-1);
     }
 
     public String sellItemToShop(int index){

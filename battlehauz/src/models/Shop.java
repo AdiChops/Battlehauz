@@ -89,10 +89,12 @@ public class Shop {
     }
 
     public String purchaseMoveAtIndex(int index){
-        if (currentMovesInShop.get(index).getBuyingPrice() <= userAtShop.getCoins()){
-            if (userAtShop.addMove(currentMovesInShop.get(index))) {
-                userAtShop.setCoins(userAtShop.getCoins() - currentMovesInShop.get(index).getBuyingPrice());
-                return "You purchased " + currentMovesInShop.get(index).getName() + " for " + currentMovesInShop.get(index).getBuyingPrice()+".";
+        Move moveToPurchase = currentMovesInShop.get(index);
+        if (moveToPurchase.getBuyingPrice() <= userAtShop.getCoins()){
+            if (userAtShop.addMove(moveToPurchase)) {
+                currentMovesInShop.remove(moveToPurchase);
+                userAtShop.setCoins(userAtShop.getCoins() - moveToPurchase.getBuyingPrice());
+                return "You purchased " + moveToPurchase.getName() + " for " + moveToPurchase.getBuyingPrice()+".";
             }else{
                 return "You do not have enough space to add another move. \n" +
                         "Sell one of your existing moves to buy another.";
