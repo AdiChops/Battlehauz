@@ -15,6 +15,8 @@ public class Player extends GameCharacter implements Battleable {
     private ArrayList<Item> ownedItemNames;
     private double[] consumeableBoost = {0,0};
     private double[] permanentBoost = {0,0,0};
+    private boolean levelUpDetected = false;
+    int initialLevel = 0;
 
     public Player(String name) {
         super(name);
@@ -55,6 +57,14 @@ public class Player extends GameCharacter implements Battleable {
 
     public ArrayList<Item> getOwnedItemNames() { return ownedItemNames; }
 
+    public boolean levelUpHasBeenDetected(){
+        if (levelUpDetected){
+            levelUpDetected = false;
+            return true;
+        }
+        return false;
+    }
+
     /////////////////////////////////////////////////////
 
     @Override
@@ -79,9 +89,11 @@ public class Player extends GameCharacter implements Battleable {
         if (this.currentHealth < 0) this.currentHealth = 0;
     }
 
-    public int calculateDamage(Move move){ return (move.getBaseDamage() + (int)(move.getBaseDamage() * consumeableBoost[0]));} // other factors will come in }
+    public int calculateDamage(Move move){ return (move.getBaseDamage() + (int)(move.getBaseDamage() * (consumeableBoost[0] + permanentBoost[1])));} // other factors will come in }
 
     public int calculateLevel() { return XP/1000;}
+
+    public int calculateMaxHealth(){ return maxHealth * calculateLevel(); }
 
     public boolean removeItem(Item itemToRemove){
         items.replace(itemToRemove, items.get(itemToRemove) - 1);
@@ -165,8 +177,10 @@ public class Player extends GameCharacter implements Battleable {
         Move nextMove = this.chooseMove(moveIndex);
         nextMove.updateMove();
         boolean s = attackSuccessful();
+        initialLevel= calculateLevel();
         if (s){
             this.increaseXP(nextMove.getXPBoost());
+            detectLevelUp();
             if (opponent instanceof Dragon && nextMove.isSellable()){
                 //Dragon enemies take 50% less damage from advanced moves
                 opponent.takeDamage((int)(0.5 * this.calculateDamage(nextMove)));
@@ -176,6 +190,45 @@ public class Player extends GameCharacter implements Battleable {
         }
         resetBoosts();
         return new Turn(nextMove, s);
+    }
+
+    public void detectLevelUp(){
+        if (initialLevel < calculateLevel()){
+            levelUpDetected = true;
+        }
+    }
+
+    public void levelUpPlayer() {
+        setMaxHealth(calculateMaxHealth());
+        getMoves().get(0).setBaseDamage(150 * calculateLevel());
+        getMoves().get(1).setBaseDamage(200 * calculateLevel());
+        getMoves().get(2).setBaseDamage(250 * calculateLevel());
+    }
+
+    public String displayLevelUp() {
+        if (initialLevel < calculateLevel()) {
+            levelUpPlayer();
+            return "You leveled up!\n" +
+                    "Level " + initialLevel + " -->" + "Level " + calculateLevel() + "\n" +
+                    "Move upgrade! " + getMoves().get(0).getName() + " : " + (getMoves().get(0).getBaseDamage() - (150 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(0).getBaseDamage() + "\n" +
+                    "Move upgrade! " + getMoves().get(1).getName() + " : " + (getMoves().get(1).getBaseDamage() - (200 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(1).getBaseDamage() + "\n" +
+                    "Move upgrade! " + getMoves().get(2).getName() + " : " + (getMoves().get(2).getBaseDamage() - (250 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(2).getBaseDamage();
+
+        }
+        return "";
+    }
+
+    public String displayLevelUp(int initialLevel) {
+        if (initialLevel < calculateLevel()) {
+            levelUpPlayer();
+            return "You leveled up!\n" +
+                    "Level " + initialLevel + " -->" + "Level " + calculateLevel() + "\n" +
+                    "Move upgrade! " + getMoves().get(0).getName() + " : " + (getMoves().get(0).getBaseDamage() - (150 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(0).getBaseDamage() + "\n" +
+                    "Move upgrade! " + getMoves().get(1).getName() + " : " + (getMoves().get(1).getBaseDamage() - (200 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(1).getBaseDamage() + "\n" +
+                    "Move upgrade! " + getMoves().get(2).getName() + " : " + (getMoves().get(2).getBaseDamage() - (250 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(2).getBaseDamage();
+
+        }
+        return "";
     }
 
     public void resetBoosts(){

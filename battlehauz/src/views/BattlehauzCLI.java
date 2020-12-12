@@ -99,6 +99,7 @@ public class BattlehauzCLI {
                                                         if (moveChoice < 0 || moveChoice > game.getGamePlayer().getMoves().size())
                                                             throw new InputException("That move doesn't exist! Pick a valid move index!");
                                                         System.out.println(game.doPlayerTurn(moveChoice));
+                                                        if (game.getGamePlayer().levelUpHasBeenDetected()) WordsHelper.rollingTextPrint(game.getGamePlayer().displayLevelUp());
                                                         System.out.println(game.displayEnemyStatus());
                                                     } catch (NumberFormatException | IndexOutOfBoundsException e) {
                                                         System.err.println("Oops! Please enter a valid move index.");
@@ -135,6 +136,7 @@ public class BattlehauzCLI {
                                         System.out.println();
                                     } else {
                                         WordsHelper.rollingTextPrint(game.enemyLoss());
+                                        WordsHelper.rollingTextPrint(game.displayPlayerRewards());
                                     }
                                 }
                             } // game.hasMoreEnemies, completing floor

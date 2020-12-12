@@ -36,102 +36,106 @@ public class GameController {
     private Shop shop;
     private boolean playersTurn = false;
 
-    public GameController()throws IOException {
+    public GameController() throws IOException {
         shop = new Shop();
         enemiesToFight = new LinkedList<Enemy>();
         currentFloor = 1;
     }
 
-    public Player getGamePlayer(){
+    public Player getGamePlayer() {
         return this.gamePlayer;
     }
 
-    public Shop getShop() { return shop; }
+    public Shop getShop() {
+        return shop;
+    }
 
     public String start(String name) {
         this.gamePlayer = new Player(name);
         return "Welcome to the Battlehauz, " + name + "!";
     }
 
-    public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException{
+    public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException {
         moveIndex--;
         Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
         playerTurnEnd();
         return "You " + currentTurn.toStringMove();
     }
 
-    public String playerUseItem(int itemIndex){
+    public String playerUseItem(int itemIndex) {
         Turn currentTurn = gamePlayer.useItem(itemIndex);
         playerTurnEnd();
         return "You " + currentTurn.toStringItem();
     }
 
-    public String doEnemyTurn(){
+    public String doEnemyTurn() {
         Turn currentTurn = currentEnemy.performTurn(currentEnemy.generateMoveIndex(), gamePlayer);
         playerTurnStart();
         return currentEnemy.getName() + " " + currentTurn.toStringMove();
     }
 
-    private int numberOfEnemies(){
-        return currentFloor+2;
+    private int numberOfEnemies() {
+        return currentFloor + 2;
     }
 
-    private void generateEnemyQueue(){
+    private void generateEnemyQueue() {
         enemiesToFight.clear();
         int numEnemies = numberOfEnemies();
         Enemy nextEnemy;
-        for(int i = 1; i <= numEnemies; i++){
-            if(i%3 == 0){
-                nextEnemy = new Dragon(WordsHelper.generateEnemyName(),currentFloor);
+        for (int i = 1; i <= numEnemies; i++) {
+            if (i % 3 == 0) {
+                nextEnemy = new Dragon(WordsHelper.generateEnemyName(), currentFloor);
             }// Dragon case
-            else if(i%3 == 2){
+            else if (i % 3 == 2) {
                 nextEnemy = new Calcifer(WordsHelper.generateEnemyName(), currentFloor);
             }//Calcifer case
-            else{
+            else {
                 nextEnemy = new Ogre(WordsHelper.generateEnemyName(), currentFloor);
             }// Ogre case
             enemiesToFight.add(nextEnemy);
         }
     }
 
-    public String startBattle(){
+    public String startBattle() {
         currentEnemy = enemiesToFight.remove();
         playerTurnStart();
         return "\nYou have encountered the " + currentEnemy.toString() + "!";
     }
 
-    public void playerTurnStart(){
+    public void playerTurnStart() {
         playersTurn = true;
     }
 
-    public void playerTurnEnd(){
+    public void playerTurnEnd() {
         playersTurn = false;
     }
 
-    public int getCurrentFloor(){
+    public int getCurrentFloor() {
         return currentFloor;
     }
 
-    public void enterBattleFloor(){
+    public void enterBattleFloor() {
         generateEnemyQueue();
     }
 
-    public boolean playerIsAlive(){
+    public boolean playerIsAlive() {
         return gamePlayer.isAlive();
     }
 
-    public boolean isPlayersTurn() { return playersTurn; }
+    public boolean isPlayersTurn() {
+        return playersTurn;
+    }
 
     public boolean currentEnemyIsAlive() {
         return currentEnemy.isAlive();
     }
 
-    public boolean hasMoreEnemies(){
+    public boolean hasMoreEnemies() {
         return !enemiesToFight.isEmpty();
     }
 
 
-    public String displayRules(){
+    public String displayRules() {
         return """
 
                 The rules of the Battlehauz are simple. You fight an increasing number of enemies at each floor (one-by-one).
@@ -145,26 +149,28 @@ public class GameController {
         return gamePlayer.shortSummary();
     }
 
-    public String displayPlayerMoves(){ return gamePlayer.availableMoves(); }
-
-    public String displayPlayerOptions(){
-        return """
-                  1. Attack
-                  2. Use Item
-                  """;
+    public String displayPlayerMoves() {
+        return gamePlayer.availableMoves();
     }
 
-    public String displayPlayerInventory(){
+    public String displayPlayerOptions() {
+        return """
+                1. Attack
+                2. Use Item
+                """;
+    }
+
+    public String displayPlayerInventory() {
         if (gamePlayer.getOwnedItemNames().size() == 0) return "You have no items you can use!";
         int counter = 1;
         StringBuilder stringToReturn = new StringBuilder("Items in inventory: \n");
-        for (Item i: gamePlayer.getOwnedItemNames()){
+        for (Item i : gamePlayer.getOwnedItemNames()) {
             stringToReturn.append(counter).append(". ").append(i.getName()).append(": ").append(gamePlayer.getItems().get(i)).append("\n");
         }
         return stringToReturn.toString();
     }
 
-    public String displayerCurrentFightersStatus(){
+    public String displayerCurrentFightersStatus() {
         return "Your " + gamePlayer.currentFighterStatus() + "\n" + displayEnemyStatus();
     }
 
@@ -172,67 +178,73 @@ public class GameController {
         return currentEnemy.getName() + "'s " + currentEnemy.currentFighterStatus() + "\n";
     }
 
-    public String displayStats(){
+    public String displayStats() {
         return gamePlayer.toString();
     }
 
-    public void restorePlayerHealth(){
+    public void restorePlayerHealth() {
         gamePlayer.fullRestore();
     }
 
-    public void nextFloor(){
+    public void nextFloor() {
         currentFloor++;
     }
 
-    public String enemyLoss(){
-        int coins = increasePlayerCoins();
-        int xp = increasePlayerXP();
-        return enemyTalk('L') + "\nYou got " + coins + " coins and " + xp + "XP!";
+    public String enemyLoss() {
+        return enemyTalk('L') + "\n";
     }
 
-    private int increasePlayerCoins(){
+    public String displayPlayerRewards() {
+        int coins = increasePlayerCoins();
+        int initialLevel = gamePlayer.calculateLevel();
+        int xp = increasePlayerXP();
+        return "You got " + coins + " coins and " + xp + "XP!\n" +
+                gamePlayer.displayLevelUp(initialLevel); //if the player levels up, additional things will be displayed
+    }
+
+    private int increasePlayerCoins() {
         int coins;
         switch (enemiesToFight.size()) {
-            case 0 -> coins= 25 * currentFloor;
-            case 1 -> coins= 20 * currentFloor;
-            case 2 -> coins= 15 * currentFloor;
-            default -> coins= 10 * currentFloor;
+            case 0 -> coins = 25 * currentFloor;
+            case 1 -> coins = 20 * currentFloor;
+            case 2 -> coins = 15 * currentFloor;
+            default -> coins = 10 * currentFloor;
         }
         gamePlayer.increaseCoins(coins);
         return coins;
     }
 
-    private int increasePlayerXP(){
+    private int increasePlayerXP() {
         int xp;
         switch (enemiesToFight.size()) {
-            case 0 -> xp= 300 * currentFloor;
-            case 1 -> xp= 200 * currentFloor;
-            case 2 -> xp= 150 * currentFloor;
-            default -> xp= 100 * currentFloor;
+            case 0 -> xp = 300 * currentFloor;
+            case 1 -> xp = 200 * currentFloor;
+            case 2 -> xp = 150 * currentFloor;
+            default -> xp = 100 * currentFloor;
         }
         gamePlayer.increaseXP(xp);
         return xp;
     }
 
-    public String enemyTalk(char mode){
-        return currentEnemy.getName() + ": " + currentEnemy.speak(mode) +"\n";
+    public String enemyTalk(char mode) {
+        return currentEnemy.getName() + ": " + currentEnemy.speak(mode) + "\n";
     }
 
     //*************************************************[this is where the shop functions start]*************************************************
-    public String enterShop(){
+    public String enterShop() {
         shop.enterShop(gamePlayer);
         //TODO: should generate a conversation between the shopkeeper and the player and return it
-        return "";
+        return "Welcome!";
     }
 
-    public String displayShopOptions(){
-        return("""
-                  1. Buy a move
-                  2. Buy a consumable item
-                  3. Buy a potion boost
-                  4. Sell a move back to the shop.
-                  5. Sell a consumable item back to the shop.
-                  6. Return back to the main menu.""");
+    public String displayShopOptions() {
+        return ("""
+                1. Buy a move
+                2. Buy a consumable item
+                3. Buy a potion boost
+                4. Sell a move back to the shop.
+                5. Sell a consumable item back to the shop.
+                6. Return back to the main menu.""");
     }
 
     public String displayMovesInShop() {
@@ -247,21 +259,19 @@ public class GameController {
         return shop.displaySummaryOfPotionBoostsInShop();
     }
 
-    public boolean boostHasNotBeenPurchasedCheck(){
-        if(!shop.isPotionBoostPurchased()){
+    public boolean boostHasNotBeenPurchasedCheck() {
+        if (!shop.isPotionBoostPurchased()) {
             return true;
         }
         return false;
     }
 
-    public int getSizeOfDisplayedMenu(int i){
-        if(i<=3){
+    public int getSizeOfDisplayedMenu(int i) {
+        if (i <= 3) {
             return shop.getSizeOfShopInventory(i);
-        }
-        else if(i == 4){
+        } else if (i == 4) {
             return gamePlayer.getMoves().size();
-        }
-        else{
+        } else {
             return gamePlayer.getOwnedItemNames().size();
         }
     }
@@ -282,36 +292,36 @@ public class GameController {
         HashMap<Item, Integer> itemsQuantity = gamePlayer.getItems();
         StringBuffer buffer = new StringBuffer();
         int itemIndex = 1;
-        for(Item i: items){
-            buffer.append(itemIndex + ": " + i.getShopSummary() + " | Quantity: "+itemsQuantity.get(i)+"\n");
+        for (Item i : items) {
+            buffer.append(itemIndex + ": " + i.getShopSummary() + " | Quantity: " + itemsQuantity.get(i) + "\n");
             itemIndex++;
         }
         return buffer.toString();
     }
 
     public String buyMove(int index) {
-        return shop.purchaseMoveAtIndex(index-1);
+        return shop.purchaseMoveAtIndex(index - 1);
     }
 
     public String buyConsumableItem(int index) {
-        return shop.purchaseConsumableItemAtIndex(index-1);
+        return shop.purchaseConsumableItemAtIndex(index - 1);
     }
 
     public String buyPotionBoost(int index) {
-        return shop.purchasePotionBoostAtIndex(index-1);
+        return shop.purchasePotionBoostAtIndex(index - 1);
     }
 
     public String sellMoveToShop(int index) {
-        return shop.buyBackMove(index-1);
+        return shop.buyBackMove(index - 1);
     }
 
-    public String sellItemToShop(int index){
-        return shop.buyBackItem(index-1);
+    public String sellItemToShop(int index) {
+        return shop.buyBackItem(index - 1);
     }
 
     //*************************************************[this is where the shop functions end]*************************************************
 
-    public String credits(){
+    public String credits() {
         return """
                 BattleHauz made with <3 by:
                 Aaditya Chopra
