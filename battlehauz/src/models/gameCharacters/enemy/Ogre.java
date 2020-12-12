@@ -10,6 +10,7 @@ public class Ogre extends Enemy {
     Move move1 = new Move("Bonk", generateDamage());
     Move move2 = new Move("Belly Tackle", generateDamage());
     Move move3 = new Move("Smelly Armpit", generateDamage());
+    Queue<Integer> sequence = new LinkedList<>(Arrays.asList(0, 1, 2));
 
 
     public Ogre(String n, int level) {
@@ -26,7 +27,6 @@ public class Ogre extends Enemy {
      */
     public int generateMoveIndex() {
         //method overload, same move pattern instead of randomized
-        Queue<Integer> sequence = new LinkedList<>(Arrays.asList(1, 2, 3));
         //add the move name into this sequence array
         int index = sequence.remove();
         sequence.add(index);
