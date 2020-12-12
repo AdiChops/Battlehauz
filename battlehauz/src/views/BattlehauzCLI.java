@@ -130,7 +130,7 @@ public class BattlehauzCLI {
                                         System.out.println();
                                     }
                                     else{
-                                        WordsHelper.rollingTextPrint(game.enemyTalk('L'));
+                                        WordsHelper.rollingTextPrint(game.enemyLoss());
                                     }
                                 }
                             } // game.hasMoreEnemies, completing floor
