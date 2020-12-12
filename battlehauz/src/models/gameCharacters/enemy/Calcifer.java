@@ -8,9 +8,9 @@ public class Calcifer extends Enemy {
 
     public Calcifer(String name, int level) {
         super(name, 1200, level);
-        addMove(new Move("Fireball", generateDamage()));
-        addMove(new Move("Lava Floor", generateDamage()));
-        addMove(new Move("Core Rage", generateDamage()));
+        addMove(new Move("Fireball", generateDamage(), 0));
+        addMove(new Move("Lava Floor", generateDamage(), 0));
+        addMove(new Move("Core Rage", generateDamage(), 0));
 
     }
 
@@ -24,11 +24,7 @@ public class Calcifer extends Enemy {
         int upperbound = 100;
         Random rand = new Random();
         int prob = rand.nextInt(upperbound);
-        if (prob >= 10) {
-            return true;
-        } else {
-            return false;
-        }
+        return prob >= 10;
 
     }
 

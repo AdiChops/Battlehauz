@@ -22,9 +22,9 @@ public class Player extends GameCharacter implements Battleable {
         ownedItemNames = new ArrayList<>();
         this.XP = 1000;
         this.coins = 0;
-        this.addMove(new Move("Taunt", 150));
-        this.addMove(new Move("Sucker Punch", 200));
-        this.addMove(new Move("Drop Kick", 250));
+        this.addMove(new Move("Taunt", 150, 100));
+        this.addMove(new Move("Sucker Punch", 200, 50));
+        this.addMove(new Move("Drop Kick", 250, 0));
     }
 
     ////////////GETTER AND SETTER METHODS////////////////
