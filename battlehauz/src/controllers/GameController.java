@@ -67,6 +67,7 @@ public class GameController {
     }
 
     private void generateEnemyQueue(){
+        enemiesToFight.clear();
         int numEnemies = numberOfEnemies();
         Enemy nextEnemy;
         for(int i = 1; i <= numEnemies; i++){
