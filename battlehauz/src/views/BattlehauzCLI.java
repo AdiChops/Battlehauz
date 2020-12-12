@@ -156,7 +156,7 @@ public class BattlehauzCLI {
         WordsHelper.rollingTextPrint("Your character enters the shop. Here, they see the shopkeeper: Dave.");
         WordsHelper.rollingTextPrint(game.enterShop()); //TODO: function needs to be completed
         //TODO: when user decides to go back using 'Q', should loop back here
-        System.out.println(game.displayShopOptions() + "\n");
+        System.out.println(game.displayShopOptions() + "\n"); //displays the options to the user
         System.out.print("Choose an option > ");
         String shopChoiceS = INPUT.next();
         System.out.println();
@@ -164,9 +164,9 @@ public class BattlehauzCLI {
             int shopChoice = Integer.parseInt(shopChoiceS);
             if (shopChoice <= 0 || shopChoice > 6) throw new InputException("");
             switch (shopChoice) {
-                case 1 -> {
+                case 1 -> { //Buying a move
                     //TODO:Loop this until user quits
-                    System.out.println(game.displayMovesInShop());
+                    System.out.println(game.displayMovesInShop()); //displays the generated moves
                     System.out.println("Q: Return to shop menu");
                     System.out.println("Input a move number above to purchase. Write 'Q' to quit. >");
                     String choice = INPUT.next();
@@ -177,13 +177,14 @@ public class BattlehauzCLI {
                             shopChoice = Integer.parseInt(shopChoiceS);
                             if (shopChoice <= 0 || shopChoice > game.getSizeForIndexMatching(1)) throw new InputException("");
                             WordsHelper.rollingTextPrint(game.buyMove(shopChoice));
+                            //Tries to buys the move. Returns a fail/success String.
                         } catch (NumberFormatException e) {
                             System.err.println("Oops! Please enter a valid number.");
                         } catch (InputException e) {
                             System.err.println("That move doesn't exist! Pick a valid menu index!"); } } }
-                case 2-> {
+                case 2-> { //Buying a consumable item
                     //TODO:Loop this until user quits
-                    System.out.println(game.displayConsumableItemsInShop());
+                    System.out.println(game.displayConsumableItemsInShop()); //displays the consumable items
                     System.out.println("Q: Return to shop menu");
                     System.out.println("Input an item number above to purchase. Write 'Q' to quit. >");
                     String choice = INPUT.next();
@@ -194,14 +195,17 @@ public class BattlehauzCLI {
                             shopChoice = Integer.parseInt(shopChoiceS);
                             if (shopChoice <= 0 || shopChoice > game.getSizeForIndexMatching(2)) throw new InputException("");
                             WordsHelper.rollingTextPrint(game.buyConsumableItem(shopChoice));
+                            //Tries to buys the item. Returns a fail/success String.
                         } catch (NumberFormatException e) {
                             System.err.println("Oops! Please enter a valid number.");
                         } catch (InputException e) {
                             System.err.println("That consumable item doesn't exist! Pick a valid menu index!"); } } }
-                case 3-> {
+                case 3-> { //buy a potion boost
                     //TODO:Loop this until user quits
                     if(game.boostHasNotBeenPurchasedCheck()){
-                        System.out.println(game.displayPotionBoostsInShop());
+                        //first checks if a potion has been purchased and NOT used in battle yet
+                        //if not, proceed
+                        System.out.println(game.displayPotionBoostsInShop()); //displays all of the potion boosts
                         System.out.println("Q: Return to shop menu");
                         System.out.println("Input a potion boost number above to purchase. Write 'Q' to quit. >");
                         String choice = INPUT.next();
@@ -212,6 +216,7 @@ public class BattlehauzCLI {
                                 shopChoice = Integer.parseInt(shopChoiceS);
                                 if (shopChoice <= 0 || shopChoice > game.getSizeForIndexMatching(3)) throw new InputException("");
                                 WordsHelper.rollingTextPrint(game.buyPotionBoost(shopChoice));
+                                //Tries to buys the potion boost. Returns a fail/success String.
                             } catch (NumberFormatException e) {
                                 System.err.println("Oops! Please enter a valid number.");
                             } catch (InputException e) {
@@ -220,11 +225,13 @@ public class BattlehauzCLI {
                     else{
                         System.out.println("You've already purchased a boost. It will be applied to your next run at the Battlehauz. \n+" +
                                 "Until you've used your boost, you can not purchase another one.");
+                        //is shown if the user has purchased a boost they have not used.
                         //TODO:return to main menu
                     } }
-                case 4-> {
+                case 4-> { //player is trying to sell a move to the shop
                     //TODO:Loop this until user quits
                     System.out.println(game.displayPlayersMoveInventory());
+                    //displays all of the moves the player has, including the base moves, with the appropriate stats.
                     System.out.println("Q: Return to shop menu");
                     System.out.println("Input a move number above to sell to the shop. Write 'Q' to quit. >");
                     String choice = INPUT.next();
@@ -235,13 +242,15 @@ public class BattlehauzCLI {
                             shopChoice = Integer.parseInt(shopChoiceS);
                             if (shopChoice <= 0 || shopChoice > game.getSizeForIndexMatching(4)) throw new InputException("");
                             WordsHelper.rollingTextPrint( game.sellMoveToShop(shopChoice));
+                            //Tries to sell the move. Returns a fail/success String.
                         } catch (NumberFormatException e) {
                             System.err.println("Oops! Please enter a valid number.");
                         } catch (InputException e) {
-                            System.err.println("That move item doesn't exist! Pick a valid menu index!"); } } }
-                case 5-> {
+                            System.err.println("That move doesn't exist! Pick a valid menu index!"); } } }
+                case 5-> { //player is tring to sell a consumable item
                     //TODO:Loop this until user quits
-                    System.out.println(game.displayPlayersMoveInventory());
+                    System.out.println(game.displayPlayersItemInventory());
+                    //displays the consumable items the player has, with the appropriate stats and quantity.
                     System.out.println("Q: Return to shop menu");
                     System.out.println("Input an item number above to sell to the shop. Write 'Q' to quit. >");
                     String choice = INPUT.next();
@@ -252,10 +261,11 @@ public class BattlehauzCLI {
                             shopChoice = Integer.parseInt(shopChoiceS);
                             if (shopChoice <= 0 || shopChoice > game.getSizeForIndexMatching(5)) throw new InputException("");
                             WordsHelper.rollingTextPrint(game.sellItemToShop(shopChoice));
+                            //Tries to sell the consumable item. Returns a fail/success String.
                         } catch (NumberFormatException e) {
                             System.err.println("Oops! Please enter a valid number.");
                         } catch (InputException e) {
-                            System.err.println("That move item doesn't exist! Pick a valid menu index!"); } } }
+                            System.err.println("That item doesn't exist! Pick a valid menu index!"); } } }
             }
         }catch (NumberFormatException e) {
             System.err.println("Oops! Please enter a valid number.");
