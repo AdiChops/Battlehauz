@@ -104,21 +104,21 @@ public class Shop {
     }
 
     public String purchaseConsumableItemAtIndex(int index){
-        Item itemToAdd = consumableItemsInShop.get(index);
-        if(itemToAdd.getBuyingPrice() <= userAtShop.getCoins()){
-            userAtShop.addItem(itemToAdd);
-            userAtShop.setCoins(userAtShop.getCoins() - itemToAdd.getBuyingPrice());
-            return "You purchased " + itemToAdd.getName() + " for " + itemToAdd.getBuyingPrice()+".";
+        Item itemToPurchase = consumableItemsInShop.get(index);
+        if(itemToPurchase.getBuyingPrice() <= userAtShop.getCoins()){
+            userAtShop.addItem(itemToPurchase);
+            userAtShop.setCoins(userAtShop.getCoins() - itemToPurchase.getBuyingPrice());
+            return "You purchased " + itemToPurchase.getName() + " for " + itemToPurchase.getBuyingPrice()+".";
         }
         return "Insufficient funds.";
     }
 
     public String purchasePotionBoostAtIndex(int index){
-        Item itemToAdd = potionBoostsInShop.get(index);
-        if(itemToAdd.getBuyingPrice() <= userAtShop.getCoins()){
-            userAtShop.addItem(itemToAdd);
-            userAtShop.setCoins(userAtShop.getCoins()-itemToAdd.getBuyingPrice());
-            return "You purchased " + itemToAdd.getName() + " for " + itemToAdd.getBuyingPrice()+".";
+        Item itemToPurchase = potionBoostsInShop.get(index);
+        if(itemToPurchase.getBuyingPrice() <= userAtShop.getCoins()){
+            userAtShop.addItem(itemToPurchase);
+            userAtShop.setCoins(userAtShop.getCoins()-itemToPurchase.getBuyingPrice());
+            return "You purchased " + itemToPurchase.getName() + " for " + itemToPurchase.getBuyingPrice()+".";
         }
         return "Insufficient funds.";
     }
