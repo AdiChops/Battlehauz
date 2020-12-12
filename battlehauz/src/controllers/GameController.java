@@ -252,7 +252,7 @@ public class GameController {
         return false;
     }
 
-    public int getSizeForIndexMatching(int i){
+    public int getSizeOfDisplayedMenu(int i){
         if(i<=3){
             return shop.getSizeOfShopInventory(i);
         }

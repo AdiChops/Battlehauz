@@ -163,6 +163,7 @@ public class BattlehauzCLI {
         try {
             int shopChoice = Integer.parseInt(shopChoiceS);
             if (shopChoice <= 0 || shopChoice > 6) throw new InputException("");
+            //there's six options on the shop menu, with the 6th being return to main menu
             switch (shopChoice) {
                 case 1 -> { //Buying a move
                     //TODO:Loop this until user quits
@@ -175,7 +176,7 @@ public class BattlehauzCLI {
                     } else {
                         try {
                             shopChoice = Integer.parseInt(shopChoiceS);
-                            if (shopChoice <= 0 || shopChoice > game.getSizeForIndexMatching(1)) throw new InputException("");
+                            if (shopChoice <= 0 || shopChoice > game.getSizeOfDisplayedMenu(1)) throw new InputException("");
                             WordsHelper.rollingTextPrint(game.buyMove(shopChoice));
                             //Tries to buys the move. Returns a fail/success String.
                         } catch (NumberFormatException e) {
@@ -193,7 +194,7 @@ public class BattlehauzCLI {
                     } else {
                         try {
                             shopChoice = Integer.parseInt(shopChoiceS);
-                            if (shopChoice <= 0 || shopChoice > game.getSizeForIndexMatching(2)) throw new InputException("");
+                            if (shopChoice <= 0 || shopChoice > game.getSizeOfDisplayedMenu(2)) throw new InputException("");
                             WordsHelper.rollingTextPrint(game.buyConsumableItem(shopChoice));
                             //Tries to buys the item. Returns a fail/success String.
                         } catch (NumberFormatException e) {
@@ -214,7 +215,7 @@ public class BattlehauzCLI {
                         } else {
                             try {
                                 shopChoice = Integer.parseInt(shopChoiceS);
-                                if (shopChoice <= 0 || shopChoice > game.getSizeForIndexMatching(3)) throw new InputException("");
+                                if (shopChoice <= 0 || shopChoice > game.getSizeOfDisplayedMenu(3)) throw new InputException("");
                                 WordsHelper.rollingTextPrint(game.buyPotionBoost(shopChoice));
                                 //Tries to buys the potion boost. Returns a fail/success String.
                             } catch (NumberFormatException e) {
@@ -240,7 +241,7 @@ public class BattlehauzCLI {
                     } else {
                         try {
                             shopChoice = Integer.parseInt(shopChoiceS);
-                            if (shopChoice <= 0 || shopChoice > game.getSizeForIndexMatching(4)) throw new InputException("");
+                            if (shopChoice <= 0 || shopChoice > game.getSizeOfDisplayedMenu(4)) throw new InputException("");
                             WordsHelper.rollingTextPrint( game.sellMoveToShop(shopChoice));
                             //Tries to sell the move. Returns a fail/success String.
                         } catch (NumberFormatException e) {
@@ -259,7 +260,7 @@ public class BattlehauzCLI {
                     } else {
                         try {
                             shopChoice = Integer.parseInt(shopChoiceS);
-                            if (shopChoice <= 0 || shopChoice > game.getSizeForIndexMatching(5)) throw new InputException("");
+                            if (shopChoice <= 0 || shopChoice > game.getSizeOfDisplayedMenu(5)) throw new InputException("");
                             WordsHelper.rollingTextPrint(game.sellItemToShop(shopChoice));
                             //Tries to sell the consumable item. Returns a fail/success String.
                         } catch (NumberFormatException e) {
