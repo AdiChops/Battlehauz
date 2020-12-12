@@ -13,7 +13,7 @@ public class Player extends GameCharacter implements Battleable {
     private int XP;
     private HashMap<Item, Integer> items;
     private ArrayList<Item> ownedItemNames;
-    private double[] consumeableBoost = {0,0};
+    private double[] consumableBoost = {0,0};
     private double[] permanentBoost = {0,0,0};
     private boolean levelUpDetected = false;
     int initialLevel = 0;
@@ -57,6 +57,9 @@ public class Player extends GameCharacter implements Battleable {
 
     public ArrayList<Item> getOwnedItemNames() { return ownedItemNames; }
 
+
+    /////////////////////////////////////////////////////
+
     public boolean levelUpHasBeenDetected(){
         if (levelUpDetected){
             levelUpDetected = false;
@@ -64,8 +67,6 @@ public class Player extends GameCharacter implements Battleable {
         }
         return false;
     }
-
-    /////////////////////////////////////////////////////
 
     @Override
     public boolean attackSuccessful() {
@@ -84,12 +85,12 @@ public class Player extends GameCharacter implements Battleable {
     @Override
     public void takeDamage(int damage) {
         // items would change this behaviour
-        this.currentHealth -= (damage - (damage * (consumeableBoost[1] + permanentBoost[1])));
+        this.currentHealth -= (damage - (damage * (consumableBoost[1] + permanentBoost[1])));
         this.currentHealth += (permanentBoost[2]);
         if (this.currentHealth < 0) this.currentHealth = 0;
     }
 
-    public int calculateDamage(Move move){ return (move.getBaseDamage() + (int)(move.getBaseDamage() * (consumeableBoost[0] + permanentBoost[1])));} // other factors will come in }
+    public int calculateDamage(Move move){ return (move.getBaseDamage() + (int)(move.getBaseDamage() * (consumableBoost[0] + permanentBoost[1])));} // other factors will come in }
 
     public int calculateLevel() { return XP/1000;}
 
@@ -145,9 +146,9 @@ public class Player extends GameCharacter implements Battleable {
     public Turn useItem(int itemIndex){
         Item itemToUse = ownedItemNames.get(itemIndex - 1);
         if (itemToUse instanceof ConsumableOffensiveItem){
-            consumeableBoost[0] = itemToUse.useItem();
+            consumableBoost[0] = itemToUse.useItem();
         }else if (itemToUse instanceof ConsumableDefensiveItem){
-            consumeableBoost[1] = itemToUse.useItem();
+            consumableBoost[1] = itemToUse.useItem();
         }else if (itemToUse instanceof ConsumableHealingItem){
             int totalHealing = (int)itemToUse.useItem();
             for (int healPoints = 0; healPoints < totalHealing; healPoints++){
@@ -186,7 +187,7 @@ public class Player extends GameCharacter implements Battleable {
                 opponent.takeDamage(this.calculateDamage(nextMove));
             }
         }
-        resetBoosts();
+        resetConsumableBoosts();
         return new Turn(nextMove, s);
     }
 
@@ -229,9 +230,15 @@ public class Player extends GameCharacter implements Battleable {
         return "";
     }
 
-    public void resetBoosts(){
-        consumeableBoost[0] = 0;
-        consumeableBoost[1] = 0;
+    public void resetConsumableBoosts(){
+        consumableBoost[0] = 0;
+        consumableBoost[1] = 0;
+    }
+
+    public void resetPermanentBoosts(){
+        permanentBoost[0] = 0;
+        permanentBoost[1] = 0;
+        permanentBoost[2] = 0;
     }
 
     public String availableMoves(){
@@ -259,7 +266,8 @@ public class Player extends GameCharacter implements Battleable {
     }
 
     public void fullRestore(){
+        resetConsumableBoosts();
+        resetPermanentBoosts();
         setCurrentHealth(maxHealth);
     }
-
 }
