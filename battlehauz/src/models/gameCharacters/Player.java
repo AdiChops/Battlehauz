@@ -102,8 +102,6 @@ public class Player extends GameCharacter implements Battleable {
             ownedItemNames.remove(itemToRemove);
         }
         return true;
-
-
     }
 
     public boolean removeMove(int moveIndex){

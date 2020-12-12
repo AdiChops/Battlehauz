@@ -151,10 +151,9 @@ public class Shop {
     public String buyBackItem(int index){
         ArrayList<Item> userItems = userAtShop.getOwnedItemNames();
         Item itemToBuy = userItems.get(index);
-        if(userAtShop.removeItem(itemToBuy)){
-            return "You sold 1 of the item "+itemToBuy.getName()+" for "+itemToBuy.getSellingPrice()+" coins.";
-        }
-        return "You sold "+itemToBuy.getName()+". However, because you have 0 in quantity left, you got no coins added.";
+        userAtShop.removeItem(itemToBuy);
+        userAtShop.increaseCoins(userAtShop.getOwnedItemNames().get(index).getSellingPrice());
+        return "You sold 1 of the item "+itemToBuy.getName()+" for "+itemToBuy.getSellingPrice()+" coins.";
     }
 
     public int getSizeOfShopInventory(int i){

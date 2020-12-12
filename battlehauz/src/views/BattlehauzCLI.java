@@ -5,6 +5,7 @@ import controllers.InputException;
 import models.items.ConsumableOffensiveItem;
 import models.utilities.WordsHelper;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -55,16 +56,17 @@ public class BattlehauzCLI {
         String name = INPUT.nextLine();
         name = WordsHelper.capitalize(name);
         System.out.println(game.start(name));
+        game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
+        game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
+        game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
+
         char choice;
         do {
             choice = proceed();
             try {
                 switch (choice) {
                     case 'B' -> {
-                        game.getShop().setPotionBoostPurchased(false); //TODO: fix model access
-                        game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
-                        game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
-                        game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
+                        game.getShop().setPotionBoostPurchased(false);
                         WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
                         System.out.println(game.displayRules());
                         //Game starts and continues while player is alive
@@ -280,9 +282,9 @@ public class BattlehauzCLI {
                             if (itemSellChoiceS.toLowerCase().equals("q")) {
                             } else {
                                 try {
-                                    shopChoice = Integer.parseInt(shopChoiceS);
-                                    if (shopChoice <= 0 || shopChoice > game.getSizeOfDisplayedMenu(5)) throw new InputException("");
-                                    WordsHelper.rollingTextPrint(game.sellItemToShop(shopChoice));
+                                    int itemSellChoice = Integer.parseInt(itemSellChoiceS);
+                                    if (itemSellChoice <= 0 || itemSellChoice > game.getSizeOfDisplayedMenu(5)) throw new InputException("");
+                                    WordsHelper.rollingTextPrint(game.sellItemToShop(itemSellChoice));
                                     //Tries to sell the consumable item. Returns a fail/success String.
                                 } catch (NumberFormatException e) {
                                     System.err.println("Oops! Please enter a valid number.");
