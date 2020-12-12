@@ -126,7 +126,7 @@ public class BattlehauzCLI {
                                     }
                                 }
                             } // game.hasMoreEnemies, completing floor
-                            game.nextFloor();
+                            if (game.playerIsAlive()) game.nextFloor();
                         }
                         game.restorePlayerHealth();
                     }

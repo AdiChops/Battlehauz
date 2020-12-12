@@ -10,8 +10,13 @@ public class Potion extends Item{
     }
 
     @Override
-    public int useItem() {
+    public double useItem() {
         return 0; // TODO: fix useItem()
+    }
+
+    @Override
+    public String getShopSummary() {
+        return null;
     }
 
     public void equip(){
