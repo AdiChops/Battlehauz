@@ -186,7 +186,7 @@ public class Player extends GameCharacter implements Battleable {
     public String availableMoves(){
         StringBuilder returnString = new StringBuilder();
         for(int i = 0; i < moves.size(); i++){
-            returnString.append((i+1) + ": " + moves.get(i).toString() + "\n");
+            returnString.append(i + 1).append(": ").append(moves.get(i).toString()).append("\n");
         }
         return returnString.toString();
     }

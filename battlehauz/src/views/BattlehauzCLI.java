@@ -10,29 +10,32 @@ import java.util.Scanner;
 public class BattlehauzCLI {
     private static final Scanner INPUT = new Scanner(System.in);
     public static void displayStartUp(){
-        System.out.println("Welcome to\n" +
-                " .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.   .----------------. .----------------. .----------------. .----------------. \n" +
-                "| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | | .--------------. | .--------------. | .--------------. | .--------------. |\n" +
-                "| |   ______     | | |      __      | | |  _________   | | |  _________   | | |   _____      | | |  _________   | | | |  ____  ____  | | |      __      | | | _____  _____ | | |   ________   | |\n" +
-                "| |  |_   _ \\    | | |     /  \\     | | | |  _   _  |  | | | |  _   _  |  | | |  |_   _|     | | | |_   ___  |  | | | | |_   ||   _| | | |     /  \\     | | ||_   _||_   _|| | |  |  __   _|  | |\n" +
-                "| |    | |_) |   | | |    / /\\ \\    | | | |_/ | | \\_|  | | | |_/ | | \\_|  | | |    | |       | | |   | |_  \\_|  | | | |   | |__| |   | | |    / /\\ \\    | | |  | |    | |  | | |  |_/  / /    | |\n" +
-                "| |    |  __'.   | | |   / ____ \\   | | |     | |      | | |     | |      | | |    | |   _   | | |   |  _|  _   | | | |   |  __  |   | | |   / ____ \\   | | |  | '    ' |  | | |     .'.' _   | |\n" +
-                "| |   _| |__) |  | | | _/ /    \\ \\_ | | |    _| |_     | | |    _| |_     | | |   _| |__/ |  | | |  _| |___/ |  | | | |  _| |  | |_  | | | _/ /    \\ \\_ | | |   \\ `--' /   | | |   _/ /__/ |  | |\n" +
-                "| |  |_______/   | | ||____|  |____|| | |   |_____|    | | |   |_____|    | | |  |________|  | | | |_________|  | | | | |____||____| | | ||____|  |____|| | |    `.__.'    | | |  |________|  | |\n" +
-                "| |              | | |              | | |              | | |              | | |              | | |              | | | |              | | |              | | |              | | |              | |\n" +
-                "| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | | '--------------' | '--------------' | '--------------' | '--------------' |\n" +
-                " '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'   '----------------' '----------------' '----------------' '----------------' ");
+        System.out.println("""
+                Welcome to
+                 .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.   .----------------. .----------------. .----------------. .----------------.\s
+                | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | | .--------------. | .--------------. | .--------------. | .--------------. |
+                | |   ______     | | |      __      | | |  _________   | | |  _________   | | |   _____      | | |  _________   | | | |  ____  ____  | | |      __      | | | _____  _____ | | |   ________   | |
+                | |  |_   _ \\    | | |     /  \\     | | | |  _   _  |  | | | |  _   _  |  | | |  |_   _|     | | | |_   ___  |  | | | | |_   ||   _| | | |     /  \\     | | ||_   _||_   _|| | |  |  __   _|  | |
+                | |    | |_) |   | | |    / /\\ \\    | | | |_/ | | \\_|  | | | |_/ | | \\_|  | | |    | |       | | |   | |_  \\_|  | | | |   | |__| |   | | |    / /\\ \\    | | |  | |    | |  | | |  |_/  / /    | |
+                | |    |  __'.   | | |   / ____ \\   | | |     | |      | | |     | |      | | |    | |   _   | | |   |  _|  _   | | | |   |  __  |   | | |   / ____ \\   | | |  | '    ' |  | | |     .'.' _   | |
+                | |   _| |__) |  | | | _/ /    \\ \\_ | | |    _| |_     | | |    _| |_     | | |   _| |__/ |  | | |  _| |___/ |  | | | |  _| |  | |_  | | | _/ /    \\ \\_ | | |   \\ `--' /   | | |   _/ /__/ |  | |
+                | |  |_______/   | | ||____|  |____|| | |   |_____|    | | |   |_____|    | | |  |________|  | | | |_________|  | | | | |____||____| | | ||____|  |____|| | |    `.__.'    | | |  |________|  | |
+                | |              | | |              | | |              | | |              | | |              | | |              | | | |              | | |              | | |              | | |              | |
+                | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | | '--------------' | '--------------' | '--------------' | '--------------' |
+                 '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'   '----------------' '----------------' '----------------' '----------------'\s""");
 
     }
     private static char proceed(){
         try {
             Scanner proceedScanner = new Scanner(System.in);
             System.out.println("\nHow would you like to proceed?");
-            System.out.println("B - Enter BattleHauz\n" +
-                    "S - Enter the shop\n" +
-                    "F - View Full Stats\n" +
-                    "A - About Game\n" +
-                    "Q - Quit game\n");
+            System.out.println("""
+                    B - Enter BattleHauz
+                    S - Enter the shop
+                    F - View Full Stats
+                    A - About Game
+                    Q - Quit game
+                    """);
             System.out.print("> ");
             String choiceS = proceedScanner.nextLine();
             return choiceS.toUpperCase().charAt(0);
@@ -49,7 +52,7 @@ public class BattlehauzCLI {
         System.out.print("What should we call you? ");
         String name = INPUT.nextLine();
         System.out.println(game.start(name));
-        char choice = ' ';
+        char choice;
         do{
             choice = proceed();
             try {
@@ -66,6 +69,8 @@ public class BattlehauzCLI {
                             WordsHelper.rollingTextPrint("\nYou have entered floor " + game.getCurrentFloor() + " of the Battlehauz.");
                             while (game.hasMoreEnemies() && game.playerIsAlive()) { //while the floor still has enemies
                                 WordsHelper.rollingTextPrint(game.startBattle()); //game.startBattle sets the currentEnemy as the first enemy in the list
+                                System.out.println();
+                                WordsHelper.rollingTextPrint(game.enemyTalk('B'));
                                 while (game.currentEnemyIsAlive() && game.playerIsAlive()) { //while the currentEnemy is still alive
                                     System.out.println(game.displayerCurrentFightersStatus() + "\n");
                                     do {
@@ -121,8 +126,11 @@ public class BattlehauzCLI {
                                         }
                                     } while (game.isPlayersTurn());
                                     if (game.currentEnemyIsAlive()) {
-                                        System.out.println(game.doEnemyTurn());
+                                        WordsHelper.rollingTextPrint(game.doEnemyTurn());
                                         System.out.println();
+                                    }
+                                    else{
+                                        WordsHelper.rollingTextPrint(game.enemyTalk('L'));
                                     }
                                 }
                             } // game.hasMoreEnemies, completing floor
@@ -133,18 +141,10 @@ public class BattlehauzCLI {
                     case 'S' -> {
                         // TODO: enter shop
                     }
-                    case 'F' -> {
-                        displayStats(game);
-                    }
-                    case 'A' -> {
-                        displayCredits(game);
-                    }
-                    case 'Q' -> {
-                        quit(game);
-                    }
-                    default -> {
-                        throw new InputException("Oops! Please enter a valid choice.");
-                    }
+                    case 'F' -> displayStats(game);
+                    case 'A' -> displayCredits(game);
+                    case 'Q' -> quit(game);
+                    default -> throw new InputException("Oops! Please enter a valid choice.");
                 }
             }
             catch (InputException e){

@@ -4,6 +4,7 @@ import interfaces.Battleable;
 import models.Move;
 import models.gameCharacters.GameCharacter;
 import models.utilities.Turn;
+import models.utilities.WordsHelper;
 
 import java.util.Random;
 
@@ -77,12 +78,22 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         }
     }
 
+    /***
+     *
+     * @param mode used to get appropriate quote from appropriate list
+     * @return random generated quote
+     */
+    @Override
+    public String speak(char mode){
+        return WordsHelper.generateQuote(mode);
+    }
+
 
     /***
      * steps to decide if opponent will take damage
      * @param moveIndex used to get move
      * @param opponent  used to direct damage onto opponent
-     * @return
+     * @return Turn summary class
      */
     @Override
     public Turn performTurn(int moveIndex, GameCharacter opponent) {

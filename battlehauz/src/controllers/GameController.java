@@ -27,7 +27,7 @@ import java.util.Queue;
 public class GameController {
 
     private int currentFloor = 1;
-    private Queue<Enemy> enemiesToFight = new LinkedList<Enemy>();
+    private final Queue<Enemy> enemiesToFight = new LinkedList<>();
     private Enemy currentEnemy;
     private Player gamePlayer;
     public void setGamePlayer(Player player){
@@ -40,7 +40,7 @@ public class GameController {
 
     public String start(String name) {
         this.gamePlayer = new Player(name);
-        return "Welcome to the Battlehauz " + name + "!";
+        return "Welcome to the Battlehauz, " + name + "!";
     }
 
     public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException{
@@ -203,10 +203,13 @@ public class GameController {
     }
 
     public String displayRules(){
-        return "\nThe rules of the Battlehauz are simple. You fight an increasing number of enemies at each floor (one-by-one).\n" +
-                "You and the enemy take turns choosing a move (you also have the option to choose an item to help your next move instead of a move).\n" +
-                "You keep fighting enemies and moving up floors until you run out of health\n" +
-                "(or a more dark way of saying it, the only way to leave the Battlehauz is DEATH). Have fun :)\n";
+        return """
+
+                The rules of the Battlehauz are simple. You fight an increasing number of enemies at each floor (one-by-one).
+                You and the enemy take turns choosing a move (you also have the option to choose an item to help your next move instead of a move).
+                You keep fighting enemies and moving up floors until you run out of health
+                (or a more dark way of saying it, the only way to leave the Battlehauz is DEATH). Have fun :)
+                """;
     }
 
     public String displayPlayerShortSummary() {
@@ -223,11 +226,11 @@ public class GameController {
     public String displayPlayerInventory(){
         if (gamePlayer.getOwnedItemNames().size() == 0) return "You have no items you can use!";
         int counter = 1;
-        String stringToReturn = "Items in inventory: \n";
+        StringBuilder stringToReturn = new StringBuilder("Items in inventory: \n");
         for (Item i: gamePlayer.getOwnedItemNames()){
-            stringToReturn += counter + ". " + i.getName() + ": " + gamePlayer.getItems().get(i) + "\n";
+            stringToReturn.append(counter).append(". ").append(i.getName()).append(": ").append(gamePlayer.getItems().get(i)).append("\n");
         }
-        return stringToReturn;
+        return stringToReturn.toString();
     }
 
     public String displayerCurrentFightersStatus(){
@@ -250,12 +253,18 @@ public class GameController {
         currentFloor++;
     }
 
+    public String enemyTalk(char mode){
+        return currentEnemy.getName() + ": " + currentEnemy.speak(mode) +"\n";
+    }
+
     public String credits(){
-        return "\nBattleHauz made with <3 by:\n" +
-                "Aaditya Chopra\n" +
-                "Elias Hawa \n" +
-                "Veronica Yung\n" +
-                "Zara Ali";
+        return """
+                
+                BattleHauz made with <3 by:
+                Aaditya Chopra
+                Elias Hawa\s
+                Veronica Yung
+                Zara Ali""";
     }
 }
 
