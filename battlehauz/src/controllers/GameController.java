@@ -42,6 +42,8 @@ public class GameController {
         currentFloor = 1;
     }
 
+    //**************************[Getter methods]*********************************************
+
     public Player getGamePlayer() {
         return this.gamePlayer;
     }
@@ -134,7 +136,6 @@ public class GameController {
     public boolean hasMoreEnemies() {
         return !enemiesToFight.isEmpty();
     }
-
 
     public String displayRules() {
         return """

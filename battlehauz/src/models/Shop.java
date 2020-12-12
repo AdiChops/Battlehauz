@@ -152,6 +152,7 @@ public class Shop {
         ArrayList<Item> userItems = userAtShop.getOwnedItemNames();
         Item itemToBuy = userItems.get(index);
         if(userAtShop.removeItem(itemToBuy)){
+
             return "You sold 1 of the item "+itemToBuy.getName()+" for "+itemToBuy.getSellingPrice()+" coins.";
         }
         return "You sold "+itemToBuy.getName()+". However, because you have 0 in quantity left, you got no coins added.";
