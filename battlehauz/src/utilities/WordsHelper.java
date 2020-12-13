@@ -68,6 +68,16 @@ public class WordsHelper {
     }
 
 
+    /***
+     * Method that displays text in a rolling fashion (i.e word by word)
+     * Splits text into an array then prints it word by word
+     * Different sleep delays occur if different characters are present
+     * ".", "!" or "?" Indicate end of sentence, 1s delay
+     * "," indicate pause, 0.5s delay
+     * ">" indicates dialogue between shopkeeper and player, requires player to press enter to continue
+     * Otherwise delay 0.25s
+     * @param text String to be displayed in rolling fashion
+     */
     public static void rollingTextPrint(String text) {
         text += "\n";
         String[] dialogue = text.split(" ");

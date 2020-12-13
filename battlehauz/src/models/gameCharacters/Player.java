@@ -199,6 +199,11 @@ public class Player extends GameCharacter implements Battleable {
         return new Turn(itemToUse, true);
     }
 
+    /***
+     * Applies potion effect to player depending on what type of potion they drank
+     * @param potion potion used by player
+     * @return String confirmation that the player drank a potion
+     */
     public String drinkPotion(Potion potion) {
         if (potion instanceof OffensivePotion) {
             potionBoost[0] = potion.useItem();
@@ -245,11 +250,19 @@ public class Player extends GameCharacter implements Battleable {
 
     //************[Resetting boosts & shop healing]*************
 
+    /***
+     * Resets all consumable item boosts back to 0
+     * Normally done when the player dies
+     */
     public void resetConsumableBoosts() {
         consumableBoost[0] = 0;
         consumableBoost[1] = 0;
     }
 
+    /***
+     * Resets all potion boosts back to 0
+     * Normally done when the player dies
+     */
     public void resetPermanentBoosts() {
         potionBoost[0] = 0;
         potionBoost[1] = 0;
@@ -272,6 +285,10 @@ public class Player extends GameCharacter implements Battleable {
         return returnString.toString();
     }
 
+    /***
+     * Build String representation of all items that the user has
+     * @return String representation of all items that the user has
+     */
     private String availableItems() {
         StringBuilder returnString = new StringBuilder();
         for (int i = 0; i < ownedItemNames.size(); i++) {
