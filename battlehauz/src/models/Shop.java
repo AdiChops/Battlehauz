@@ -145,8 +145,9 @@ public class Shop {
         if (moveToBuy.isSellable()) {
             userAtShop.removeMove(index);
             userAtShop.increaseCoins(userMoves.get(index).calculateSellingPrice());
+            return "You sold the move "+moveToBuy.getName()+" for "+moveToBuy.calculateSellingPrice()+" coins.";
         }
-        return "You sold the move "+moveToBuy.getName()+" for "+moveToBuy.calculateSellingPrice()+" coins.";
+        return "You're trying to sell a basic move. These can't be sold. Try selling a move you've purchased at the shop.";
     }
 
     public String buyBackItem(int index){

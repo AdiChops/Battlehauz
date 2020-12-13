@@ -290,7 +290,7 @@ public class GameController {
         return !shop.isPotionBoostPurchased();
     }
 
-    public boolean setPotionBoostUsed(boolean b){
+    public void setPotionBoostUsed(boolean b){
         shop.setPotionBoostPurchased(!b);
     }
 
