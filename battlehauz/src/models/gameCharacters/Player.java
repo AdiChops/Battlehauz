@@ -87,7 +87,7 @@ public class Player extends GameCharacter implements Battleable {
      * Damage is calculated using the following formula
      * damageDealt = (baseDamage + (baseDamage * consumable attack damage boost))
      * @param moveIndex Index of move selected show in view
-     * @param opponent GameCharacter class of oponent
+     * @param opponent GameCharacter class of opponent
      * @return Turn summary
      */
     @Override
@@ -111,11 +111,7 @@ public class Player extends GameCharacter implements Battleable {
     }
 
     public void removeMove(int moveIndex){
-        try{
-            moves.remove(moveIndex);
-        }
-        catch (Exception e){ // TODO: make the exception catching more specific
-        }
+        moves.remove(moveIndex);
     }
 
     public void resetMoves(){
