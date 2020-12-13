@@ -9,9 +9,6 @@ public abstract class Potion extends Item{
        boost = iBoost;
     }
 
-    public double useItem() {
-        return boost; // TODO: fix useItem()
-    }
-
+    public double useItem() { return boost; }
 
 }

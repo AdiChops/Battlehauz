@@ -249,7 +249,7 @@ public class BattlehauzCLI {
                         //TODO:Loop this until user quits
                         String moveSellChoiceS = "";
                         do{
-                            System.out.println(game.displayPlayersMoves());
+                            System.out.println(game.displayPlayersMovesForShop());
                             //displays all of the moves the player has, including the base moves, with the appropriate stats.
                             System.out.println("Q: Return to shop menu");
                             System.out.println("Input a move number above to sell to the shop. Write 'Q' to quit. >");
