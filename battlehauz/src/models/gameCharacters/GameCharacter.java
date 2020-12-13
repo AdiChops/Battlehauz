@@ -26,6 +26,8 @@ public abstract class GameCharacter {
         this.moves = new ArrayList<>();
     }
 
+    //********************[Getters and Setters]*********************
+
     public String getName() {
         return name;
     }
@@ -54,10 +56,23 @@ public abstract class GameCharacter {
         return moves;
     }
 
+    //*************[End of Getters and Setters]***************
+
+    //********************[Other Methods]*********************
+
+    /***
+     * Determines if character is still alive
+     * @return true if character is alive, false otherwise
+     */
     public boolean isAlive() {
         return currentHealth > 0;
     }
 
+    /***
+     * adds a move ot the move ArrayList
+     * @param move for the move to be added to list
+     * @return whether the move was added
+     */
     public boolean addMove(Move move) {
         if (moves.size() < MAX_MOVES) {
             moves.add(move);
@@ -66,12 +81,25 @@ public abstract class GameCharacter {
         return false;
     }
 
+    /***
+     * selects a move from the moves ArrayList
+     * @param index the index at which the move is located
+     * @return the move at the specified index
+     */
     public Move chooseMove(int index) {
         return moves.get(index);
     }
 
+    /***
+     * this abstract method is overridden in the subclasses for the character taking damage from its opponent
+     * @param damage how much damage the character has to take
+     */
     public abstract void takeDamage(int damage);
 
+    /***
+     * this function makes a progress bar based on the character's current health/max health
+     * @return progress bar string representation
+     */
     protected String progressBar() {
         double percentage = ((double) currentHealth / (double) maxHealth) * 100;
         String color;
@@ -98,6 +126,10 @@ public abstract class GameCharacter {
         return barBuilder.toString();
     }
 
+    /**
+     * returns status for when character is in battle
+     * @return String statistics for character in battle
+     */
     public String currentFighterStatus() {
         return "current health: " + getCurrentHealth() + "/" + getMaxHealth() + "\n" +
                 progressBar();
