@@ -6,14 +6,24 @@ import models.utilities.Turn;
 
 
 public interface Battleable {
-    // this method returns true or false based on probability of the attack hitting opponent
-    // 5% chance for Player to miss move, varying% chance depending on subclass of enemy
+    /***
+     * Method return true or false based on random int generation
+     * dictates if an attack is successful or not
+     * @return
+     */
     boolean attackSuccessful();
 
-//    void takeDamage(int damage);
-//    int calculateDamage(Move move);
+    /***
+     * Method dictates how character takes damage
+     * @param damage amnt of damage character is taking
+     */
+    void takeDamage(int damage);
 
+    /***
+     * Method dictates how character performs a turn
+     * @param moveIndex index of move selected
+     * @param opponent
+     * @return
+     */
     Turn performTurn(int moveIndex, GameCharacter opponent);
-
-//    int calculateDamage();
 }

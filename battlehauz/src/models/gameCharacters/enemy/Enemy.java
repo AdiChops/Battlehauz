@@ -9,22 +9,12 @@ import models.utilities.WordsHelper;
 import java.util.Random;
 
 public abstract class Enemy extends GameCharacter implements Battleable {
-    protected int mana;// will be used later to generate special move
     protected int level;
 
     public Enemy(String name, int maxHealth, int level) {
         super(name, maxHealth * level);
         this.level = level;
 
-    }
-
-    /***
-     * generates enemy name
-     *
-     * @return enemy name
-     */
-    public String generateName() {
-        return name;
     }
 
     /***
@@ -44,13 +34,7 @@ public abstract class Enemy extends GameCharacter implements Battleable {
      * randomly generates probability of hitting player
      * @return boolean that determines if the attack is successful
      */
-    public boolean attackSuccessful() {
-        int upperbound = 100;
-        Random rand = new Random();
-        int prob = rand.nextInt(upperbound);
-        return prob >= 20;
-
-    }
+    public abstract boolean attackSuccessful();
 
     /***
      * generates a random number proportional to player's level

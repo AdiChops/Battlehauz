@@ -4,20 +4,17 @@ import models.Move;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 
 public class Ogre extends Enemy {
-    Move move1 = new Move("Bonk", generateDamage(),0);
-    Move move2 = new Move("Belly Tackle", generateDamage(),0);
-    Move move3 = new Move("Smelly Armpit", generateDamage(),0);
     Queue<Integer> sequence = new LinkedList<>(Arrays.asList(0, 1, 2));
-
 
     public Ogre(String n, int level) {
         super(n, 1000, level);
-        addMove(move1);
-        addMove(move2);
-        addMove(move3);
+        addMove(new Move("Bonk", generateDamage(),0));
+        addMove(new Move("Belly Tackle", generateDamage(),0));
+        addMove(new Move("Smelly Armpit", generateDamage(),0));
 
     }
 
@@ -25,6 +22,15 @@ public class Ogre extends Enemy {
      * ogres have a fixed/predictable sequence of moves rather than randomized
      * @return index of move
      */
+
+    public boolean attackSuccessful() {
+        int upperbound = 100;
+        Random rand = new Random();
+        int prob = rand.nextInt(upperbound);
+        return prob >= 20;
+
+    }
+
     public int generateMoveIndex() {
         //method overload, same move pattern instead of randomized
         //add the move name into this sequence array
