@@ -64,6 +64,10 @@ public class GameController {
         return "You " + currentTurn.toStringMove();
     }
 
+    public int playerCurrentLevel(){
+        return gamePlayer.calculateLevel();
+    }
+
     public String playerUseItem(int itemIndex) {
         Turn currentTurn = gamePlayer.useItem(itemIndex);
         playerTurnEnd();
@@ -249,12 +253,8 @@ public class GameController {
         return currentEnemy.getName() + ": " + currentEnemy.speak(mode) + "\n";
     }
 
-    public boolean detectLevelUp(){
-        return gamePlayer.levelUpHasBeenDetected();
-    }
-
-    public String displayLevelUp(){
-        return gamePlayer.displayLevelUp();
+    public String displayLevelUp(int initialLevel){
+        return gamePlayer.displayLevelUp(initialLevel)+ "\n";
     }
 
     //*************************************************[this is where the shop functions start]*************************************************

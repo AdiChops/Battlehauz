@@ -15,8 +15,6 @@ public class Player extends GameCharacter implements Battleable {
     private final ArrayList<Item> ownedItemNames;
     private final double[] consumableBoost = {0,0};
     private final double[] potionBoost = {0,0,0};
-    private boolean levelUpDetected = false;
-    int initialLevel = 0;
 
     public Player(String name) {
         super(name);
@@ -96,10 +94,8 @@ public class Player extends GameCharacter implements Battleable {
         Move nextMove = this.chooseMove(moveIndex);
         nextMove.updateMove();
         boolean s = attackSuccessful();
-        initialLevel = calculateLevel();
         if (s) {
             this.increaseXP(nextMove.getXPBoost());
-            detectLevelUp();
             if (opponent instanceof Dragon && nextMove.isSellable()) {
                 //Dragon enemies take 50% less damage from advanced moves
                 opponent.takeDamage((int) (0.5 * this.calculateDamage(nextMove)));
@@ -193,22 +189,9 @@ public class Player extends GameCharacter implements Battleable {
     //*********************************************************
 
     //***********************[Leveling up]********************
-    /***
-     * Used to pass to the view if a level up has occured to the player to display a message
-     * @return
-     */
-    public boolean levelUpHasBeenDetected(){
-        if (levelUpDetected){
-            levelUpDetected = false;
-            return true;
-        }
-        return false;
-    }
 
-    public void detectLevelUp(){
-        if (initialLevel < calculateLevel()){
-            levelUpDetected = true;
-        }
+    public boolean hasLevelledUp(int initialLevel){
+        return initialLevel < calculateLevel();
     }
 
     public void levelUpPlayer() {
@@ -218,22 +201,10 @@ public class Player extends GameCharacter implements Battleable {
         getMoves().get(2).setBaseDamage(250 * calculateLevel());
     }
 
-    public String displayLevelUp() {
-        if (initialLevel < calculateLevel()) {
-            levelUpPlayer();
-            return "You leveled up!\n" +
-                    "Level " + initialLevel + " -->" + "Level " + calculateLevel() + "\n" +
-                    "Move upgrade! " + getMoves().get(0).getName() + " : " + (getMoves().get(0).getBaseDamage() - (150 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(0).getBaseDamage() + "\n" +
-                    "Move upgrade! " + getMoves().get(1).getName() + " : " + (getMoves().get(1).getBaseDamage() - (200 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(1).getBaseDamage() + "\n" +
-                    "Move upgrade! " + getMoves().get(2).getName() + " : " + (getMoves().get(2).getBaseDamage() - (250 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(2).getBaseDamage();
-
-        }
-        return "";
-    }
-
     public String displayLevelUp(int initialLevel) {
-        if (initialLevel < calculateLevel()) {
+        if (hasLevelledUp(initialLevel)) {
             levelUpPlayer();
+            // Only the basic moves get upgrades, which is why only the first 3 get upgraded
             return "You leveled up!\n" +
                     "Level " + initialLevel + " -->" + "Level " + calculateLevel() + "\n" +
                     "Move upgrade! " + getMoves().get(0).getName() + " : " + (getMoves().get(0).getBaseDamage() - (150 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(0).getBaseDamage() + "\n" +
