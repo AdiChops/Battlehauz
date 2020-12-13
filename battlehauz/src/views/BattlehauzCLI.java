@@ -232,7 +232,8 @@ public class BattlehauzCLI {
      * this function is called in the Main method and represents the Shop of the game
      * the user is shown the main menu of the Shop with options to buy/sell a move, buy/sell a consumable item, buy a potion boost, speak to the shopkeeper, and return.
      * user input is taken, and the necessary functions in Controller are carried out depending on the user's choices
-     * the user returns to the main menu of the game by indicating in put that they want to return
+     * continues to loop in main menu selections until user indicates through input that they want to return.
+     * the user returns to the main menu of the game by indicating in their input that they want to return
      * @param game takes the instance of the Controller in order to call on functions.
      */
     private static void goToShop(GameController game) {
