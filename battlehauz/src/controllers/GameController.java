@@ -1,5 +1,6 @@
 package controllers;
 
+import models.InputException;
 import models.Move;
 import models.Shop;
 import models.gameCharacters.Player;
@@ -58,11 +59,16 @@ public class GameController {
         return "Welcome to the Battlehauz, " + name + "!";
     }
 
-    public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException {
-        moveIndex--;
-        Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
-        playerTurnEnd();
-        return "You " + currentTurn.toStringMove();
+    public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException, InputException {
+        try {
+            moveIndex--;
+            Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
+            playerTurnEnd();
+            return "You " + currentTurn.toStringMove();
+        }
+        catch(NullPointerException e){
+            throw new InputException("You can't use that move anymore, you ran out of uses!");
+        }
     }
 
     public int playerCurrentLevel(){
@@ -246,6 +252,10 @@ public class GameController {
         }
         gamePlayer.increaseXP(xp);
         return xp;
+    }
+
+    public void movesReset(){
+        gamePlayer.resetMoves();
     }
 
     public String enemyTalk(char mode) {

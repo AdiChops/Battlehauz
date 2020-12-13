@@ -55,13 +55,13 @@ public class Move {
         if(!isSellable){
             return true;
         }
-        else return remainingUses == 0;
+        else return remainingUses > 0;
     }
 
     public void updateMove(){
         if(isSellable){
             this.remainingUses -= 1;
-            depreciationPercentage += 0.1;
+            depreciationPercentage += 0.01;
         }
     }
 
@@ -73,6 +73,18 @@ public class Move {
     public String getShopSummary(){
         return getName() + " | Base Damage: " + getBaseDamage() + " | " + ((isSellable)?getRemainingUses():"Unlimited") + " Uses | XP Boost: " + getXPBoost() + " | Buying Price: "+getBuyingPrice()+" coins | Selling Price: "+calculateSellingPrice();
     }
+
+    /**
+     * resetMove() resets the move after each battle
+     * it depreciates the maxUses and resets the remainingUses accordingly
+     */
+    public void resetMove(){
+        if(isSellable){
+//            maxUses *= ((1-depreciationPercentage)*maxUses);
+            remainingUses = maxUses;
+        }
+    }
+
 
     @Override
     public String toString() { //will update later

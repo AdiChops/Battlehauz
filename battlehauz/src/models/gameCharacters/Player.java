@@ -91,8 +91,10 @@ public class Player extends GameCharacter implements Battleable {
      * @return Turn summary
      */
     @Override
-    public Turn performTurn(int moveIndex, GameCharacter opponent) throws ArrayIndexOutOfBoundsException { // passing in opponent of type GameCharacter, as same method could be used for enemy
+    public Turn performTurn(int moveIndex, GameCharacter opponent) throws ArrayIndexOutOfBoundsException, NullPointerException { // passing in opponent of type GameCharacter, as same method could be used for enemy
         Move nextMove = this.chooseMove(moveIndex);
+        if(!nextMove.canUse())
+            throw new NullPointerException("");
         nextMove.updateMove();
         boolean s = attackSuccessful();
         if (s) {
@@ -113,6 +115,12 @@ public class Player extends GameCharacter implements Battleable {
             moves.remove(moveIndex);
         }
         catch (Exception e){ // TODO: make the exception catching more specific
+        }
+    }
+
+    public void resetMoves(){
+        for(Move m: moves){
+            m.resetMove();
         }
     }
 

@@ -1,5 +1,4 @@
 package models.utilities;
-import controllers.InputException;
 
 import java.util.Random;
 import java.util.Scanner;

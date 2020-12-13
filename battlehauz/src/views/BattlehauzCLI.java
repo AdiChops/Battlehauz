@@ -1,7 +1,7 @@
 package views;
 
 import controllers.GameController;
-import controllers.InputException;
+import models.InputException;
 import models.items.ConsumableOffensiveItem;
 import models.utilities.WordsHelper;
 
@@ -61,6 +61,7 @@ public class BattlehauzCLI {
         game.getGamePlayer().setCoins(10000);
         char choice;
         do {
+            game.movesReset();
             choice = proceed();
             try {
                 switch (choice) {

@@ -21,8 +21,8 @@ public interface Battleable {
     /***
      * Method dictates how character performs a turn
      * @param moveIndex index of move selected
-     * @param opponent
-     * @return
+     * @param opponent opponent of whoever is fighting (enemy or player)
+     * @return Turn summary
      */
     Turn performTurn(int moveIndex, GameCharacter opponent);
 }
