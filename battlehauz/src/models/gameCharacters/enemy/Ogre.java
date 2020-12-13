@@ -31,6 +31,10 @@ public class Ogre extends Enemy {
 
     }
 
+    /***
+     * returns a predictable queue of moves for ogres specifically
+     * @return move index
+     */
     public int generateMoveIndex() {
         //method overload, same move pattern instead of randomized
         //add the move name into this sequence array
