@@ -44,51 +44,53 @@ public class GameController {
         currentFloor = 1;
     }
 
+    public String start(String name) {
+        this.gamePlayer = new Player(name);
+        return "Welcome to the Battlehauz, " + name + "!";
+    }
+
     //**************************[Getter methods]*********************************************
 
     public Player getGamePlayer() {
         return this.gamePlayer;
     }
 
-    public Shop getShop() {
-        return shop;
-    }
-
-    public String start(String name) {
-        this.gamePlayer = new Player(name);
-        return "Welcome to the Battlehauz, " + name + "!";
-    }
-
-    public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException, InputException {
-        try {
-            moveIndex--;
-            Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
-            playerTurnEnd();
-            return "You " + currentTurn.toStringMove();
-        }
-        catch(NullPointerException e){
-            throw new InputException("You can't use that move anymore, you ran out of uses!");
-        }
-    }
-
     public int playerCurrentLevel(){
         return gamePlayer.calculateLevel();
     }
 
-    public String playerUseItem(int itemIndex) {
-        Turn currentTurn = gamePlayer.useItem(itemIndex);
-        playerTurnEnd();
-        return "You " + currentTurn.toStringItem();
-    }
-
-    public String doEnemyTurn() {
-        Turn currentTurn = currentEnemy.performTurn(currentEnemy.generateMoveIndex(), gamePlayer);
-        playerTurnStart();
-        return currentEnemy.getName() + " " + currentTurn.toStringMove();
-    }
-
     private int numberOfEnemies() {
         return currentFloor + 2;
+    }
+
+    public int getCurrentFloor() {
+        return currentFloor;
+    }
+
+
+    public boolean playerIsAlive() {
+        return gamePlayer.isAlive();
+    }
+
+    public boolean isPlayersTurn() {
+        return playersTurn;
+    }
+
+    public boolean currentEnemyIsAlive() {
+        return currentEnemy.isAlive();
+    }
+
+    public boolean hasMoreEnemies() {
+        return !enemiesToFight.isEmpty();
+    }
+
+    //******************************************************************************************
+
+    //*********************************[Battles]************************************************
+
+    public void enterBattleFloor() {
+        shop.setPotionBoostPurchased(false);
+        generateEnemyQueue();
     }
 
     private void generateEnemyQueue() {
@@ -109,6 +111,10 @@ public class GameController {
         }
     }
 
+    public String enemyTalk(char mode) {
+        return Colors.YELLOW_BOLD + currentEnemy.getName() + ": "+ Colors.RESET + currentEnemy.speak(mode);
+    }
+
     public String startBattle() {
         currentEnemy = enemiesToFight.remove();
         playerTurnStart();
@@ -119,54 +125,11 @@ public class GameController {
         playersTurn = true;
     }
 
-    public void playerTurnEnd() {
-        playersTurn = false;
-    }
-
-    public int getCurrentFloor() {
-        return currentFloor;
-    }
-
-    public void enterBattleFloor() {
-        shop.setPotionBoostPurchased(false);
-        generateEnemyQueue();
-    }
-
-    public boolean playerIsAlive() {
-        return gamePlayer.isAlive();
-    }
-
-    public boolean isPlayersTurn() {
-        return playersTurn;
-    }
-
-    public boolean currentEnemyIsAlive() {
-        return currentEnemy.isAlive();
-    }
-
-    public boolean hasMoreEnemies() {
-        return !enemiesToFight.isEmpty();
-    }
-
-    public String displayRules() {
+    public String displayPlayerOptions() {
         return """
-
-                The rules of the Battlehauz are simple. You fight an increasing number of enemies at each floor (one-by-one).
-                You and the enemy take turns choosing a move (you also have the option to choose an item to help your next move instead of a move).
-                You keep fighting enemies and moving up floors until you run out of health.
-                (A more dark way of saying it: the only way to leave the Battlehauz is DEATH). Have fun :)
+                1. Attack
+                2. Use Item
                 """;
-    }
-
-    public String displayPlayersMovesForShop() {
-        ArrayList<Move> moves = gamePlayer.getMoves();
-        StringBuilder buffer = new StringBuilder();
-        int moveIndex = 1;
-        for (Move m : moves) {
-            buffer.append(moveIndex).append(": ").append(m.getShopSummary()).append("\n");
-            moveIndex++;
-        }
-        return buffer.toString();
     }
 
     public String displayPlayersMoves() {
@@ -178,13 +141,6 @@ public class GameController {
             moveIndex++;
         }
         return buffer.toString();
-    }
-
-    public String displayPlayerOptions() {
-        return """
-                1. Attack
-                2. Use Item
-                """;
     }
 
     public String displayPlayerInventory() {
@@ -200,34 +156,43 @@ public class GameController {
         return buffer.toString();
     }
 
-    public String displayCurrentFightersStatus() {
-        return "Your " + gamePlayer.currentFighterStatus() + "\n" + displayEnemyStatus();
+    public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException, InputException {
+        try {
+            moveIndex--;
+            Turn currentTurn = gamePlayer.performTurn(moveIndex, currentEnemy);
+            playerTurnEnd();
+            return "You " + currentTurn.toStringMove();
+        } catch (NullPointerException e) {
+            throw new InputException("You can't use that move anymore, you ran out of uses!");
+        }
+    }
+
+    public String playerUseItem(int itemIndex) {
+        Turn currentTurn = gamePlayer.useItem(itemIndex);
+        playerTurnEnd();
+        return "You " + currentTurn.toStringItem();
+    }
+
+    public void playerTurnEnd() {
+        playersTurn = false;
     }
 
     public String displayEnemyStatus() {
         return currentEnemy.getName() + "'s " + currentEnemy.currentFighterStatus();
     }
 
-    public String displayStats() {
-        return gamePlayer.toString();
+    public String doEnemyTurn() {
+        Turn currentTurn = currentEnemy.performTurn(currentEnemy.generateMoveIndex(), gamePlayer);
+        playerTurnStart();
+        return currentEnemy.getName() + " " + currentTurn.toStringMove();
     }
 
-    public void restorePlayerHealth() {
-        gamePlayer.fullRestore();
-    }
-
-    public void nextFloor() {
-        currentFloor++;
+    public String displayCurrentFightersStatus() {
+        return "Your " + gamePlayer.currentFighterStatus() + "\n" + displayEnemyStatus();
     }
 
     public String enemyLoss() {
         return enemyTalk('L') ;
-    }
-
-    public String displayPlayerRewards() {
-        int coins = increasePlayerCoins();
-        int xp = increasePlayerXP();
-        return Colors.BOLD + "You got " + coins + " coins and " + xp + "XP!" + Colors.RESET;
     }
 
     private int increasePlayerCoins() {
@@ -254,8 +219,18 @@ public class GameController {
         return xp;
     }
 
-    public void movesReset(){
-        gamePlayer.resetMoves();
+    public String displayPlayerRewards() {
+        int coins = increasePlayerCoins();
+        int xp = increasePlayerXP();
+        return Colors.BOLD + "You got " + coins + " coins and " + xp + "XP!" + Colors.RESET;
+    }
+
+    public String displayLevelUp(int initialLevel){
+        return gamePlayer.displayLevelUp(initialLevel);
+    }
+
+    public void nextFloor() {
+        currentFloor++;
     }
 
     public String playerLoss(){
@@ -263,13 +238,15 @@ public class GameController {
         return Colors.BOLD + "You died! You are getting sent back to the main menu.\nGo to the shop to purchase consumable items, more powerful moves, and potion boosts.\n" + Colors.RESET + enemyTalk('W') + "\n" + quote;
     }
 
-    public String enemyTalk(char mode) {
-        return Colors.YELLOW_BOLD + currentEnemy.getName() + ": "+ Colors.RESET + currentEnemy.speak(mode);
+    public void restorePlayerHealth() {
+        gamePlayer.fullRestore();
     }
 
-    public String displayLevelUp(int initialLevel){
-        return gamePlayer.displayLevelUp(initialLevel);
+    public void movesReset(){
+        gamePlayer.resetMoves();
     }
+
+    //******************************************************************************************************************
 
     //*************************************************[this is where the shop functions start]*************************************************
     public String enterShop() {
@@ -327,6 +304,17 @@ public class GameController {
         return shop.purchasePotionBoostAtIndex(index - 1);
     }
 
+    public String displayPlayersMovesForShop() {
+        ArrayList<Move> moves = gamePlayer.getMoves();
+        StringBuilder buffer = new StringBuilder();
+        int moveIndex = 1;
+        for (Move m : moves) {
+            buffer.append(moveIndex).append(": ").append(m.getShopSummary()).append("\n");
+            moveIndex++;
+        }
+        return buffer.toString();
+    }
+
     public String sellMoveToShop(int index) {
         return shop.buyBackMove(index - 1);
     }
@@ -340,7 +328,18 @@ public class GameController {
     }
 
     //*************************************************[this is where the shop functions end]*************************************************
+
     //*************************************************[this is where the rules are located]*************************************************
+    public String displayRules() {
+        return """
+
+                The rules of the Battlehauz are simple. You fight an increasing number of enemies at each floor (one-by-one).
+                You and the enemy take turns choosing a move (you also have the option to choose an item to help your next move instead of a move).
+                You keep fighting enemies and moving up floors until you run out of health.
+                (A more dark way of saying it: the only way to leave the Battlehauz is DEATH). Have fun :)
+                """;
+    }
+
     public String displayGameplayRules(){
         return """
                 BATTLEHAUZ
@@ -389,6 +388,10 @@ public class GameController {
 
     //*************************************************[this is where the rules end]*************************************************
 
+    public String displayStats() {
+        return gamePlayer.toString();
+    }
+
     public String credits() {
         return """
                 BattleHauz made with <3 by:
@@ -398,7 +401,3 @@ public class GameController {
                 Zara Ali""";
     }
 }
-
-
-
-
