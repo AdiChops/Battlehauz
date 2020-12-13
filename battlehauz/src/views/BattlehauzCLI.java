@@ -192,6 +192,7 @@ public class BattlehauzCLI {
                                     int moveChoice = Integer.parseInt(moveChoiceS);
                                     if (moveChoice <= 0 || moveChoice > game.getSizeOfDisplayedMenu(1)) throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.buyMove(moveChoice));
+                                    System.out.println();
                                     //Tries to buys the move. Returns a fail/success String.
                                 } catch (NumberFormatException e) {
                                     System.err.println("Oops! Please enter a valid number.");
@@ -213,6 +214,7 @@ public class BattlehauzCLI {
                                     int consumableChoice = Integer.parseInt(consumableChoiceS);
                                     if (consumableChoice <= 0 || consumableChoice > game.getSizeOfDisplayedMenu(2)) throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.buyConsumableItem(consumableChoice));
+                                    System.out.println();
                                     //Tries to buys the item. Returns a fail/success String.
                                 } catch (NumberFormatException e) {
                                     System.err.println("Oops! Please enter a valid number.");
@@ -237,6 +239,7 @@ public class BattlehauzCLI {
                                         int potionChoice = Integer.parseInt(potionChoiceS);
                                         if (potionChoice <= 0 || potionChoice > game.getSizeOfDisplayedMenu(3)) throw new InputException("");
                                         WordsHelper.rollingTextPrint(game.buyPotionBoost(potionChoice));
+                                        System.out.println();
                                         //Tries to buys the potion boost. Returns a fail/success String.
                                     } catch (NumberFormatException e) {
                                         System.err.println("Oops! Please enter a valid number.");
@@ -265,6 +268,7 @@ public class BattlehauzCLI {
                                     int moveSellChoice = Integer.parseInt(moveSellChoiceS);
                                     if (moveSellChoice <= 0 || moveSellChoice > game.getSizeOfDisplayedMenu(4)) throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.sellMoveToShop(moveSellChoice));
+                                    System.out.println();
                                     //Tries to sell the move. Returns a fail/success String.
                                 } catch (NumberFormatException e) {
                                     System.err.println("Oops! Please enter a valid number.");
@@ -288,6 +292,7 @@ public class BattlehauzCLI {
                                     int itemSellChoice = Integer.parseInt(itemSellChoiceS);
                                     if (itemSellChoice <= 0 || itemSellChoice > game.getSizeOfDisplayedMenu(5)) throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.sellItemToShop(itemSellChoice));
+                                    System.out.println();
                                     //Tries to sell the consumable item. Returns a fail/success String.
                                 } catch (NumberFormatException e) {
                                     System.err.println("Oops! Please enter a valid number.");
