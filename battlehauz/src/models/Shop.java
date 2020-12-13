@@ -6,7 +6,6 @@ import models.items.Potion;
 import models.utilities.ItemGenerator;
 import models.utilities.WordsHelper;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -56,7 +55,7 @@ public class Shop {
     }
 
     private void generateMoves(){
-        currentMovesInShop = new ArrayList<Move>();
+        currentMovesInShop = new ArrayList<>();
         int generatedMoveCount = 0;
         while (generatedMoveCount < 5) {
             String moveName = WordsHelper.generateMoveName();
@@ -75,33 +74,33 @@ public class Shop {
     }
 
     public String displaySummaryofMovesInShop(){
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int moveIndex = 1;
         for(Move m: currentMovesInShop){
-            buffer.append(moveIndex+": "+m.getShopSummary()+"\n");
+            buffer.append(moveIndex).append(": ").append(m.getShopSummary()).append("\n");
             moveIndex++;
         }
         return buffer.toString();
     }
 
     public String displaySummaryofConsumableItemsInShop(){
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
         int consumableItemIndex = 1;
         for(Item i: consumableItemsInShop){
-            buffer.append(consumableItemIndex+": "+ i.getShopSummary()+"\n");
+            builder.append(consumableItemIndex).append(": ").append(i.getShopSummary()).append("\n");
             consumableItemIndex++;
         }
-        return buffer.toString();
+        return builder.toString();
     }
 
     public String displaySummaryOfPotionBoostsInShop(){
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
         int potionIndex = 1;
         for(Item i: potionBoostsInShop){
-            buffer.append(potionIndex+": "+ i.getShopSummary()+"\n");
+            builder.append(potionIndex).append(": ").append(i.getShopSummary()).append("\n");
             potionIndex++;
         }
-        return buffer.toString();
+        return builder.toString();
     }
 
     public String purchaseMoveAtIndex(int index){

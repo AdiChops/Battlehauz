@@ -178,8 +178,7 @@ public class BattlehauzCLI {
                             System.out.println("Q: Return to shop menu");
                             System.out.println("Input a move number above to purchase. Write 'Q' to quit. >");
                             moveChoiceS = INPUT.next();
-                            if (moveChoiceS.toLowerCase().equals("q")) {
-                            } else {
+                            if (!moveChoiceS.toLowerCase().equals("q")){
                                 try {
                                     int moveChoice = Integer.parseInt(moveChoiceS);
                                     if (moveChoice <= 0 || moveChoice > game.getSizeOfDisplayedMenu(1)) throw new InputException("");
@@ -200,8 +199,7 @@ public class BattlehauzCLI {
                             System.out.println("Q: Return to shop menu");
                             System.out.println("Input an item number above to purchase. Write 'Q' to quit. >");
                             consumableChoiceS = INPUT.next();
-                            if (consumableChoiceS.toLowerCase().equals("q")) {
-                            } else {
+                            if (!consumableChoiceS.toLowerCase().equals("q")){
                                 try {
                                     int consumableChoice = Integer.parseInt(consumableChoiceS);
                                     if (consumableChoice <= 0 || consumableChoice > game.getSizeOfDisplayedMenu(2)) throw new InputException("");
