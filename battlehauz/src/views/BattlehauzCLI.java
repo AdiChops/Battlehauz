@@ -160,6 +160,7 @@ public class BattlehauzCLI {
 
     private static void goToShop(GameController game) {
         WordsHelper.rollingTextPrint(game.enterShop());
+        System.out.println();
         int shopChoice = 0;
         do {
             System.out.println(game.displayShopOptions() + "\n"); //displays the options to the user
