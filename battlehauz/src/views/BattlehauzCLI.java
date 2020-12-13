@@ -268,7 +268,7 @@ public class BattlehauzCLI {
                             }
                         }while (!moveSellChoiceS.equals("q"));
                     }
-                    case 5 -> { //player is tring to sell a consumable item
+                    case 5 -> { //player is trying to sell a consumable item
                         //TODO:Loop this until user quits
                         String itemSellChoiceS = "";
                         do{
@@ -293,7 +293,7 @@ public class BattlehauzCLI {
                         }while(!itemSellChoiceS.equals("q"));
                     }
                     case 6 -> {
-                        WordsHelper.rollingTextPrint(game.getShop().getRandomDialogue());
+                        WordsHelper.rollingTextPrint(game.displayShopkeeperConversation());
                         System.out.println();
                     }
                 }

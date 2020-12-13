@@ -325,6 +325,10 @@ public class GameController {
         return shop.buyBackItem(index - 1);
     }
 
+    public String displayShopkeeperConversation(){
+        return shop.getRandomDialogue();
+    }
+
     //*************************************************[this is where the shop functions end]*************************************************
 
     public String credits() {
