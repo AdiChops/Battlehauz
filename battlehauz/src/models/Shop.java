@@ -7,7 +7,6 @@ import models.items.Potion;
 import utilities.Colors;
 import utilities.ItemGenerator;
 import utilities.WordsHelper;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -96,6 +95,7 @@ public class Shop {
         generateMoves();
     }
 
+    //********************[Shop Menu Displays]*********************
     /**
      * Builds a new String that appends the player in shop's current coins
      * Appends the summary, including price, of all the moves (Move objects) currently available for purchase, proceeded by an index number
@@ -144,6 +144,9 @@ public class Shop {
         return builder.toString();
     }
 
+    //********************[End of Shop Menu Displays]*********************
+
+    //********************[Buying/Selling]*********************
 
     /**
      * checks if the Player at the Shop has enough coins to purchase an indicated Move.
@@ -236,6 +239,9 @@ public class Shop {
         return "You sold 1 of the item " + itemToBuy.getName() + " for " + itemToBuy.getSellingPrice() + " coins.";
     }
 
+    //********************[End of Buying/Selling]*********************
+
+    //********************[Other Methods]*********************
     /**
      * calculates size of different inventory lists in the Shop class
      * @param i takes an integer representing what list's size the caller wants returned from the Shop class
