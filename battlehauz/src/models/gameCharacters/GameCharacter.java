@@ -1,6 +1,7 @@
 package models.gameCharacters;
 
 import models.Move;
+import utilities.Colors;
 
 import java.util.ArrayList;
 
@@ -73,18 +74,27 @@ public abstract class GameCharacter {
 
     protected String progressBar() {
         double percentage = ((double) currentHealth / (double) maxHealth) * 100;
-        StringBuilder barBuilder = new StringBuilder("[");
-        for (int i = 0; i < 20; i++) {
-            if (percentage == 0)
-                barBuilder.append("  ");
-            else {
-                if (i <= percentage / 5)
-                    barBuilder.append("==");
-                else
-                    barBuilder.append("..");
-            }
+        String color;
+        if(percentage <= 30){
+            color = Colors.RED;
         }
-        barBuilder.append("]");
+        else if(percentage <= 50){
+            color = Colors.YELLOW;
+        }
+        else{
+            color = Colors.GREEN;
+        }
+        StringBuilder barBuilder = new StringBuilder(color).append("[");
+        for (int i = 0; i < 20; i++) {
+            if(percentage == 0){
+                barBuilder.append("..");
+            }
+            else if (i <= percentage / 5)
+                barBuilder.append("==");
+            else
+                barBuilder.append("..");
+        }
+        barBuilder.append("]").append(Colors.RESET);
         return barBuilder.toString();
     }
 

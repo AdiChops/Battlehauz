@@ -2,6 +2,7 @@ package views;
 
 import controllers.GameController;
 import controllers.InputException;
+import utilities.Colors;
 import utilities.WordsHelper;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class BattlehauzCLI {
     private static int step = 0;
 
     public static void displayStartUp() {
-        System.out.println("""
+        System.out.println(Colors.BLUE_BOLD+"""
                 Welcome to
                  .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.   .----------------. .----------------. .----------------. .----------------.\s
                 | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | | .--------------. | .--------------. | .--------------. | .--------------. |
@@ -26,7 +27,7 @@ public class BattlehauzCLI {
                 | |  |_______/   | | ||____|  |____|| | |   |_____|    | | |   |_____|    | | |  |________|  | | | |_________|  | | | | |____||____| | | ||____|  |____|| | |    `.__.'    | | |  |________|  | |
                 | |              | | |              | | |              | | |              | | |              | | |              | | | |              | | |              | | |              | | |              | |
                 | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | | '--------------' | '--------------' | '--------------' | '--------------' |
-                 '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'   '----------------' '----------------' '----------------' '----------------'\s""");
+                 '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'   '----------------' '----------------' '----------------' '----------------'\s""" + Colors.RESET);
 
     }
 
@@ -128,7 +129,7 @@ public class BattlehauzCLI {
     }// main()
 
     private static void enterBattlehauz(GameController game) {
-        WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
+        WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz!" + Colors.BOLD + " Good luck!" + Colors.RESET + " Oh wait, you don't need luck, you need skill." + Colors.BOLD+ " Good skill!" + Colors.RESET);
         WordsHelper.rollingTextPrint(game.displayRules());
         //Game starts and continues while player is alive
         while (game.playerIsAlive()) {
@@ -174,7 +175,7 @@ public class BattlehauzCLI {
                 }
             } while (game.isPlayersTurn());
             if (game.currentEnemyIsAlive()) {
-                WordsHelper.rollingTextPrint(game.doEnemyTurn());
+                WordsHelper.rollingTextPrint(Colors.RED + game.doEnemyTurn() + Colors.RESET);
             } else {
                 WordsHelper.rollingTextPrint(game.enemyLoss());
                 System.out.println();
@@ -193,7 +194,7 @@ public class BattlehauzCLI {
             int moveChoice = Integer.parseInt(moveChoiceS);
             if (moveChoice < 0 || moveChoice > game.getSizeOfDisplayedMenu(4))
                 throw new InputException("That move doesn't exist! Pick a valid move index!");
-            System.out.println(game.doPlayerTurn(moveChoice) + "\n");
+            System.out.println(Colors.BLUE + game.doPlayerTurn(moveChoice) + Colors.RESET + "\n");
             System.out.println(game.displayEnemyStatus() + "\n");
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             System.err.println("Oops! Please enter a valid move index.");
@@ -388,7 +389,7 @@ public class BattlehauzCLI {
     private static void quit(GameController game) {
         displayStats(game);
         displayCredits(game);
-        System.out.println("\nThank you for playing Battlehauz! :D");
+        System.out.println(Colors.BOLD+"\nThank you for playing Battlehauz! :D"+Colors.RESET);
         System.exit(0);
     }
 }

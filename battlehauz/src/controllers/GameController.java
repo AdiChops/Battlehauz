@@ -45,7 +45,7 @@ public class GameController {
 
     public String start(String name) {
         this.gamePlayer = new Player(name);
-        return "Welcome to the Battlehauz, " + name + "!";
+        return Colors.BOLD + "Welcome to the Battlehauz, " + name + "!" + Colors.RESET;
     }
 
     //**************************[Getter methods]*********************************************
