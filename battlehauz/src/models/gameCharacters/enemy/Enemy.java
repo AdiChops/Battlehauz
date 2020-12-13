@@ -3,8 +3,8 @@ package models.gameCharacters.enemy;
 import interfaces.Battleable;
 import models.Move;
 import models.gameCharacters.GameCharacter;
-import models.utilities.Turn;
-import models.utilities.WordsHelper;
+import models.Turn;
+import utilities.WordsHelper;
 
 import java.util.Random;
 
@@ -19,12 +19,10 @@ public abstract class Enemy extends GameCharacter implements Battleable {
 
     /***
      * randomly generates the order of enemy moves
+     * used by chooseMove method
      * @return returns the index of move
      */
     public int generateMoveIndex() {
-        //randomly selects a move from moves array
-        //returns the index
-        // choseMove(generateMoveIndex)
         int upperbound = getMoves().size();
         Random rand = new Random();
         return rand.nextInt(upperbound);
@@ -41,7 +39,6 @@ public abstract class Enemy extends GameCharacter implements Battleable {
      * This is used to calculate the damage of enemy moves when they are created
      * @return returns the damage points of an enemy's move
      */
-    // calculate damage of enemy's move
     public int generateDamage() {
         int max = 175 * level;
         int min = 50 * level;
@@ -53,7 +50,6 @@ public abstract class Enemy extends GameCharacter implements Battleable {
      * @param damage the amount of damage points that will be taken from enemy's health
      */
     public void takeDamage(int damage) {
-        //calls dies() if dead.
         if (this.getCurrentHealth() >= damage) {
             this.setCurrentHealth(this.getCurrentHealth() - damage);
         }
@@ -67,14 +63,12 @@ public abstract class Enemy extends GameCharacter implements Battleable {
      * @param mode used to get appropriate quote from appropriate list
      * @return random generated quote
      */
-
     public String speak(char mode){
         return WordsHelper.generateQuote(mode);
     }
 
-
     /***
-     * steps to decide if opponent will take damage
+     * steps to decide if enemy will deal damage
      * @param moveIndex used to get move
      * @param opponent  used to direct damage onto opponent
      * @return Turn summary class
@@ -95,6 +89,4 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         return getClass().getSimpleName() +  " of the name " + this.getName() + ", with " + this.getCurrentHealth() + " health";
     }
 
-
-    // abstract void draw()  this will be helpful for graphics, different images
 }

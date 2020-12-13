@@ -4,8 +4,8 @@ import interfaces.Battleable;
 import models.items.*;
 import models.Move;
 import models.gameCharacters.enemy.Dragon;
-import models.utilities.Colors;
-import models.utilities.Turn;
+import utilities.Colors;
+import models.Turn;
 
 import java.util.*;
 
@@ -14,8 +14,8 @@ public class Player extends GameCharacter implements Battleable {
     private int XP;
     private final HashMap<Item, Integer> items;
     private final ArrayList<Item> ownedItemNames;
-    private final double[] consumableBoost = {0,0};
-    private final double[] potionBoost = {0,0,0};
+    private final double[] consumableBoost = {0, 0};
+    private final double[] potionBoost = {0, 0, 0};
 
     public Player(String name) {
         super(name);
@@ -30,25 +30,38 @@ public class Player extends GameCharacter implements Battleable {
 
     //********************[Getters and Setters]*********************
 
-    public int getXP() { return XP; }
+    public int getXP() {
+        return XP;
+    }
 
-    public void setCoins(int coins) { this.coins = coins; }
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
 
-    public int getCoins() { return coins; }
+    public int getCoins() {
+        return coins;
+    }
 
-    public void increaseCoins(int amount){ this.coins += amount; }
+    public void increaseCoins(int amount) {
+        this.coins += amount;
+    }
 
-    public void increaseXP(int xpIncrease){ this.XP += xpIncrease; }
+    public void increaseXP(int xpIncrease) {
+        this.XP += xpIncrease;
+    }
 
-    public HashMap<Item, Integer> getItems() { return items; }
+    public HashMap<Item, Integer> getItems() {
+        return items;
+    }
 
-    public ArrayList<Item> getOwnedItemNames() { return ownedItemNames; }
+    public ArrayList<Item> getOwnedItemNames() {
+        return ownedItemNames;
+    }
 
     //**********************************************************
 
     @Override
     public boolean attackSuccessful() {
-        // would depend on other factors
         Random rnd = new Random();
         return rnd.nextInt(100) > 5;
     }
@@ -66,18 +79,24 @@ public class Player extends GameCharacter implements Battleable {
         this.currentHealth -= (damage - (damage * (consumableBoost[1] + potionBoost[1])));
         consumableBoost[1] = 0;
         double totalHealing = maxHealth * potionBoost[2];
-        for (int healPoints = 0; healPoints < (int)totalHealing; healPoints++){
+        for (int healPoints = 0; healPoints < (int) totalHealing; healPoints++) {
             currentHealth += 1;
             if (currentHealth == maxHealth) break;
         }
         if (this.currentHealth < 0) this.currentHealth = 0;
     }
 
-    public int calculateDamage(Move move){ return (move.getBaseDamage() + (int)(move.getBaseDamage() * (consumableBoost[0] + potionBoost[0])));} // other factors will come in }
+    public int calculateDamage(Move move) {
+        return (move.getBaseDamage() + (int) (move.getBaseDamage() * (consumableBoost[0] + potionBoost[0])));
+    }
 
-    public int calculateLevel() { return XP/1000;}
+    public int calculateLevel() {
+        return XP / 1000;
+    }
 
-    public int calculateMaxHealth(){ return maxHealth * calculateLevel(); }
+    public int calculateMaxHealth() {
+        return maxHealth * calculateLevel();
+    }
 
     /***
      * Gets the move that the player selected from moveIndex
@@ -86,21 +105,21 @@ public class Player extends GameCharacter implements Battleable {
      * Calls takeDamage method from opponent class
      * Damage is calculated using the following formula
      * damageDealt = (baseDamage + (baseDamage * consumable attack damage boost))
+     * Dragon enemies take 50% less damage from advanced/sellable moves
      * @param moveIndex Index of move selected show in view
      * @param opponent GameCharacter class of opponent
      * @return Turn summary
      */
     @Override
-    public Turn performTurn(int moveIndex, GameCharacter opponent) throws ArrayIndexOutOfBoundsException, NullPointerException { // passing in opponent of type GameCharacter, as same method could be used for enemy
+    public Turn performTurn(int moveIndex, GameCharacter opponent) throws ArrayIndexOutOfBoundsException, NullPointerException {
         Move nextMove = this.chooseMove(moveIndex);
-        if(!nextMove.canUse())
+        if (!nextMove.canUse())
             throw new NullPointerException("");
         nextMove.updateMove();
         boolean s = attackSuccessful();
         if (s) {
             this.increaseXP(nextMove.getXPBoost());
             if (opponent instanceof Dragon && nextMove.isSellable()) {
-                //Dragon enemies take 50% less damage from advanced moves
                 opponent.takeDamage((int) (0.5 * this.calculateDamage(nextMove)));
             } else {
                 opponent.takeDamage(this.calculateDamage(nextMove));
@@ -110,12 +129,12 @@ public class Player extends GameCharacter implements Battleable {
         return new Turn(nextMove, s);
     }
 
-    public void removeMove(int moveIndex){
+    public void removeMove(int moveIndex) {
         moves.remove(moveIndex);
     }
 
-    public void resetMoves(){
-        for(Move m: moves){
+    public void resetMoves() {
+        for (Move m : moves) {
             m.resetMove();
         }
     }
@@ -128,10 +147,10 @@ public class Player extends GameCharacter implements Battleable {
      * otherwise, add that item to their inventory with a value of 1 item
      * @param itemToAdd The item being added to the players item inventory
      */
-    public void addItem(Item itemToAdd){
+    public void addItem(Item itemToAdd) {
         boolean hasItem = false;
-        for (Item i: items.keySet()){
-            if (i.getName().equals(itemToAdd.getName())){
+        for (Item i : items.keySet()) {
+            if (i.getName().equals(itemToAdd.getName())) {
                 hasItem = true;
                 items.replace(i, items.get(i) + 1);
                 break;
@@ -149,7 +168,7 @@ public class Player extends GameCharacter implements Battleable {
      * If the player has quantity 0 of the removed item, the item is entirely removed from the user's inventory
      * @param itemToRemove item to remove
      */
-    public void removeItem(Item itemToRemove){
+    public void removeItem(Item itemToRemove) {
         items.replace(itemToRemove, items.get(itemToRemove) - 1);
         if (items.get(itemToRemove) == 0) {
             items.remove(itemToRemove);
@@ -163,15 +182,15 @@ public class Player extends GameCharacter implements Battleable {
      * If the item is a healing item, the healing is applied right away
      * @param itemIndex index of item selected by user show in view
      */
-    public Turn useItem(int itemIndex){
+    public Turn useItem(int itemIndex) {
         Item itemToUse = ownedItemNames.get(itemIndex - 1);
-        if (itemToUse instanceof ConsumableOffensiveItem){
+        if (itemToUse instanceof ConsumableOffensiveItem) {
             consumableBoost[0] = itemToUse.useItem();
-        }else if (itemToUse instanceof ConsumableDefensiveItem){
+        } else if (itemToUse instanceof ConsumableDefensiveItem) {
             consumableBoost[1] = itemToUse.useItem();
-        }else if (itemToUse instanceof ConsumableHealingItem){
+        } else if (itemToUse instanceof ConsumableHealingItem) {
             double totalHealing = maxHealth * itemToUse.useItem();
-            for (int healPoints = 0; healPoints < (int)totalHealing; healPoints++){
+            for (int healPoints = 0; healPoints < (int) totalHealing; healPoints++) {
                 currentHealth += 1;
                 if (currentHealth == maxHealth) break;
             }
@@ -180,12 +199,12 @@ public class Player extends GameCharacter implements Battleable {
         return new Turn(itemToUse, true);
     }
 
-    public String drinkPotion(Potion potion){
-        if (potion instanceof OffensivePotion){
+    public String drinkPotion(Potion potion) {
+        if (potion instanceof OffensivePotion) {
             potionBoost[0] = potion.useItem();
-        }else if (potion instanceof DefensivePotion){
+        } else if (potion instanceof DefensivePotion) {
             potionBoost[1] = potion.useItem();
-        }else if (potion instanceof HealingPotion){
+        } else if (potion instanceof HealingPotion) {
             potionBoost[2] = potion.useItem();
         }
         return potion.toString();
@@ -195,7 +214,7 @@ public class Player extends GameCharacter implements Battleable {
 
     //***********************[Leveling up]********************
 
-    public boolean hasLevelledUp(int initialLevel){
+    public boolean hasLevelledUp(int initialLevel) {
         return initialLevel < calculateLevel();
     }
 
@@ -209,8 +228,7 @@ public class Player extends GameCharacter implements Battleable {
     public String displayLevelUp(int initialLevel) {
         if (hasLevelledUp(initialLevel)) {
             levelUpPlayer();
-            // Only the basic moves get upgrades, which is why only the first 3 get upgraded
-            return Colors.BOLD+"You leveled up!\n" +
+            return Colors.BOLD + "You leveled up!\n" +
                     "Level " + initialLevel + " -->" + "Level " + calculateLevel() + "\n" +
                     "Move upgrade! " + getMoves().get(0).getName() + " : " + (getMoves().get(0).getBaseDamage() - (150 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(0).getBaseDamage() + "\n" +
                     "Move upgrade! " + getMoves().get(1).getName() + " : " + (getMoves().get(1).getBaseDamage() - (200 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(1).getBaseDamage() + "\n" +
@@ -219,22 +237,26 @@ public class Player extends GameCharacter implements Battleable {
         return "";
     }
 
+    private int calculateFromLevellingUp() {
+        return ((this.calculateLevel() + 1) * 1000) - this.XP;
+    }
+
     //**********************************************************
 
     //************[Resetting boosts & shop healing]*************
 
-    public void resetConsumableBoosts(){
+    public void resetConsumableBoosts() {
         consumableBoost[0] = 0;
         consumableBoost[1] = 0;
     }
 
-    public void resetPermanentBoosts(){
+    public void resetPermanentBoosts() {
         potionBoost[0] = 0;
         potionBoost[1] = 0;
         potionBoost[2] = 0;
     }
 
-    public void fullRestore(){
+    public void fullRestore() {
         resetConsumableBoosts();
         resetPermanentBoosts();
         setCurrentHealth(maxHealth);
@@ -242,28 +264,24 @@ public class Player extends GameCharacter implements Battleable {
 
     //**********************************************************
 
-    public String availableMoves(){
+    private String availableMoves() {
         StringBuilder returnString = new StringBuilder();
-        for(int i = 0; i < moves.size(); i++){
+        for (int i = 0; i < moves.size(); i++) {
             returnString.append(i + 1).append(": ").append(moves.get(i).getShopSummary()).append("\n");
         }
         return returnString.toString();
     }
 
-    public String availableItems(){
+    private String availableItems() {
         StringBuilder returnString = new StringBuilder();
-        for(int i = 0; i < ownedItemNames.size(); i++){
+        for (int i = 0; i < ownedItemNames.size(); i++) {
             returnString.append(i + 1).append(": ").append(ownedItemNames.get(i).getShopSummary()).append("\n");
         }
         return returnString.toString();
     }
 
-    private int calculateFromLevellingUp(){
-        return ((this.calculateLevel()+1)*1000) - this.XP;
-    }
-
-    public String toString(){
-        return"Full Summary\n------------------------------ \n"+
+    public String toString() {
+        return "Full Summary\n------------------------------ \n" +
                 this.getName() + "\nYou are at level " + this.calculateLevel() + "\n"
                 + this.getXP() + "XP (you are " + calculateFromLevellingUp() + "XP from levelling up)\n"
                 + this.getCurrentHealth() + " / " + this.getMaxHealth() + " health\n"

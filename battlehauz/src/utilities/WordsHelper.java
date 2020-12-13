@@ -1,4 +1,4 @@
-package models.utilities;
+package utilities;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class WordsHelper {
     private static final String[] beginQuotes = {"Our battle will be legendary!",
             "Your journey will have many obstacles that you will overcome." +
-            " I am one obstacle you won't be able to overcome!",
+                    " I am one obstacle you won't be able to overcome!",
             "You have met your match!",
             "Prepare to face your destiny!"};
     private static final String[] winQuotes = {"We had a great battle! Unfortunate for you, I am unstoppable.",
@@ -28,8 +28,8 @@ public class WordsHelper {
             "Bill", "Jack", "Sally", "Donald", "Jeff", "Ahmed", "Dwight", "Toby", "Ed", "Rob", "Victor", "Justin",
             "Amy", "Pamela", "Bert", "Eric", "Bob", "David", "Haley", "Christina", "Chris", "George", "Ned",
             "Bart", "Lisa", "Claire", "Sophia", "Gloria", "Patrick", "Kevin", "Kaley", "Carl", "Victoria", "William"};
-    private static final String [] moveAdjectives = new String[]{"Blinding", "Gut", "Core", "Soul", "Full", "Top", "Rhythmic", "Awful", "Schemed", "Bottom"};
-    private static final String [] moveNames = new String[]{"Punch", "Kick", "Taunt", "Roll", "Chop", "Snap", "Cut", "Scald", "Slap", "Burn", "Roast", "Toast", "Wring", "Hit"};
+    private static final String[] moveAdjectives = new String[]{"Blinding", "Gut", "Core", "Soul", "Full", "Top", "Rhythmic", "Awful", "Schemed", "Bottom"};
+    private static final String[] moveNames = new String[]{"Punch", "Kick", "Taunt", "Roll", "Chop", "Snap", "Cut", "Scald", "Slap", "Burn", "Roast", "Toast", "Wring", "Hit"};
     private static final Random RND = new Random();
 
     /***
@@ -37,7 +37,7 @@ public class WordsHelper {
      * @param mode letter to represent which quote to generate
      * @return random generated quote from designated word banks
      */
-    public static String generateQuote(char mode){
+    public static String generateQuote(char mode) {
         switch (mode) {
             case 'B' -> { // A quote when the enemy appears and the battle begins
                 int nextIndex = RND.nextInt(beginQuotes.length);
@@ -61,30 +61,30 @@ public class WordsHelper {
      * generates a random enemy name
      * @return a random combination of an adjective and the name of enemy
      */
-    public static String generateEnemyName(){
+    public static String generateEnemyName() {
         int adjIndex = RND.nextInt(nameAdjectives.length);
         int nameIndex = RND.nextInt(names.length);
         return nameAdjectives[adjIndex] + " " + names[nameIndex];
     }
 
 
-    public static void rollingTextPrint(String text)  {
+    public static void rollingTextPrint(String text) {
         text += "\n";
         String[] dialogue = text.split(" ");
         Scanner enterPrompter = new Scanner(System.in);
-        for (String s: dialogue){
+        for (String s : dialogue) {
             System.out.print(s + " ");
-            try{
-                if (s.contains(".") || s.contains("!") || s.contains("?")){
+            try {
+                if (s.contains(".") || s.contains("!") || s.contains("?")) {
                     Thread.sleep(1000);
-                }else if (s.contains(",")){
+                } else if (s.contains(",")) {
                     Thread.sleep(500);
-                }else if (s.contains(">") && !s.contains("-->")){
+                } else if (s.contains(">") && !s.contains("-->")) {
                     enterPrompter.nextLine();
-                }else{
+                } else {
                     Thread.sleep(250);
                 }
-            }catch (InterruptedException ignored){
+            } catch (InterruptedException ignored) {
             }
         }
     }
@@ -93,7 +93,7 @@ public class WordsHelper {
      * generates random names for moves
      * @return  @return a random combination of an adjective and the name of move
      */
-    public static String generateMoveName(){
+    public static String generateMoveName() {
         return moveAdjectives[RND.nextInt(moveAdjectives.length)] + moveNames[RND.nextInt(moveNames.length)];
     }
 
@@ -102,7 +102,7 @@ public class WordsHelper {
      * @param original the name user inputs before entering game
      * @return the name user inputs with the first letter capitalized
      */
-    public static String capitalize(String original){
+    public static String capitalize(String original) {
         if (Character.isUpperCase(original.charAt(0))) return original;
         return Character.toUpperCase(original.charAt(0)) + original.substring(1);
     }
@@ -111,10 +111,10 @@ public class WordsHelper {
      * when you die, there's a 30% chance that shopkeeper generates a dying remark
      * @return shopkeeper and player having a conversation after player dies
      */
-    public static String shopkeeperQuote(){
+    public static String shopkeeperQuote() {
         int chance = RND.nextInt(100);
-        if(chance < 30)
-            return Colors.BLUE_BOLD + "You: " + Colors.RESET + "Did I win?\n"+ Colors.GREEN_BOLD + "Shopkeeper Dave: " + Colors.RESET + "Kinda. You lost...\n";
+        if (chance < 30)
+            return Colors.BLUE_BOLD + "You: " + Colors.RESET + "Did I win?\n" + Colors.GREEN_BOLD + "Shopkeeper Dave: " + Colors.RESET + "Kinda. You lost...\n";
         else
             return "";
     }

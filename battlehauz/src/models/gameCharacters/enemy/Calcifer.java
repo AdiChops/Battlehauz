@@ -28,8 +28,4 @@ public class Calcifer extends Enemy {
 
     }
 
-
-    //abstract draw method
-
-
 }

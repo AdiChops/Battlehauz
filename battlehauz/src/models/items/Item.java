@@ -5,9 +5,11 @@ public abstract class Item {
     int buyingPrice;
     int sellingPrice;
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public Item(String iName, int iBuyingPrice, int iSellingPrice){
+    public Item(String iName, int iBuyingPrice, int iSellingPrice) {
         name = iName;
         buyingPrice = iBuyingPrice;
         sellingPrice = iSellingPrice;

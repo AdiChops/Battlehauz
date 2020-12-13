@@ -18,7 +18,6 @@ public class Dragon extends Enemy {
      * randomly generates probability of hitting player, chance of missing is reduced to 5%
      * @return boolean that determines if the attack is successful
      */
-
     @Override
     public boolean attackSuccessful() {
         int upperbound = 100;

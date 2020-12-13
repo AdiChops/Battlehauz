@@ -1,4 +1,4 @@
-package models.utilities;
+package utilities;
 
 import models.items.*;
 
@@ -11,23 +11,23 @@ public class ItemGenerator {
         String itemClassification = in.readLine();
         if (itemClassification.equals("co")) {
             return new ConsumableOffensiveItem(in.readLine(), Integer.parseInt(in.readLine()),
-                Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
-        } else if (itemClassification.equals("cd")){
+                    Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
+        } else if (itemClassification.equals("cd")) {
             return new ConsumableDefensiveItem(in.readLine(), Integer.parseInt(in.readLine()),
-                Integer.parseInt(in.readLine()), Double.parseDouble((in.readLine())));
-        } else if (itemClassification.equals("ch")){
+                    Integer.parseInt(in.readLine()), Double.parseDouble((in.readLine())));
+        } else if (itemClassification.equals("ch")) {
             return new ConsumableHealingItem(in.readLine(), Integer.parseInt(in.readLine()),
                     Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
-        }else if(itemClassification.equals("po")){
+        } else if (itemClassification.equals("po")) {
             return new OffensivePotion(in.readLine(), Integer.parseInt(in.readLine()),
                     Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
-        }else if (itemClassification.equals("pd")){
+        } else if (itemClassification.equals("pd")) {
             return new DefensivePotion(in.readLine(), Integer.parseInt(in.readLine()),
                     Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
-        }else if (itemClassification.equals("ph")){
+        } else if (itemClassification.equals("ph")) {
             return new HealingPotion(in.readLine(), Integer.parseInt(in.readLine()),
                     Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
-        }else{
+        } else {
             return null;
         }
     }

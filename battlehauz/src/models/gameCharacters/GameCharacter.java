@@ -9,67 +9,76 @@ public abstract class GameCharacter {
     protected int maxHealth;
     protected int currentHealth;
     protected ArrayList<Move> moves;
-    protected final static int MAX_MOVES = 9; //how many types of moves they can have
+    private final static int MAX_MOVES = 9; //how many types of moves they can have
 
-    public GameCharacter(String name){
+    public GameCharacter(String name) {
         this.name = name;
         this.maxHealth = 1000;
         this.currentHealth = 1000;
         this.moves = new ArrayList<>();
     }
 
-    public GameCharacter(String name, int maxHealth){
+    public GameCharacter(String name, int maxHealth) {
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
-        this.moves = new ArrayList<>(); }
+        this.moves = new ArrayList<>();
+    }
 
     public String getName() {
-        return name; }
+        return name;
+    }
 
     public void setName(String name) {
-        this.name = name; }
+        this.name = name;
+    }
 
     public int getMaxHealth() {
-        return maxHealth; }
+        return maxHealth;
+    }
 
     public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth; }
+        this.maxHealth = maxHealth;
+    }
 
     public int getCurrentHealth() {
-        return currentHealth; }
+        return currentHealth;
+    }
 
     public void setCurrentHealth(int currentHealth) {
-        this.currentHealth = currentHealth; }
+        this.currentHealth = currentHealth;
+    }
 
     public ArrayList<Move> getMoves() {
-        return moves; }
+        return moves;
+    }
 
-    public boolean isAlive() { return currentHealth > 0; }
+    public boolean isAlive() {
+        return currentHealth > 0;
+    }
 
-    public boolean addMove(Move move){
+    public boolean addMove(Move move) {
         if (moves.size() < MAX_MOVES) {
             moves.add(move);
             return true;
-        }return false; }
+        }
+        return false;
+    }
 
-    public Move chooseMove(int index){
-        return moves.get(index); }
+    public Move chooseMove(int index) {
+        return moves.get(index);
+    }
 
-    public void takeDamage(int damage) {
-        // basic takeDamage
-        // to expand in other classes
-        if (this.getCurrentHealth() >= damage) {
-            this.setCurrentHealth(this.getCurrentHealth() - damage); } }
+    public abstract void takeDamage(int damage);
 
-    protected String progressBar(){
-        double percentage = ((double)currentHealth/(double)maxHealth)*100;
+    protected String progressBar() {
+        double percentage = ((double) currentHealth / (double) maxHealth) * 100;
         StringBuilder barBuilder = new StringBuilder("[");
-        for(int i=0; i <20; i++){
-            if(percentage == 0)
+        for (int i = 0; i < 20; i++) {
+            if (percentage == 0)
                 barBuilder.append("  ");
-            else{
-                if(i <= percentage/5)
+            else {
+                if (i <= percentage / 5)
                     barBuilder.append("==");
                 else
                     barBuilder.append("..");
@@ -79,8 +88,8 @@ public abstract class GameCharacter {
         return barBuilder.toString();
     }
 
-    public String currentFighterStatus(){
-        return "current health: " + getCurrentHealth() + "/" + getMaxHealth() +"\n" +
+    public String currentFighterStatus() {
+        return "current health: " + getCurrentHealth() + "/" + getMaxHealth() + "\n" +
                 progressBar();
     }
 

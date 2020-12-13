@@ -1,6 +1,5 @@
 package controllers;
 
-import models.InputException;
 import models.Move;
 import models.Shop;
 import models.gameCharacters.Player;
@@ -9,9 +8,9 @@ import models.gameCharacters.enemy.Dragon;
 import models.gameCharacters.enemy.Enemy;
 import models.gameCharacters.enemy.Ogre;
 import models.items.Item;
-import models.utilities.Colors;
-import models.utilities.Turn;
-import models.utilities.WordsHelper;
+import utilities.Colors;
+import models.Turn;
+import utilities.WordsHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,10 +50,6 @@ public class GameController {
 
     //**************************[Getter methods]*********************************************
 
-    public Player getGamePlayer() {
-        return this.gamePlayer;
-    }
-
     public int playerCurrentLevel(){
         return gamePlayer.calculateLevel();
     }
@@ -66,7 +61,6 @@ public class GameController {
     public int getCurrentFloor() {
         return currentFloor;
     }
-
 
     public boolean playerIsAlive() {
         return gamePlayer.isAlive();
@@ -266,11 +260,11 @@ public class GameController {
     }
 
     public String displayMovesInShop() {
-        return shop.displaySummaryofMovesInShop();
+        return shop.displaySummaryOfMovesInShop();
     }
 
     public String displayConsumableItemsInShop() {
-        return shop.displaySummaryofConsumableItemsInShop();
+        return shop.displaySummaryOfConsumableItemsInShop();
     }
 
     public String displayPotionBoostsInShop() {

@@ -1,8 +1,8 @@
 package views;
 
 import controllers.GameController;
-import models.InputException;
-import models.utilities.WordsHelper;
+import controllers.InputException;
+import utilities.WordsHelper;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -30,6 +30,10 @@ public class BattlehauzCLI {
 
     }
 
+    /***
+     * Prompts the user for what selection they'd like to perform
+     * @return selection char
+     */
     private static char proceed() {
         try {
             Scanner proceedScanner = new Scanner(System.in);
@@ -49,9 +53,9 @@ public class BattlehauzCLI {
             if (!m.find()) throw new InputException("");
             return choiceS.toUpperCase().charAt(0);
         } catch (StringIndexOutOfBoundsException | InputException e) {
-            switch(step){
-                case 0 ->System.err.println("Oops! please enter a valid choice.");
-                case 1->System.err.println("""
+            switch (step) {
+                case 0 -> System.err.println("Oops! please enter a valid choice.");
+                case 1 -> System.err.println("""
                         The valid choices are\s
                         B - Enter BattleHauz
                         S - Enter the Shop
@@ -59,27 +63,27 @@ public class BattlehauzCLI {
                         R - View Gameplay Rules
                         A - About Game
                         Q - Quit Game""");
-                case 2->System.err.println("Ok, cmon buddy I have a business to run, I don't have all day, now tell me what you wanna do!");
-                case 3->System.err.println("Seriously I'm not playing around just pick a valid choice");
-                case 4->System.err.println("The devs only programmed me to talk for so long, I'm not sure what'll happen pretty soon!");
-                case 5->System.err.println("You're coming down to the wire! I think I only see two or three more if statements!");
-                case 6->System.err.println("JUST PICK A CHOICE");
-                case 7->System.err.println("PLEASE");
-                case 8->System.err.println("You know what fine.");
-                case 9->System.err.println("FINE");
-                case 10->System.err.println("Is there any reason for you selecting an invalid choice this many times?");
-                case 11->System.err.println("You don't have anything else better to do than to test the limits of some sleep deprived programmer?");
-                case 12->System.err.println("Shame.");
-                case 13->System.err.println("Well while you're here I might as well tell you a story.");
-                case 14->System.err.println("Let's see here. Ooh, here's a good one, it's about bricks!");
-                case 15->System.err.println("Man has used brick for building purpose for thousands of years.");
-                case 16->System.err.println("Bricks date back to 7000 BC, which makes them one of the oldest known building materials.");
-                case 17->System.err.println("They were discovered in southern Turkey at the site of an ancient settlement around the city of Jericho.");
-                case 18->System.err.println("The first bricks, made in areas with warm climates, were mud bricks dried in the sun for hardening.");
-                case 19->System.err.println("...");
-                case 20->System.err.println("You're still here?");
-                case 21->System.err.println("Really?");
-                case 22->{
+                case 2 -> System.err.println("Ok, cmon buddy I have a business to run, I don't have all day, now tell me what you wanna do!");
+                case 3 -> System.err.println("Seriously I'm not playing around just pick a valid choice");
+                case 4 -> System.err.println("The devs only programmed me to talk for so long, I'm not sure what'll happen pretty soon!");
+                case 5 -> System.err.println("You're coming down to the wire! I think I only see two or three more if statements!");
+                case 6 -> System.err.println("JUST PICK A CHOICE");
+                case 7 -> System.err.println("PLEASE");
+                case 8 -> System.err.println("You know what fine.");
+                case 9 -> System.err.println("FINE");
+                case 10 -> System.err.println("Is there any reason for you selecting an invalid choice this many times?");
+                case 11 -> System.err.println("You don't have anything else better to do than to test the limits of some sleep deprived programmer?");
+                case 12 -> System.err.println("Shame.");
+                case 13 -> System.err.println("Well while you're here I might as well tell you a story.");
+                case 14 -> System.err.println("Let's see here. Ooh, here's a good one, it's about bricks!");
+                case 15 -> System.err.println("Man has used brick for building purpose for thousands of years.");
+                case 16 -> System.err.println("Bricks date back to 7000 BC, which makes them one of the oldest known building materials.");
+                case 17 -> System.err.println("They were discovered in southern Turkey at the site of an ancient settlement around the city of Jericho.");
+                case 18 -> System.err.println("The first bricks, made in areas with warm climates, were mud bricks dried in the sun for hardening.");
+                case 19 -> System.err.println("...");
+                case 20 -> System.err.println("You're still here?");
+                case 21 -> System.err.println("Really?");
+                case 22 -> {
                     System.err.println("Alright buddy, you've beat the dev and forced my hand, into BattleHauz you go!");
                     return ('B');
                 }
@@ -94,7 +98,7 @@ public class BattlehauzCLI {
         displayStartUp();
         System.out.print("What should we call you? ");
         String name = INPUT.nextLine();
-        if (name.isEmpty()){
+        if (name.isEmpty()) {
             WordsHelper.rollingTextPrint("Ooh hoo hoo, look at the funny man - wants to input a BlaNK nAmE, huh? \n" +
                     "Well now your name is Jimmy John, how do you feel about that?");
             name = "Jimmy John";
@@ -123,7 +127,7 @@ public class BattlehauzCLI {
         } while (choice != 'Q'); // do-while
     }// main()
 
-    private static void enterBattlehauz(GameController game){
+    private static void enterBattlehauz(GameController game) {
         WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
         WordsHelper.rollingTextPrint(game.displayRules());
         //Game starts and continues while player is alive
@@ -147,8 +151,8 @@ public class BattlehauzCLI {
         game.restorePlayerHealth();
     }
 
-    private static void battle(GameController game){
-        while (game.currentEnemyIsAlive() && game.playerIsAlive()) { //while the currentEnemy is still alive
+    private static void battle(GameController game) {
+        while (game.currentEnemyIsAlive() && game.playerIsAlive()) {
             System.out.println(game.displayCurrentFightersStatus());
             do {
                 System.out.println("What would you like to do?");
@@ -177,10 +181,10 @@ public class BattlehauzCLI {
                 WordsHelper.rollingTextPrint(game.displayPlayerRewards());
             }
             System.out.println();
-        }
+        } //while the currentEnemy and the player is still alive
     }
 
-    private static void performMove(GameController game){
+    private static void performMove(GameController game) {
         System.out.println("Which move would you like to select?");
         System.out.println(game.displayPlayersMoves());
         System.out.print("> ");
@@ -189,8 +193,8 @@ public class BattlehauzCLI {
             int moveChoice = Integer.parseInt(moveChoiceS);
             if (moveChoice < 0 || moveChoice > game.getSizeOfDisplayedMenu(4))
                 throw new InputException("That move doesn't exist! Pick a valid move index!");
-            System.out.println(game.doPlayerTurn(moveChoice)+"\n");
-            System.out.println(game.displayEnemyStatus()+"\n");
+            System.out.println(game.doPlayerTurn(moveChoice) + "\n");
+            System.out.println(game.displayEnemyStatus() + "\n");
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             System.err.println("Oops! Please enter a valid move index.");
         } catch (InputException e) {
@@ -198,7 +202,7 @@ public class BattlehauzCLI {
         }
     }
 
-    private static void useItem(GameController game){
+    private static void useItem(GameController game) {
         System.out.println(game.displayPlayerInventory());
         if (!game.displayPlayerInventory().equals("You have no items you can use!")) {
             try {
@@ -207,7 +211,7 @@ public class BattlehauzCLI {
                 int itemChoice = Integer.parseInt(itemChoiceS);
                 if (itemChoice < 0 || itemChoice > game.getSizeOfDisplayedMenu(5))
                     throw new InputException("That item doesn't exist! Pick a valid item index!");
-                System.out.println(game.playerUseItem(itemChoice)+"\n");
+                System.out.println(game.playerUseItem(itemChoice) + "\n");
             } catch (NumberFormatException e) {
                 System.err.println("Oops! Please enter a valid number.");
             } catch (InputException e) {
@@ -237,10 +241,11 @@ public class BattlehauzCLI {
                             System.out.println("Q: Return to shop menu");
                             System.out.println("Input a move number above to purchase. Write 'Q' to quit. >");
                             moveChoiceS = INPUT.next();
-                            if (!moveChoiceS.toLowerCase().equals("q")){
+                            if (!moveChoiceS.toLowerCase().equals("q")) {
                                 try {
                                     int moveChoice = Integer.parseInt(moveChoiceS);
-                                    if (moveChoice <= 0 || moveChoice > game.getSizeOfDisplayedMenu(1)) throw new InputException("");
+                                    if (moveChoice <= 0 || moveChoice > game.getSizeOfDisplayedMenu(1))
+                                        throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.buyMove(moveChoice));
                                     System.out.println();
                                     //Tries to buys the move. Returns a fail/success String.
@@ -259,10 +264,11 @@ public class BattlehauzCLI {
                             System.out.println("Q: Return to shop menu");
                             System.out.println("Input an item number above to purchase. Write 'Q' to quit. >");
                             consumableChoiceS = INPUT.next();
-                            if (!consumableChoiceS.toLowerCase().equals("q")){
+                            if (!consumableChoiceS.toLowerCase().equals("q")) {
                                 try {
                                     int consumableChoice = Integer.parseInt(consumableChoiceS);
-                                    if (consumableChoice <= 0 || consumableChoice > game.getSizeOfDisplayedMenu(2)) throw new InputException("");
+                                    if (consumableChoice <= 0 || consumableChoice > game.getSizeOfDisplayedMenu(2))
+                                        throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.buyConsumableItem(consumableChoice));
                                     System.out.println();
                                     //Tries to buys the item. Returns a fail/success String.
@@ -287,7 +293,8 @@ public class BattlehauzCLI {
                                 if (!potionChoiceS.toLowerCase().equals("q")) {
                                     try {
                                         int potionChoice = Integer.parseInt(potionChoiceS);
-                                        if (potionChoice <= 0 || potionChoice > game.getSizeOfDisplayedMenu(3)) throw new InputException("");
+                                        if (potionChoice <= 0 || potionChoice > game.getSizeOfDisplayedMenu(3))
+                                            throw new InputException("");
                                         WordsHelper.rollingTextPrint(game.buyPotionBoost(potionChoice));
                                         System.out.println();
                                         //Tries to buys the potion boost. Returns a fail/success String.
@@ -307,7 +314,7 @@ public class BattlehauzCLI {
                     }
                     case 4 -> { //player is trying to sell a move to the shop
                         String moveSellChoiceS;
-                        do{
+                        do {
                             System.out.println(game.displayPlayersMovesForShop());
                             //displays all of the moves the player has, including the base moves, with the appropriate stats.
                             System.out.println("Q: Return to shop menu");
@@ -316,7 +323,8 @@ public class BattlehauzCLI {
                             if (!moveSellChoiceS.toLowerCase().equals("q")) {
                                 try {
                                     int moveSellChoice = Integer.parseInt(moveSellChoiceS);
-                                    if (moveSellChoice <= 0 || moveSellChoice > game.getSizeOfDisplayedMenu(4)) throw new InputException("");
+                                    if (moveSellChoice <= 0 || moveSellChoice > game.getSizeOfDisplayedMenu(4))
+                                        throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.sellMoveToShop(moveSellChoice));
                                     System.out.println();
                                     //Tries to sell the move. Returns a fail/success String.
@@ -326,11 +334,11 @@ public class BattlehauzCLI {
                                     System.err.println("That move doesn't exist! Pick a valid menu index!");
                                 }
                             }
-                        }while (!moveSellChoiceS.equals("q"));
+                        } while (!moveSellChoiceS.equals("q"));
                     }
                     case 5 -> { //player is trying to sell a consumable item
                         String itemSellChoiceS;
-                        do{
+                        do {
                             System.out.println(game.displayPlayerInventory());
                             //displays the consumable items the player has, with the appropriate stats and quantity.
                             System.out.println("Q: Return to shop menu");
@@ -339,7 +347,8 @@ public class BattlehauzCLI {
                             if (!itemSellChoiceS.toLowerCase().equals("q")) {
                                 try {
                                     int itemSellChoice = Integer.parseInt(itemSellChoiceS);
-                                    if (itemSellChoice <= 0 || itemSellChoice > game.getSizeOfDisplayedMenu(5)) throw new InputException("");
+                                    if (itemSellChoice <= 0 || itemSellChoice > game.getSizeOfDisplayedMenu(5))
+                                        throw new InputException("");
                                     WordsHelper.rollingTextPrint(game.sellItemToShop(itemSellChoice));
                                     System.out.println();
                                     //Tries to sell the consumable item. Returns a fail/success String.
@@ -349,7 +358,7 @@ public class BattlehauzCLI {
                                     System.err.println("That item doesn't exist! Pick a valid menu index!");
                                 }
                             }
-                        }while(!itemSellChoiceS.equals("q"));
+                        } while (!itemSellChoiceS.equals("q"));
                     }
                     case 6 -> {
                         WordsHelper.rollingTextPrint(game.displayShopkeeperConversation());
@@ -372,7 +381,9 @@ public class BattlehauzCLI {
         System.out.println(game.displayStats());
     }
 
-    private static void displayRules(GameController game){System.out.println(game.displayGameplayRules());}
+    private static void displayRules(GameController game) {
+        System.out.println(game.displayGameplayRules());
+    }
 
     private static void quit(GameController game) {
         displayStats(game);
