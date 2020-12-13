@@ -78,7 +78,6 @@ public class BattlehauzCLI {
     }// main()
 
     private static void enterBattlehauz(GameController game){
-        game.setPotionBoostUsed(true);
         WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
         WordsHelper.rollingTextPrint(game.displayRules());
         //Game starts and continues while player is alive

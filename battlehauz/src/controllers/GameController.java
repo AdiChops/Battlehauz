@@ -288,10 +288,6 @@ public class GameController {
         return !shop.isPotionBoostPurchased();
     }
 
-    public void setPotionBoostUsed(boolean b){
-        shop.setPotionBoostPurchased(!b);
-    }
-
     public int getSizeOfDisplayedMenu(int i) {
         if (i <= 3) {
             return shop.getSizeOfShopInventory(i);
