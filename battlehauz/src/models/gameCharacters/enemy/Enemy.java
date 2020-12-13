@@ -67,7 +67,7 @@ public abstract class Enemy extends GameCharacter implements Battleable {
      * @param mode used to get appropriate quote from appropriate list
      * @return random generated quote
      */
-    @Override
+
     public String speak(char mode){
         return WordsHelper.generateQuote(mode);
     }

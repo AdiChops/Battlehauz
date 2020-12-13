@@ -260,7 +260,7 @@ public class GameController {
 
     public String playerLoss(){
         String quote = WordsHelper.shopkeeperQuote();
-        return Colors.BOLD + "You died! You are getting sent back to the main menu.\n" + Colors.RESET + enemyTalk('W') + "\n" + quote;
+        return Colors.BOLD + "You died! You are getting sent back to the main menu.\nGo to the shop to purchase consumable items, more powerful moves, and potion boosts.\n" + Colors.RESET + enemyTalk('W') + "\n" + quote;
     }
 
     public String enemyTalk(char mode) {
@@ -340,6 +340,54 @@ public class GameController {
     }
 
     //*************************************************[this is where the shop functions end]*************************************************
+    //*************************************************[this is where the rules are located]*************************************************
+    public String displayGameplayRules(){
+        return """
+                BATTLEHAUZ
+                Your objective is to get to the highest floor you can. There's an increasing amount of enemies per floor. 
+                Choose to attack an enemy using a move or use a consumable item to help you in your next turn instead.
+                The only way out is death!
+                                
+                PLAYER LEVEL
+                Level up by increasing your XP. To do so, defeat enemies in the Battlehauz. Note that moves with less damage usually give more XP than others!
+                Leveling up means you get access to more powerful moves in shop, get more max health, and upgrade your basic moves damage.
+                                
+                ENEMIES
+                They will get more harder to beat as you go up. Each enemy type has three basic moves.
+                    Ogres: Easy, predictable moves in a sequence.
+                    Calcifer: Medium, unpredictable moves.
+                    Dragon: Hard, takes only 50% damage of purchased moves. Find their weakness!
+                                
+                COINS
+                You gain coins and XP upon enemy defeat and 100 coins per floor cleared.
+                                
+                SHOP
+                Visit the shop every time you die to get new moves, buy consumable items, or buy potion boosts. 
+                These will help you get stronger and get higher in your next run of the Battlehauz.
+                                
+                MOVES
+                Basic moves: Start off with three moves that can’t be sold. The damage of these moves increase as you level up.
+                Buying: Buy new moves at the shop. Have a limited amount of uses in the Battlehauz that reset per entry.
+                Selling: You can sell the moves you buy. Selling price depreciates the more you’ve used them.
+                                
+                CONSUMABLE ITEMS
+                These items can be consumed instead of taking a move turn.
+                	Offensive consumable: next move gives you more damage.
+                	Defensive consumable: next enemy move deals less damage to you.
+                	Regeneration consumable: you’ll heal next move for a certain amount of health.
+                Buying: Purchase these from the shop. You can buy as many as you want.
+                Selling: if you didn’t use them in battle, you can always resell for half the price you bought it.
+                                
+                POTION BOOSTS
+                Can only purchase one before you enter the Battlehauz. Consumed immediately when bought. 
+                They have an effect that lasts your entire run of the Battlehauz without having to sacrifice a turn.
+                	Offensive potion boost: deal extra damage every move until you die.
+                	Defensive potion boost: take less damage until you die.
+                	Regeneration potion boost: heal every turn for a certain amount until you die.           
+                """;
+    }
+
+    //*************************************************[this is where the rules end]*************************************************
 
     public String credits() {
         return """

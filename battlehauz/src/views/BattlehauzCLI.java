@@ -34,10 +34,11 @@ public class BattlehauzCLI {
             System.out.println("\nHow would you like to proceed?");
             System.out.println("""
                     B - Enter BattleHauz
-                    S - Enter the shop
+                    S - Enter the Shop
                     F - View Full Stats
+                    R - View Gameplay Rules
                     A - About Game
-                    Q - Quit game
+                    Q - Quit Game
                     """);
             System.out.print("> ");
             String choiceS = proceedScanner.nextLine();
@@ -68,6 +69,7 @@ public class BattlehauzCLI {
                     case 'B' -> enterBattlehauz(game);
                     case 'S' -> goToShop(game);
                     case 'F' -> displayStats(game);
+                    case 'R' -> displayRules(game);
                     case 'A' -> displayCredits(game);
                     case 'Q' -> quit(game);
                     default -> throw new InputException("Oops! Please enter a valid choice.");
@@ -285,7 +287,6 @@ public class BattlehauzCLI {
                         }while (!moveSellChoiceS.equals("q"));
                     }
                     case 5 -> { //player is trying to sell a consumable item
-                        //TODO:Loop this until user quits
                         String itemSellChoiceS;
                         do{
                             System.out.println(game.displayPlayerInventory());
@@ -328,6 +329,8 @@ public class BattlehauzCLI {
     private static void displayStats(GameController game) {
         System.out.println(game.displayStats());
     }
+
+    private static void displayRules(GameController game){System.out.println(game.displayGameplayRules());}
 
     private static void quit(GameController game) {
         displayStats(game);

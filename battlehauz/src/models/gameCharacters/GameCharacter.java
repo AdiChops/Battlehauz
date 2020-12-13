@@ -22,72 +22,45 @@ public abstract class GameCharacter {
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
-        this.moves = new ArrayList<>();
-    }
+        this.moves = new ArrayList<>(); }
 
     public String getName() {
-        return name;
-    }
+        return name; }
 
     public void setName(String name) {
-        this.name = name;
-    }
+        this.name = name; }
 
     public int getMaxHealth() {
-        return maxHealth;
-    }
+        return maxHealth; }
 
     public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
+        this.maxHealth = maxHealth; }
 
     public int getCurrentHealth() {
-        return currentHealth;
-    }
+        return currentHealth; }
 
     public void setCurrentHealth(int currentHealth) {
-        this.currentHealth = currentHealth;
-    }
+        this.currentHealth = currentHealth; }
 
     public ArrayList<Move> getMoves() {
-        return moves;
-    }
+        return moves; }
 
     public boolean isAlive() { return currentHealth > 0; }
 
     public boolean addMove(Move move){
-        if (checkMove(move)) {
-            if (moves.size() < MAX_MOVES) {
-                moves.add(move);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean checkMove(Move move){
-        //this method checks if the move is already in the inventory of the user.
-        //for now, it's just checking when you try to add a move.
-        //can change so it gives an error message of its own.
-        for (Move value : moves) {
-            if (value.getName().equals(move.getName())) {
-                return false;
-            }
-        }
-        return true;
-    }
+        if (moves.size() < MAX_MOVES) {
+            moves.add(move);
+            return true;
+        }return false; }
 
     public Move chooseMove(int index){
-        return moves.get(index);
-    }
+        return moves.get(index); }
 
     public void takeDamage(int damage) {
         // basic takeDamage
         // to expand in other classes
         if (this.getCurrentHealth() >= damage) {
-            this.setCurrentHealth(this.getCurrentHealth() - damage);
-        }
-    }
+            this.setCurrentHealth(this.getCurrentHealth() - damage); } }
 
     protected String progressBar(){
         double percentage = ((double)currentHealth/(double)maxHealth)*100;
@@ -109,10 +82,6 @@ public abstract class GameCharacter {
     public String currentFighterStatus(){
         return "current health: " + getCurrentHealth() + "/" + getMaxHealth() +"\n" +
                 progressBar();
-    }
-
-    public String speak(char mode){
-        return "";
     }
 
 }
