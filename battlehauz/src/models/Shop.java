@@ -78,17 +78,19 @@ public class Shop {
     }
 
     public String displaySummaryofMovesInShop(){
-        StringBuilder buffer = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
+        builder.append("Your coins: ").append(userAtShop.getCoins()).append("\n");
         int moveIndex = 1;
         for(Move m: currentMovesInShop){
-            buffer.append(moveIndex).append(": ").append(m.getShopSummary()).append("\n");
+            builder.append(moveIndex).append(": ").append(m.getShopSummary()).append("\n");
             moveIndex++;
         }
-        return buffer.toString();
+        return builder.toString();
     }
 
     public String displaySummaryofConsumableItemsInShop(){
         StringBuilder builder = new StringBuilder();
+        builder.append("Your coins: ").append(userAtShop.getCoins()).append("\n");
         int consumableItemIndex = 1;
         for(Item i: consumableItemsInShop){
             builder.append(consumableItemIndex).append(": ").append(i.getShopSummary()).append("\n");
@@ -99,6 +101,7 @@ public class Shop {
 
     public String displaySummaryOfPotionBoostsInShop(){
         StringBuilder builder = new StringBuilder();
+        builder.append("Your coins: ").append(userAtShop.getCoins()).append("\n");
         int potionIndex = 1;
         for(Item i: potionBoostsInShop){
             builder.append(potionIndex).append(": ").append(i.getShopSummary()).append("\n");

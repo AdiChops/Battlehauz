@@ -7,9 +7,12 @@ import models.utilities.WordsHelper;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BattlehauzCLI {
     private static final Scanner INPUT = new Scanner(System.in);
+    private static int step = 0;
 
     public static void displayStartUp() {
         System.out.println("""
@@ -31,6 +34,7 @@ public class BattlehauzCLI {
     private static char proceed() {
         try {
             Scanner proceedScanner = new Scanner(System.in);
+            Pattern p = Pattern.compile("B|S|F|R|A|Q");
             System.out.println("\nHow would you like to proceed?");
             System.out.println("""
                     B - Enter BattleHauz
@@ -42,9 +46,46 @@ public class BattlehauzCLI {
                     """);
             System.out.print("> ");
             String choiceS = proceedScanner.nextLine();
+            Matcher m = p.matcher(choiceS.toUpperCase());
+            if (!m.find()) throw new InputException("");
             return choiceS.toUpperCase().charAt(0);
-        } catch (StringIndexOutOfBoundsException e) {
-            System.err.println("Oops! Please enter a choice.");
+        } catch (StringIndexOutOfBoundsException | InputException e) {
+            switch(step){
+                case 0, 1, 2 ->System.err.println("Oops! please enter a valid choice.");
+                case 3->System.err.println("Please enter a valid choice.");
+                case 4->System.err.println("The valid choices are \n" +
+                        "B - Enter BattleHauz\n" +
+                        "S - Enter the Shop\n" +
+                        "F - View Full Stats\n" +
+                        "R - View Gameplay Rules\n" +
+                        "A - About Game\n" +
+                        "Q - Quit Game");
+                case 5->System.err.println("Ok, cmon buddy I have a business to run, I don't have all day, now tell me what you wanna do!");
+                case 6->System.err.println("Seriously I'm not playing around just pick a valid choice");
+                case 7->System.err.println("The devs only programmed me to talk for so long, I'm not sure what'll happen pretty soon!");
+                case 8->System.err.println("You're coming down to the wire! I think I only see two or three more if statements!");
+                case 9->System.err.println("JUST PICK A CHOICE");
+                case 10->System.err.println("PLEASE");
+                case 11->System.err.println("You know what fine.");
+                case 12->System.err.println("FINE");
+                case 13->System.err.println("Is there any reason for you selecting an invalid choice this many times?");
+                case 14->System.err.println("You don't have anything else better to do than to test the limits of some sleep deprived programmer?");
+                case 15->System.err.println("Shame.");
+                case 16->System.err.println("Well while you're here I might as well tell you a story.");
+                case 17->System.err.println("Let's see here. Ooh, here's a good one, it's about bricks!");
+                case 18->System.err.println("Man has used brick for building purpose for thousands of years.");
+                case 19->System.err.println("Bricks date back to 7000 BC, which makes them one of the oldest known building materials.");
+                case 20->System.err.println("They were discovered in southern Turkey at the site of an ancient settlement around the city of Jericho.");
+                case 21->System.err.println("The first bricks, made in areas with warm climates, were mud bricks dried in the sun for hardening.");
+                case 22->System.err.println("...");
+                case 23->System.err.println("You're still here?");
+                case 24->System.err.println("Really?");
+                case 25->{
+                    System.err.println("Alright buddy, you've beat the dev and forced my hand, into BattleHauz you go!");
+                    return ('B');
+                }
+            }
+            step++;
             return proceed();
         }
     }
@@ -64,6 +105,7 @@ public class BattlehauzCLI {
         do {
             game.movesReset();
             choice = proceed();
+            step = 0;
             try {
                 switch (choice) {
                     case 'B' -> enterBattlehauz(game);
