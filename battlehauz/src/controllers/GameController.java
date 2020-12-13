@@ -8,6 +8,7 @@ import models.gameCharacters.enemy.Dragon;
 import models.gameCharacters.enemy.Enemy;
 import models.gameCharacters.enemy.Ogre;
 import models.items.Item;
+import models.utilities.Colors;
 import models.utilities.Turn;
 import models.utilities.WordsHelper;
 
@@ -219,9 +220,9 @@ public class GameController {
 
     public String displayPlayerRewards() {
         int coins = increasePlayerCoins();
-        int initialLevel = gamePlayer.calculateLevel();
         int xp = increasePlayerXP();
-        return "You got " + coins + " coins and " + xp + "XP!";}
+        return Colors.BOLD + "You got " + coins + " coins and " + xp + "XP!" + Colors.RESET;
+    }
 
     private int increasePlayerCoins() {
         int coins;
@@ -258,7 +259,7 @@ public class GameController {
     //*************************************************[this is where the shop functions start]*************************************************
     public String enterShop() {
         shop.enterShop(gamePlayer);
-        return "Your character enters the shop. Here, they see the shopkeeper: Dave. Welcome!";
+        return "You enter the shop. Here, you see the shopkeeper: Dave. Welcome!";
     }
 
     public String displayShopOptions() {

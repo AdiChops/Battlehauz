@@ -4,6 +4,7 @@ import interfaces.Battleable;
 import models.items.*;
 import models.Move;
 import models.gameCharacters.enemy.Dragon;
+import models.utilities.Colors;
 import models.utilities.Turn;
 
 import java.util.*;
@@ -205,11 +206,11 @@ public class Player extends GameCharacter implements Battleable {
         if (hasLevelledUp(initialLevel)) {
             levelUpPlayer();
             // Only the basic moves get upgrades, which is why only the first 3 get upgraded
-            return "You leveled up!\n" +
+            return Colors.BOLD+"You leveled up!\n" +
                     "Level " + initialLevel + " -->" + "Level " + calculateLevel() + "\n" +
                     "Move upgrade! " + getMoves().get(0).getName() + " : " + (getMoves().get(0).getBaseDamage() - (150 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(0).getBaseDamage() + "\n" +
                     "Move upgrade! " + getMoves().get(1).getName() + " : " + (getMoves().get(1).getBaseDamage() - (200 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(1).getBaseDamage() + "\n" +
-                    "Move upgrade! " + getMoves().get(2).getName() + " : " + (getMoves().get(2).getBaseDamage() - (250 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(2).getBaseDamage();
+                    "Move upgrade! " + getMoves().get(2).getName() + " : " + (getMoves().get(2).getBaseDamage() - (250 * (calculateLevel() - initialLevel))) + " --> " + getMoves().get(2).getBaseDamage() + Colors.RESET;
 
         }
         return "";

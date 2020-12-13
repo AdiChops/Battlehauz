@@ -3,6 +3,7 @@ import models.gameCharacters.Player;
 import models.items.ConsumableItem;
 import models.items.Item;
 import models.items.Potion;
+import models.utilities.Colors;
 import models.utilities.ItemGenerator;
 import models.utilities.WordsHelper;
 
@@ -50,7 +51,10 @@ public class Shop {
     private void loadQuotes() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("dialogueOptions.txt"));
         while(br.ready()){
-            shopkeeperDialogue.add(br.readLine());
+            String quote = br.readLine();
+            quote = quote.replaceAll("Dave:", Colors.GREEN+"Dave:"+Colors.RESET); // colors
+            quote = quote.replaceAll("You:", Colors.BLUE+"You:"+Colors.RESET); // colors
+            shopkeeperDialogue.add(quote);
         }
     }
 
