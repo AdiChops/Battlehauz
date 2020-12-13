@@ -139,10 +139,6 @@ public class Player extends GameCharacter implements Battleable {
         }
     }
 
-    public void setXP(int XP) {
-        this.XP = XP;
-    }
-
     /***
      * Removes 1 of passed in item from user's inventory
      * If the player has quantity 0 of the removed item, the item is entirely removed from the user's inventory
