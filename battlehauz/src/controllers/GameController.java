@@ -249,11 +249,20 @@ public class GameController {
     //******************************************************************************************************************
 
     //*************************************************[this is where the shop functions start]*************************************************
+
+    /**
+     * indicates to the Shop object what Player object is interacting with it by passing it into a function
+     * @return String message that welcomes the user
+     */
     public String enterShop() {
         shop.enterShop(gamePlayer);
         return "You enter the shop. Here, you see the shopkeeper: Dave. Welcome!";
     }
 
+    /**
+     * the main menu of the shop
+     * @return a String that indicates what ways the user can interact with the Shop object
+     */
     public String displayShopOptions() {
         return ("""
                 1. Buy a move
@@ -265,19 +274,22 @@ public class GameController {
                 7. Return back to the main menu.""");
     }
 
+    /**
+     * @return String that displays the Move objects in the shop for purchase in menu format
+     */
     public String displayMovesInShop() {
         return shop.displaySummaryOfMovesInShop();
     }
 
     /***
-     * @return String that displays all consumable available items in the shop
+     * @return String that displays all consumable available items in the shop in menu format
      */
     public String displayConsumableItemsInShop() {
         return shop.displaySummaryOfConsumableItemsInShop();
     }
 
     /***
-     * @return String that displays all potions available in the shop
+     * @return String that displays all potions available in the shop in menu format
      */
     public String displayPotionBoostsInShop() {
         return shop.displaySummaryOfPotionBoostsInShop();
@@ -285,12 +297,25 @@ public class GameController {
 
     /***
      * In the shop, a potion can only be purchased once per round of the battlehauz
-     * @return Boolean, true if a potion has already been purchase, false otherwise
+     * @return Boolean, true if a potion has already been purchased, false otherwise
      */
     public boolean boostHasNotBeenPurchasedCheck() {
         return !shop.isPotionBoostPurchased();
     }
 
+    /**
+     * used to show user what moves they have in order to sell
+     * @return String that displays all moves of the Player interacting with the shop in menu format
+     */
+    public String displayPlayersMovesForShop() {
+        return gamePlayer.availableMoves();
+    }
+
+    /**
+     * used to check the upper bound for valid user input during menu selection in the shop
+     * @param i indicates the list accessed
+     * @return the size of the list indicated by the parameter
+     */
     public int getSizeOfDisplayedMenu(int i) {
         if (i <= 3) {
             return shop.getSizeOfShopInventory(i);
@@ -302,13 +327,20 @@ public class GameController {
         return 0;
     }
 
+    /**
+     * allows the user to try to buy a move in the shop by user input
+     * when moves are displayed, the menu items start at 1 and not 0
+     * @param index is a user inputted number based off of what was displayed on the menu of moves for purchase
+     * @return a String representing success/failure of purchasing the move
+     */
     public String buyMove(int index) {
         return shop.purchaseMoveAtIndex(index - 1);
     }
 
     /***
-     * Buys consumable item at selected index
-     * @param index index inputted by the user
+     * tries to buy consumable item at selected index
+     * when consumable items are displayed, the menu items start at 1 and not 0
+     * @param index number inputted by the user based off what was displayed on the menu of consumable items for purchase
      * @return String confirmation that the player purchased the item or has insufficient funds
      */
     public String buyConsumableItem(int index) {
@@ -316,31 +348,38 @@ public class GameController {
     }
 
     /***
-     * Buys potion boost at selected index
-     * @param index index inputted by the user
+     * tries to buy potion boost at selected index
+     * when Potion items are displayed, the menu items start at 1 and not 0
+     * @param index number inputted by the user based off what was displayed on the menu of potion boost items for purchase
      * @return String confirmation that the player purchased the potion or has insufficient funds
      */
     public String buyPotionBoost(int index) {
         return shop.purchasePotionBoostAtIndex(index - 1);
     }
 
-    public String displayPlayersMovesForShop() {
-        return gamePlayer.availableMoves();
-    }
-
+    /**
+     * tries to sell move in player's inventory back to shop
+     * when user moves are displayed, the menu items start at 1 and not 0
+     * @param index number inputted by the user based off of what was displayed on the menu of moves of the user
+     * @return String confirmation that the player sold the move back and how many coins they recieved
+     */
     public String sellMoveToShop(int index) {
         return shop.buyBackMove(index - 1);
     }
 
     /***
-     * Sells item in player's inventory back to shop
-     * @param index index inputted by the user
-     * @return String confirmation that the player sold the item back and how much coins they received
+     * Sells consumable item in player's inventory back to shop
+     * when items are displayed, the menu items start at 1 and not 0
+     * @param index number inputted by the user based off of what was displayed on the menu of items of the user
+     * @return String confirmation that the player sold the item back and how many coins they received
      */
     public String sellItemToShop(int index) {
         return shop.buyBackItem(index - 1);
     }
 
+    /**
+     * @return String of a random conversation between the Shopkeeper and Player at shop.
+     */
     public String displayShopkeeperConversation(){
         return shop.getRandomDialogue();
     }
@@ -348,6 +387,11 @@ public class GameController {
     //*************************************************[this is where the shop functions end]*************************************************
 
     //*************************************************[this is where the rules are located]*************************************************
+
+    /**
+     * summarizes the basic rules of the Battlehauz battles.
+     * @return a String of rules.
+     */
     public String displayRules() {
         return """
 
@@ -358,6 +402,10 @@ public class GameController {
                 """;
     }
 
+    /**
+     * summarizes all gameplay rules of Battlehauz.
+     * @return a String of all of the rules.
+     */
     public String displayGameplayRules(){
         return """
                 BATTLEHAUZ
