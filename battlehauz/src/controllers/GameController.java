@@ -105,7 +105,7 @@ public class GameController {
     public String startBattle() {
         currentEnemy = enemiesToFight.remove();
         playerTurnStart();
-        return "\nYou have encountered the " + currentEnemy.toString() + "!";
+        return "You have encountered the " + currentEnemy.toString() + "!";
     }
 
     public void playerTurnStart() {
@@ -146,8 +146,8 @@ public class GameController {
 
                 The rules of the Battlehauz are simple. You fight an increasing number of enemies at each floor (one-by-one).
                 You and the enemy take turns choosing a move (you also have the option to choose an item to help your next move instead of a move).
-                You keep fighting enemies and moving up floors until you run out of health
-                (or a more dark way of saying it, the only way to leave the Battlehauz is DEATH). Have fun :)
+                You keep fighting enemies and moving up floors until you run out of health.
+                (A more dark way of saying it: the only way to leave the Battlehauz is DEATH). Have fun :)
                 """;
     }
 
@@ -198,7 +198,7 @@ public class GameController {
     }
 
     public String displayEnemyStatus() {
-        return currentEnemy.getName() + "'s " + currentEnemy.currentFighterStatus() + "\n";
+        return currentEnemy.getName() + "'s " + currentEnemy.currentFighterStatus();
     }
 
     public String displayStats() {
@@ -214,16 +214,14 @@ public class GameController {
     }
 
     public String enemyLoss() {
-        return enemyTalk('L') + "\n";
+        return enemyTalk('L') ;
     }
 
     public String displayPlayerRewards() {
         int coins = increasePlayerCoins();
         int initialLevel = gamePlayer.calculateLevel();
         int xp = increasePlayerXP();
-        return "You got " + coins + " coins and " + xp + "XP!\n" +
-                gamePlayer.displayLevelUp(initialLevel); //if the player levels up, additional things will be displayed
-    }
+        return "You got " + coins + " coins and " + xp + "XP!";}
 
     private int increasePlayerCoins() {
         int coins;
@@ -250,11 +248,11 @@ public class GameController {
     }
 
     public String enemyTalk(char mode) {
-        return currentEnemy.getName() + ": " + currentEnemy.speak(mode) + "\n";
+        return currentEnemy.getName() + ": " + currentEnemy.speak(mode);
     }
 
     public String displayLevelUp(int initialLevel){
-        return gamePlayer.displayLevelUp(initialLevel)+ "\n";
+        return gamePlayer.displayLevelUp(initialLevel);
     }
 
     //*************************************************[this is where the shop functions start]*************************************************

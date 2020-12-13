@@ -79,19 +79,23 @@ public class BattlehauzCLI {
 
     private static void enterBattlehauz(GameController game){
         game.setPotionBoostUsed(true);
+        game.getGamePlayer().setXP(1800);
         WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
         WordsHelper.rollingTextPrint(game.displayRules());
         //Game starts and continues while player is alive
         while (game.playerIsAlive()) {
             game.enterBattleFloor(); //generate enemies for floor
             WordsHelper.rollingTextPrint("\nYou have entered floor " + game.getCurrentFloor() + " of the Battlehauz.");
+            System.out.println();
             while (game.hasMoreEnemies() && game.playerIsAlive()) { //while the floor still has enemies
                 WordsHelper.rollingTextPrint(game.startBattle()); //game.startBattle sets the currentEnemy as the first enemy in the list
                 System.out.println();
                 WordsHelper.rollingTextPrint(game.enemyTalk('B'));
+                System.out.println();
                 int initialLevel = game.playerCurrentLevel();
                 battle(game);
                 WordsHelper.rollingTextPrint(game.displayLevelUp(initialLevel));
+                System.out.println();
             } // game.hasMoreEnemies, completing floor
             if (game.playerIsAlive()) game.nextFloor();
         }
@@ -100,10 +104,10 @@ public class BattlehauzCLI {
 
     private static void battle(GameController game){
         while (game.currentEnemyIsAlive() && game.playerIsAlive()) { //while the currentEnemy is still alive
-            System.out.println(game.displayCurrentFightersStatus() + "\n");
+            System.out.println(game.displayCurrentFightersStatus());
             do {
                 System.out.println("What would you like to do?");
-                System.out.println(game.displayPlayerOptions() + "\n");
+                System.out.println(game.displayPlayerOptions());
                 System.out.print("> ");
                 String actionChoiceS = INPUT.next();
                 System.out.println();
@@ -125,7 +129,9 @@ public class BattlehauzCLI {
                 System.out.println();
             } else {
                 WordsHelper.rollingTextPrint(game.enemyLoss());
+                System.out.println();
                 WordsHelper.rollingTextPrint(game.displayPlayerRewards());
+                System.out.println();
             }
         }
     }
@@ -139,8 +145,8 @@ public class BattlehauzCLI {
             int moveChoice = Integer.parseInt(moveChoiceS);
             if (moveChoice < 0 || moveChoice > game.getSizeOfDisplayedMenu(4))
                 throw new InputException("That move doesn't exist! Pick a valid move index!");
-            System.out.println(game.doPlayerTurn(moveChoice));
-            System.out.println(game.displayEnemyStatus());
+            System.out.println(game.doPlayerTurn(moveChoice)+"\n");
+            System.out.println(game.displayEnemyStatus()+"\n");
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             System.err.println("Oops! Please enter a valid move index.");
         } catch (InputException e) {
@@ -157,7 +163,7 @@ public class BattlehauzCLI {
                 int itemChoice = Integer.parseInt(itemChoiceS);
                 if (itemChoice < 0 || itemChoice > game.getSizeOfDisplayedMenu(5))
                     throw new InputException("That item doesn't exist! Pick a valid item index!");
-                System.out.println(game.playerUseItem(itemChoice));
+                System.out.println(game.playerUseItem(itemChoice)+"\n");
             } catch (NumberFormatException e) {
                 System.err.println("Oops! Please enter a valid number.");
             } catch (InputException e) {
