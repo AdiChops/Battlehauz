@@ -18,7 +18,7 @@ public class WordsHelper {
             "It's my lucky day today!",
             "Was that the best you got?",
             "Of course I emerged victorious, what did you think would happen?",
-            "You put up a good fight. Unfortunately, it was not good enough."};
+            "You put up a good fight. Unfortunately, it was not good enough.","You: \"Did I win?\"\nShopkeeper Dave: \"Kinda. You lost.\""};
     private static final String[] lossQuotes = {"A well-deserved win.", "You have done well, I have met my match.",
             "This is not the end.", "This is not done yet.", "You were a worthy opponent,"
             + " I happily accept my defeat.", "I will be seeing you again very soon."};
