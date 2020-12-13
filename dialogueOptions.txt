@@ -13,3 +13,6 @@ Dave: "I feel like, getting hit with a sword somebody threw at you hurts more th
 Dave: "Y'Know in theory, you could model a simulation of a plague and put that onto like a real world scale or real life... but you probably shouldn't do that."
 You: "How do you keep the shop running?" > Dave: "Basically I hired myself three times, to, avoid tax fraud or something."
 Dave: "If you ever made a stack of potions then tried to rip the bottom one out, you probably got fired from your first shopkeeper job...like I did."
+Dave: "People don't like if you use a sword. Well, some people don't. Insurance people don't like it when you use a sword. Other people might."
+Dave: "Oh I see you have a bank account. It's owner is you. And the bank account has a lot of coins in it..." > Dave: "Either because you got paid a lot or because you've been embezzling money."
+You: "What do you sell here?" > Dave: "I don't sell people. You shouldn't sell people. It's illegal... in many jurisdictions."
