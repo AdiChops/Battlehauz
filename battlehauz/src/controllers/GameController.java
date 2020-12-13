@@ -249,6 +249,14 @@ public class GameController {
         return currentEnemy.getName() + ": " + currentEnemy.speak(mode) + "\n";
     }
 
+    public boolean detectLevelUp(){
+        return gamePlayer.levelUpHasBeenDetected();
+    }
+
+    public String displayLevelUp(){
+        return gamePlayer.displayLevelUp();
+    }
+
     //*************************************************[this is where the shop functions start]*************************************************
     public String enterShop() {
         shop.enterShop(gamePlayer);
@@ -282,7 +290,11 @@ public class GameController {
         return !shop.isPotionBoostPurchased();
     }
 
-    public int getSizeOfDisplayedMenu(int i) { //TODO: look at this
+    public boolean setPotionBoostUsed(boolean b){
+        shop.setPotionBoostPurchased(!b);
+    }
+
+    public int getSizeOfDisplayedMenu(int i) {
         if (i <= 3) {
             return shop.getSizeOfShopInventory(i);
         } else if (i == 4) {

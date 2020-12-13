@@ -66,7 +66,7 @@ public class BattlehauzCLI {
             try {
                 switch (choice) {
                     case 'B' -> {
-                        game.getShop().setPotionBoostPurchased(false);
+                        game.setPotionBoostUsed(true);
                         WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
                         WordsHelper.rollingTextPrint(game.displayRules());
                         //Game starts and continues while player is alive
@@ -97,11 +97,11 @@ public class BattlehauzCLI {
                                                     String moveChoiceS = INPUT.next();
                                                     try {
                                                         int moveChoice = Integer.parseInt(moveChoiceS);
-                                                        if (moveChoice < 0 || moveChoice > game.getGamePlayer().getMoves().size()) //TODO: direct model access. Fix.
+                                                        if (moveChoice < 0 || moveChoice > game.getSizeOfDisplayedMenu(4))
                                                             throw new InputException("That move doesn't exist! Pick a valid move index!");
                                                         System.out.println(game.doPlayerTurn(moveChoice));
-                                                        if (game.getGamePlayer().levelUpHasBeenDetected()) //TODO: direct model access
-                                                            WordsHelper.rollingTextPrint(game.getGamePlayer().displayLevelUp());
+                                                        if (game.detectLevelUp())
+                                                            WordsHelper.rollingTextPrint(game.displayLevelUp());
                                                         System.out.println(game.displayEnemyStatus());
                                                     } catch (NumberFormatException | IndexOutOfBoundsException e) {
                                                         System.err.println("Oops! Please enter a valid move index.");
@@ -116,7 +116,7 @@ public class BattlehauzCLI {
                                                             System.out.print("Which item would you like to use > ");
                                                             String itemChoiceS = INPUT.next();
                                                             int itemChoice = Integer.parseInt(itemChoiceS);
-                                                            if (itemChoice < 0 || itemChoice > game.getGamePlayer().getOwnedItemNames().size()) //TODO: direct model access. Fix.
+                                                            if (itemChoice < 0 || itemChoice > game.getSizeOfDisplayedMenu(5))
                                                                 throw new InputException("That item doesn't exist! Pick a valid item index!");
                                                             System.out.println(game.playerUseItem(itemChoice));
                                                         } catch (NumberFormatException e) {
@@ -246,7 +246,6 @@ public class BattlehauzCLI {
                         }
                     }
                     case 4 -> { //player is trying to sell a move to the shop
-                        //TODO:Loop this until user quits
                         String moveSellChoiceS = "";
                         do{
                             System.out.println(game.displayPlayersMovesForShop());
