@@ -2,10 +2,8 @@ package views;
 
 import controllers.GameController;
 import models.InputException;
-import models.items.ConsumableOffensiveItem;
 import models.utilities.WordsHelper;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -35,7 +33,7 @@ public class BattlehauzCLI {
     private static char proceed() {
         try {
             Scanner proceedScanner = new Scanner(System.in);
-            Pattern p = Pattern.compile("B|S|F|R|A|Q");
+            Pattern p = Pattern.compile("[BSFRAQ]");
             System.out.println("\nHow would you like to proceed?");
             System.out.println("""
                     B - Enter BattleHauz
@@ -53,13 +51,14 @@ public class BattlehauzCLI {
         } catch (StringIndexOutOfBoundsException | InputException e) {
             switch(step){
                 case 0 ->System.err.println("Oops! please enter a valid choice.");
-                case 1->System.err.println("The valid choices are \n" +
-                        "B - Enter BattleHauz\n" +
-                        "S - Enter the Shop\n" +
-                        "F - View Full Stats\n" +
-                        "R - View Gameplay Rules\n" +
-                        "A - About Game\n" +
-                        "Q - Quit Game");
+                case 1->System.err.println("""
+                        The valid choices are\s
+                        B - Enter BattleHauz
+                        S - Enter the Shop
+                        F - View Full Stats
+                        R - View Gameplay Rules
+                        A - About Game
+                        Q - Quit Game""");
                 case 2->System.err.println("Ok, cmon buddy I have a business to run, I don't have all day, now tell me what you wanna do!");
                 case 3->System.err.println("Seriously I'm not playing around just pick a valid choice");
                 case 4->System.err.println("The devs only programmed me to talk for so long, I'm not sure what'll happen pretty soon!");
@@ -172,13 +171,12 @@ public class BattlehauzCLI {
             } while (game.isPlayersTurn());
             if (game.currentEnemyIsAlive()) {
                 WordsHelper.rollingTextPrint(game.doEnemyTurn());
-                System.out.println();
             } else {
                 WordsHelper.rollingTextPrint(game.enemyLoss());
                 System.out.println();
                 WordsHelper.rollingTextPrint(game.displayPlayerRewards());
-                System.out.println();
             }
+            System.out.println();
         }
     }
 

@@ -245,18 +245,31 @@ public class Player extends GameCharacter implements Battleable {
     public String availableMoves(){
         StringBuilder returnString = new StringBuilder();
         for(int i = 0; i < moves.size(); i++){
-            returnString.append(i + 1).append(": ").append(moves.get(i).toString()).append("\n");
+            returnString.append(i + 1).append(": ").append(moves.get(i).getShopSummary()).append("\n");
         }
         return returnString.toString();
+    }
+
+    public String availableItems(){
+        StringBuilder returnString = new StringBuilder();
+        for(int i = 0; i < ownedItemNames.size(); i++){
+            returnString.append(i + 1).append(": ").append(ownedItemNames.get(i).getShopSummary()).append("\n");
+        }
+        return returnString.toString();
+    }
+
+    private int calculateFromLevellingUp(){
+        return ((this.calculateLevel()+1)*1000) - this.XP;
     }
 
     public String toString(){
         return"Full Summary\n------------------------------ \n"+
                 this.getName() + "\nYou are at level " + this.calculateLevel() + "\n"
-                + this.getXP() + "XP\n"
-                + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"
+                + this.getXP() + "XP (you are " + calculateFromLevellingUp() + "XP from levelling up)\n"
+                + this.getCurrentHealth() + " / " + this.getMaxHealth() + " health\n"
                 + this.getCoins() + " coins\n"
-                + "Your available moves are \n" + availableMoves();
+                + "Your available moves are: \n" + availableMoves()
+                + "\nYour available items are: \n" + availableItems();
     }
 
 
