@@ -221,6 +221,13 @@ public class BattlehauzCLI {
         }
     }
 
+    /**
+     * this function is called in the Main method and represents the Shop of the game
+     * the user is shown the main menu of the Shop with options to buy/sell a move, buy/sell a consumable item, buy a potion boost, speak to the shopkeeper, and return.
+     * user input is taken, and the necessary functions in Controller are carried out depending on the user's choices
+     * the user returns to the main menu of the game by indicating in put that they want to return
+     * @param game takes the instance of the Controller in order to call on functions.
+     */
     private static void goToShop(GameController game) {
         WordsHelper.rollingTextPrint(game.enterShop());
         System.out.println();
@@ -233,7 +240,7 @@ public class BattlehauzCLI {
             try {
                 shopChoice = Integer.parseInt(shopChoiceS);
                 if (shopChoice <= 0 || shopChoice > 7) throw new InputException("");
-                //there's six options on the shop menu, with the 6th being return to main menu
+                //there's seven options on the shop menu, with the 7th being return to main menu
                 switch (shopChoice) {
                     case 1 -> { //Buying a move
                         String moveChoiceS;
