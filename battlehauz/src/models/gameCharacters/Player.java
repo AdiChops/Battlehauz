@@ -264,7 +264,7 @@ public class Player extends GameCharacter implements Battleable {
 
     //**********************************************************
 
-    private String availableMoves() {
+    public String availableMoves() {
         StringBuilder returnString = new StringBuilder();
         for (int i = 0; i < moves.size(); i++) {
             returnString.append(i + 1).append(": ").append(moves.get(i).getShopSummary()).append("\n");

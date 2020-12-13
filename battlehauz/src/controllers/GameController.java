@@ -299,14 +299,7 @@ public class GameController {
     }
 
     public String displayPlayersMovesForShop() {
-        ArrayList<Move> moves = gamePlayer.getMoves();
-        StringBuilder buffer = new StringBuilder();
-        int moveIndex = 1;
-        for (Move m : moves) {
-            buffer.append(moveIndex).append(": ").append(m.getShopSummary()).append("\n");
-            moveIndex++;
-        }
-        return buffer.toString();
+        return gamePlayer.availableMoves();
     }
 
     public String sellMoveToShop(int index) {
