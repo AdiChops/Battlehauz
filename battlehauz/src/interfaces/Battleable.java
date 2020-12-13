@@ -1,7 +1,6 @@
 package interfaces;
 
 import models.gameCharacters.GameCharacter;
-import models.Move;
 import models.utilities.Turn;
 
 

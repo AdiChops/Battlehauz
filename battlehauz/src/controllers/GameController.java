@@ -2,16 +2,15 @@ package controllers;
 
 import models.Move;
 import models.Shop;
-import models.items.Item;
 import models.gameCharacters.Player;
 import models.gameCharacters.enemy.Calcifer;
 import models.gameCharacters.enemy.Dragon;
 import models.gameCharacters.enemy.Enemy;
 import models.gameCharacters.enemy.Ogre;
+import models.items.Item;
 import models.utilities.Turn;
 import models.utilities.WordsHelper;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,15 +30,15 @@ import java.util.Queue;
 public class GameController {
 
     private int currentFloor;
-    private Queue<Enemy> enemiesToFight;
+    private final Queue<Enemy> enemiesToFight;
     private Enemy currentEnemy;
     private Player gamePlayer;
-    private Shop shop;
+    private final Shop shop;
     private boolean playersTurn = false;
 
     public GameController() throws IOException {
         shop = new Shop();
-        enemiesToFight = new LinkedList<Enemy>();
+        enemiesToFight = new LinkedList<>();
         currentFloor = 1;
     }
 
@@ -148,16 +147,23 @@ public class GameController {
                 """;
     }
 
-    public String displayPlayerShortSummary() {
-        return gamePlayer.shortSummary();
+    public String displayPlayersMovesForShop() {
+        ArrayList<Move> moves = gamePlayer.getMoves();
+        StringBuilder buffer = new StringBuilder();
+        int moveIndex = 1;
+        for (Move m : moves) {
+            buffer.append(moveIndex).append(": ").append(m.getShopSummary()).append("\n");
+            moveIndex++;
+        }
+        return buffer.toString();
     }
 
     public String displayPlayersMoves() {
         ArrayList<Move> moves = gamePlayer.getMoves();
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int moveIndex = 1;
         for (Move m : moves) {
-            buffer.append(moveIndex + ": " + m.getShopSummary() + "\n");
+            buffer.append(moveIndex).append(": ").append(m).append("\n");
             moveIndex++;
         }
         return buffer.toString();
@@ -174,10 +180,10 @@ public class GameController {
         if (gamePlayer.getOwnedItemNames().size() == 0) return "You have no items you can use!";
         ArrayList<Item> items = gamePlayer.getOwnedItemNames();
         HashMap<Item, Integer> itemsQuantity = gamePlayer.getItems();
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int itemIndex = 1;
         for (Item i : items) {
-            buffer.append(itemIndex + ": " + i.getShopSummary() + " | Quantity: " + itemsQuantity.get(i) + "\n");
+            buffer.append(itemIndex).append(": ").append(i.getShopSummary()).append(" | Quantity: ").append(itemsQuantity.get(i)).append("\n");
             itemIndex++;
         }
         return buffer.toString();

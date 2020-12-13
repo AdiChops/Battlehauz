@@ -11,10 +11,10 @@ import java.util.*;
 public class Player extends GameCharacter implements Battleable {
     private int coins;
     private int XP;
-    private HashMap<Item, Integer> items;
-    private ArrayList<Item> ownedItemNames;
-    private double[] consumableBoost = {0,0};
-    private double[] potionBoost = {0,0,0};
+    private final HashMap<Item, Integer> items;
+    private final ArrayList<Item> ownedItemNames;
+    private final double[] consumableBoost = {0,0};
+    private final double[] potionBoost = {0,0,0};
     private boolean levelUpDetected = false;
     int initialLevel = 0;
 
@@ -111,13 +111,11 @@ public class Player extends GameCharacter implements Battleable {
         return new Turn(nextMove, s);
     }
 
-    public boolean removeMove(int moveIndex){
+    public void removeMove(int moveIndex){
         try{
             moves.remove(moveIndex);
-            return true;
         }
         catch (Exception e){ // TODO: make the exception catching more specific
-            return false;
         }
     }
 
@@ -149,15 +147,13 @@ public class Player extends GameCharacter implements Battleable {
      * Removes 1 of passed in item from user's inventory
      * If the player has quantity 0 of the removed item, the item is entirely removed from the user's inventory
      * @param itemToRemove item to remove
-     * @return true
      */
-    public boolean removeItem(Item itemToRemove){
+    public void removeItem(Item itemToRemove){
         items.replace(itemToRemove, items.get(itemToRemove) - 1);
         if (items.get(itemToRemove) == 0) {
             items.remove(itemToRemove);
             ownedItemNames.remove(itemToRemove);
         }
-        return true;
     }
 
     /***
@@ -286,13 +282,6 @@ public class Player extends GameCharacter implements Battleable {
                 + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"
                 + this.getCoins() + " coins\n"
                 + "Your available moves are \n" + availableMoves();
-    }
-
-    public String shortSummary(){
-        return "\n" + this.getName() + "\n" + this.getCurrentHealth() + " health / " + this.getMaxHealth() + "\n"+
-                this.progressBar()+ "\n"+
-                "Your available moves are: \n" +
-                this.availableMoves();
     }
 
 
