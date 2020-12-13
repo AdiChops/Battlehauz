@@ -2,7 +2,7 @@ package models.items;
 
 public abstract class ConsumableItem extends Item {
 
-    private double boost;
+    private final double boost;
 
     public ConsumableItem(String iName, int iBuyingPrice, int iSellingPrice, double iBoost) {
         super(iName, iBuyingPrice, iSellingPrice);

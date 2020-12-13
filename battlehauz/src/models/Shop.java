@@ -19,7 +19,7 @@ public class Shop {
     private final ArrayList<Item> consumableItemsInShop;
     private final ArrayList<Item> potionBoostsInShop;
     private ArrayList<Move> currentMovesInShop;
-    private ArrayList<String> shopkeeperDialogue;
+    private final ArrayList<String> shopkeeperDialogue;
     private boolean potionBoostPurchased;
     private static final Random RND = new Random();
 

@@ -8,7 +8,7 @@ public interface Battleable {
     /***
      * Method return true or false based on random int generation
      * dictates if an attack is successful or not
-     * @return
+     * @return true if attack is successful, false otherwise
      */
     boolean attackSuccessful();
 

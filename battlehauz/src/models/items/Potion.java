@@ -2,7 +2,7 @@ package models.items;
 
 public abstract class Potion extends Item {
 
-    private double boost;
+    private final double boost;
 
     public Potion(String iName, int iBuyingPrice, int iSellingPrice, double iBoost) {
         super(iName, iBuyingPrice, iSellingPrice);

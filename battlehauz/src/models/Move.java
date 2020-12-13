@@ -1,13 +1,13 @@
 package models;
 
 public class Move {
-    private String name;
+    private final String name;
     private int baseDamage;
-    private int XPBoost;
-    private int maxUses; //max amount of times you're allowed to use this move
+    private final int XPBoost;
+    private final int maxUses; //max amount of times you're allowed to use this move
     private int remainingUses; //remaining times you're allowed to use this move
-    private boolean isSellable;
-    private int buyingPrice;
+    private final boolean isSellable;
+    private final int buyingPrice;
     private double depreciationPercentage; //percent that price is depreciated by.
     //boolean isSellable is necessary for the player to see whether or not they can get the selling price.
     //boolean baseMove is not inherently as necessary because isSellable can be used within the method canUse() as well, but added it until we talk about hierarchy again.
