@@ -11,6 +11,7 @@ import models.gameCharacters.enemy.Ogre;
 import models.utilities.Turn;
 import models.utilities.WordsHelper;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -151,8 +152,15 @@ public class GameController {
         return gamePlayer.shortSummary();
     }
 
-    public String displayPlayerMoves() {
-        return gamePlayer.availableMoves();
+    public String displayPlayersMoves() {
+        ArrayList<Move> moves = gamePlayer.getMoves();
+        StringBuffer buffer = new StringBuffer();
+        int moveIndex = 1;
+        for (Move m : moves) {
+            buffer.append(moveIndex + ": " + m.getShopSummary() + "\n");
+            moveIndex++;
+        }
+        return buffer.toString();
     }
 
     public String displayPlayerOptions() {
@@ -164,12 +172,15 @@ public class GameController {
 
     public String displayPlayerInventory() {
         if (gamePlayer.getOwnedItemNames().size() == 0) return "You have no items you can use!";
-        int counter = 1;
-        StringBuilder stringToReturn = new StringBuilder("Items in inventory: \n");
-        for (Item i : gamePlayer.getOwnedItemNames()) {
-            stringToReturn.append(counter).append(". ").append(i.getName()).append(": ").append(gamePlayer.getItems().get(i)).append("\n");
+        ArrayList<Item> items = gamePlayer.getOwnedItemNames();
+        HashMap<Item, Integer> itemsQuantity = gamePlayer.getItems();
+        StringBuffer buffer = new StringBuffer();
+        int itemIndex = 1;
+        for (Item i : items) {
+            buffer.append(itemIndex + ": " + i.getShopSummary() + " | Quantity: " + itemsQuantity.get(i) + "\n");
+            itemIndex++;
         }
-        return stringToReturn.toString();
+        return buffer.toString();
     }
 
     public String displayCurrentFightersStatus() {
@@ -265,6 +276,14 @@ public class GameController {
         return !shop.isPotionBoostPurchased();
     }
 
+    public void setPotionBoostPurchased(){
+        shop.setPotionBoostPurchased(true);
+    }
+
+    public void resetPotionBoostPurchase(){
+        shop.setPotionBoostPurchased(false);
+    }
+
     public int getSizeOfDisplayedMenu(int i) { //TODO: look at this
         if (i <= 3) {
             return shop.getSizeOfShopInventory(i);
@@ -274,29 +293,6 @@ public class GameController {
             return gamePlayer.getOwnedItemNames().size();
         }
         return 0;
-    }
-
-    public String displayPlayersMoveInventory() {
-        ArrayList<Move> moves = gamePlayer.getMoves();
-        StringBuffer buffer = new StringBuffer();
-        int moveIndex = 1;
-        for (Move m : moves) {
-            buffer.append(moveIndex + ": " + m.getShopSummary() + "\n");
-            moveIndex++;
-        }
-        return buffer.toString();
-    }
-
-    public String displayPlayersItemInventory() {
-        ArrayList<Item> items = gamePlayer.getOwnedItemNames();
-        HashMap<Item, Integer> itemsQuantity = gamePlayer.getItems();
-        StringBuffer buffer = new StringBuffer();
-        int itemIndex = 1;
-        for (Item i : items) {
-            buffer.append(itemIndex + ": " + i.getShopSummary() + " | Quantity: " + itemsQuantity.get(i) + "\n");
-            itemIndex++;
-        }
-        return buffer.toString();
     }
 
     public String buyMove(int index) {

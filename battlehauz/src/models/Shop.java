@@ -2,6 +2,7 @@ package models;
 import models.gameCharacters.Player;
 import models.items.ConsumableItem;
 import models.items.Item;
+import models.items.Potion;
 import models.utilities.ItemGenerator;
 import models.utilities.WordsHelper;
 
@@ -109,7 +110,7 @@ public class Shop {
             if (userAtShop.addMove(moveToPurchase)) {
                 currentMovesInShop.remove(moveToPurchase);
                 userAtShop.setCoins(userAtShop.getCoins() - moveToPurchase.getBuyingPrice());
-                return "You purchased " + moveToPurchase.getName() + " for " + moveToPurchase.getBuyingPrice()+".";
+                return "You purchased " + moveToPurchase.getName() + " for " + moveToPurchase.getBuyingPrice()+" coins.";
             }else{
                 return "You do not have enough space to add another move. \n" +
                         "Sell one of your existing moves to buy another.";
@@ -123,7 +124,7 @@ public class Shop {
         if(itemToPurchase.getBuyingPrice() <= userAtShop.getCoins()){
             userAtShop.addItem(itemToPurchase);
             userAtShop.setCoins(userAtShop.getCoins() - itemToPurchase.getBuyingPrice());
-            return "You purchased " + itemToPurchase.getName() + " for " + itemToPurchase.getBuyingPrice()+".";
+            return "You purchased " + itemToPurchase.getName() + " for " + itemToPurchase.getBuyingPrice()+" coins.";
         }
         return "Insufficient funds.";
     }
@@ -131,9 +132,10 @@ public class Shop {
     public String purchasePotionBoostAtIndex(int index){
         Item itemToPurchase = potionBoostsInShop.get(index);
         if(itemToPurchase.getBuyingPrice() <= userAtShop.getCoins()){
-            userAtShop.addItem(itemToPurchase);
+            potionBoostPurchased = true;
             userAtShop.setCoins(userAtShop.getCoins()-itemToPurchase.getBuyingPrice());
-            return "You purchased " + itemToPurchase.getName() + " for " + itemToPurchase.getBuyingPrice()+".";
+            return "You purchased " + itemToPurchase.getName() + " for " + itemToPurchase.getBuyingPrice()+" coins.\n" +
+                    userAtShop.drinkPotion((Potion) itemToPurchase);
         }
         return "Insufficient funds.";
     }
@@ -142,8 +144,8 @@ public class Shop {
         ArrayList<Move> userMoves = userAtShop.getMoves();
         Move moveToBuy = userMoves.get(index);
         if (moveToBuy.isSellable()) {
-            userAtShop.increaseCoins(userMoves.get(index).calculateSellingPrice());
             userAtShop.removeMove(index);
+            userAtShop.increaseCoins(userMoves.get(index).calculateSellingPrice());
         }
         return "You sold the move "+moveToBuy.getName()+" for "+moveToBuy.calculateSellingPrice()+" coins.";
     }

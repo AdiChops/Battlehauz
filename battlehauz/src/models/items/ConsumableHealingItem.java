@@ -16,6 +16,6 @@ public class ConsumableHealingItem extends ConsumableItem {
     @Override
     public String toString() {
         DecimalFormat df = new DecimalFormat("##.#");
-        return "You were healed for " + df.format(useItem() * 100) + " health!";
+        return "You were healed for " + df.format(useItem() * 100) + "% of your health health!";
     }
 }

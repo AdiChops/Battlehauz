@@ -59,7 +59,7 @@ public class BattlehauzCLI {
         game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
         game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
         game.getGamePlayer().addItem(new ConsumableOffensiveItem("Jimmy John's hot stick", 7, 7, 0.07));
-
+        game.getGamePlayer().setCoins(10000);
         char choice;
         do {
             choice = proceed();
@@ -68,7 +68,7 @@ public class BattlehauzCLI {
                     case 'B' -> {
                         game.getShop().setPotionBoostPurchased(false);
                         WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz! Good luck! Oh wait, you don't need luck, you need skill. Good skill!");
-                        System.out.println(game.displayRules());
+                        WordsHelper.rollingTextPrint(game.displayRules());
                         //Game starts and continues while player is alive
                         while (game.playerIsAlive()) {
                             game.enterBattleFloor(); //generate enemies for floor
@@ -92,7 +92,7 @@ public class BattlehauzCLI {
                                             switch (actionChoice) {
                                                 case 1 -> {
                                                     System.out.println("Which move would you like to select?");
-                                                    System.out.println(game.displayPlayerMoves());
+                                                    System.out.println(game.displayPlayersMoves());
                                                     System.out.print("> ");
                                                     String moveChoiceS = INPUT.next();
                                                     try {
@@ -239,9 +239,9 @@ public class BattlehauzCLI {
                                     }
 
                                 }
-                            } while (!potionChoiceS.equalsIgnoreCase("q"));
+                            } while (!potionChoiceS.equalsIgnoreCase("q") && game.boostHasNotBeenPurchasedCheck());
                         } else {
-                            System.out.println("You've already purchased a boost. It will be applied to your next run at the Battlehauz. \n+" +
+                            System.out.println("You've already purchased a boost. It will be applied to your next run at the Battlehauz. \n" +
                                     "Until you've used your boost, you can not purchase another one.");
                             //is shown if the user has purchased a boost they have not used.
                         }
@@ -250,7 +250,7 @@ public class BattlehauzCLI {
                         //TODO:Loop this until user quits
                         String moveSellChoiceS = "";
                         do{
-                            System.out.println(game.displayPlayersMoveInventory());
+                            System.out.println(game.displayPlayersMoves());
                             //displays all of the moves the player has, including the base moves, with the appropriate stats.
                             System.out.println("Q: Return to shop menu");
                             System.out.println("Input a move number above to sell to the shop. Write 'Q' to quit. >");
@@ -274,7 +274,7 @@ public class BattlehauzCLI {
                         //TODO:Loop this until user quits
                         String itemSellChoiceS = "";
                         do{
-                            System.out.println(game.displayPlayersItemInventory());
+                            System.out.println(game.displayPlayerInventory());
                             //displays the consumable items the player has, with the appropriate stats and quantity.
                             System.out.println("Q: Return to shop menu");
                             System.out.println("Input an item number above to sell to the shop. Write 'Q' to quit. >");

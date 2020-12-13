@@ -77,14 +77,4 @@ ph
 Potion of Regeneration I
 500
 225
-0.20
-ph
-Potion of Regeneration II
-1500
-675
-0.30
-ph
-Potion of Regeneration III
-2500
-1125
-0.40
+0.0625

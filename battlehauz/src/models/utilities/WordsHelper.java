@@ -71,7 +71,7 @@ public class WordsHelper {
                     Thread.sleep(1000);
                 }else if (s.contains(",")){
                     Thread.sleep(500);
-                }else if (s.contains(">")){
+                }else if (s.contains(">") && !s.contains("-->")){
                     enterPrompter.nextLine();
                 }else{
                     Thread.sleep(250);

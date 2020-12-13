@@ -6,6 +6,7 @@ import models.Move;
 import models.gameCharacters.enemy.Dragon;
 import models.utilities.Turn;
 
+import javax.swing.*;
 import java.util.*;
 
 public class Player extends GameCharacter implements Battleable {
@@ -60,6 +61,10 @@ public class Player extends GameCharacter implements Battleable {
 
     /////////////////////////////////////////////////////
 
+    /***
+     * Used to pass to the view if a level up has occured to the player to display a message
+     * @return
+     */
     public boolean levelUpHasBeenDetected(){
         if (levelUpDetected){
             levelUpDetected = false;
@@ -86,16 +91,27 @@ public class Player extends GameCharacter implements Battleable {
     public void takeDamage(int damage) {
         // items would change this behaviour
         this.currentHealth -= (damage - (damage * (consumableBoost[1] + permanentBoost[1])));
-        this.currentHealth += (permanentBoost[2]);
+        consumableBoost[1] = 0;
+        double totalHealing = maxHealth * permanentBoost[2];
+        for (int healPoints = 0; healPoints < (int)totalHealing; healPoints++){
+            currentHealth += 1;
+            if (currentHealth == maxHealth) break;
+        }
         if (this.currentHealth < 0) this.currentHealth = 0;
     }
 
-    public int calculateDamage(Move move){ return (move.getBaseDamage() + (int)(move.getBaseDamage() * (consumableBoost[0] + permanentBoost[1])));} // other factors will come in }
+    public int calculateDamage(Move move){ return (move.getBaseDamage() + (int)(move.getBaseDamage() * (consumableBoost[0] + permanentBoost[0])));} // other factors will come in }
 
     public int calculateLevel() { return XP/1000;}
 
     public int calculateMaxHealth(){ return maxHealth * calculateLevel(); }
 
+    /***
+     * Removes 1 of passed in item from user's inventory
+     * If the player has quantity 0 of the removed item, the item is entirely removed from the user's inventory
+     * @param itemToRemove item to remove
+     * @return true
+     */
     public boolean removeItem(Item itemToRemove){
         items.replace(itemToRemove, items.get(itemToRemove) - 1);
         if (items.get(itemToRemove) == 0) {
@@ -150,14 +166,25 @@ public class Player extends GameCharacter implements Battleable {
         }else if (itemToUse instanceof ConsumableDefensiveItem){
             consumableBoost[1] = itemToUse.useItem();
         }else if (itemToUse instanceof ConsumableHealingItem){
-            int totalHealing = (int)itemToUse.useItem();
-            for (int healPoints = 0; healPoints < totalHealing; healPoints++){
+            double totalHealing = maxHealth * itemToUse.useItem();
+            for (int healPoints = 0; healPoints < (int)totalHealing; healPoints++){
                 currentHealth += 1;
                 if (currentHealth == maxHealth) break;
             }
         }
         removeItem(itemToUse);
         return new Turn(itemToUse, true);
+    }
+
+    public String drinkPotion(Potion potion){
+        if (potion instanceof OffensivePotion){
+            permanentBoost[0] = potion.useItem();
+        }else if (potion instanceof DefensivePotion){
+            permanentBoost[1] = potion.useItem();
+        }else if (potion instanceof HealingPotion){
+            permanentBoost[2] = potion.useItem();
+        }
+        return potion.toString();
     }
 
     /***
@@ -187,7 +214,7 @@ public class Player extends GameCharacter implements Battleable {
                 opponent.takeDamage(this.calculateDamage(nextMove));
             }
         }
-        resetConsumableBoosts();
+        consumableBoost[0] = 0;
         return new Turn(nextMove, s);
     }
 
