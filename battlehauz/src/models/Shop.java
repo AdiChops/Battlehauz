@@ -154,7 +154,7 @@ public class Shop {
         ArrayList<Item> userItems = userAtShop.getOwnedItemNames();
         Item itemToBuy = userItems.get(index);
         userAtShop.removeItem(itemToBuy);
-        userAtShop.increaseCoins(userAtShop.getOwnedItemNames().get(index).getSellingPrice());
+        userAtShop.increaseCoins(itemToBuy.getSellingPrice());
         return "You sold 1 of the item "+itemToBuy.getName()+" for "+itemToBuy.getSellingPrice()+" coins.";
     }
 
