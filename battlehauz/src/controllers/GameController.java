@@ -161,6 +161,12 @@ public class GameController {
         }
     }
 
+    /***
+     * Uses the item at the index that the user selected
+     * Applies item effect to Player class
+     * @param itemIndex index of item selected
+     * @return String that desrcribes action
+     */
     public String playerUseItem(int itemIndex) {
         Turn currentTurn = gamePlayer.useItem(itemIndex);
         playerTurnEnd();
@@ -263,14 +269,24 @@ public class GameController {
         return shop.displaySummaryOfMovesInShop();
     }
 
+    /***
+     * @return String that displays all consumable available items in the shop
+     */
     public String displayConsumableItemsInShop() {
         return shop.displaySummaryOfConsumableItemsInShop();
     }
 
+    /***
+     * @return String that displays all potions available in the shop
+     */
     public String displayPotionBoostsInShop() {
         return shop.displaySummaryOfPotionBoostsInShop();
     }
 
+    /***
+     * In the shop, a potion can only be purchased once per round of the battlehauz
+     * @return Boolean, true if a potion has already been purchase, false otherwise
+     */
     public boolean boostHasNotBeenPurchasedCheck() {
         return !shop.isPotionBoostPurchased();
     }
@@ -290,10 +306,20 @@ public class GameController {
         return shop.purchaseMoveAtIndex(index - 1);
     }
 
+    /***
+     * Buys consumable item at selected index
+     * @param index index inputted by the user
+     * @return String confirmation that the player purchased the item or has insufficient funds
+     */
     public String buyConsumableItem(int index) {
         return shop.purchaseConsumableItemAtIndex(index - 1);
     }
 
+    /***
+     * Buys potion boost at selected index
+     * @param index index inputted by the user
+     * @return String confirmation that the player purchased the potion or has insufficient funds
+     */
     public String buyPotionBoost(int index) {
         return shop.purchasePotionBoostAtIndex(index - 1);
     }
@@ -306,6 +332,11 @@ public class GameController {
         return shop.buyBackMove(index - 1);
     }
 
+    /***
+     * Sells item in player's inventory back to shop
+     * @param index index inputted by the user
+     * @return String confirmation that the player sold the item back and how much coins they received
+     */
     public String sellItemToShop(int index) {
         return shop.buyBackItem(index - 1);
     }

@@ -203,6 +203,13 @@ public class BattlehauzCLI {
         }
     }
 
+    /***
+     * Prompts the user to use an item
+     * If the user has no items then "You have no items you can use!" is displayed
+     * Otherwise summary of all items player has is displayed
+     * Once input is selected, item is used and effects are applied
+     * @param game current game
+     */
     private static void useItem(GameController game) {
         System.out.println(game.displayPlayerInventory());
         if (!game.displayPlayerInventory().equals("You have no items you can use!")) {

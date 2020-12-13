@@ -7,6 +7,19 @@ import java.io.IOException;
 
 public class ItemGenerator {
 
+    /***
+     * Static method that generates items from file input
+     * Type of item returned is dependant on the first line of each item attribute description
+     * "co" = Consumable Offensive
+     * "cd" = Consumable Defensive
+     * "ch" = Consumable Healing
+     * "po" = Offensive Potion
+     * "pd" = Defensive Potion
+     * "ph" = Healing Potion
+     * @param in Buffered reader of file with item information
+     * @return new item of specific type
+     * @throws IOException
+     */
     public static Item generateItems(BufferedReader in) throws IOException {
         String itemClassification = in.readLine();
         return switch (itemClassification) {
