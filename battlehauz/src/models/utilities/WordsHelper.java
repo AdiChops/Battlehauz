@@ -12,12 +12,12 @@ public class WordsHelper {
     private static final String[] winQuotes = {"We had a great battle! Unfortunate for you, I am unstoppable.",
             "Don't take it personally, I'm just the better opponent.",
             "What did you expect when you chose to pick a fight with me?",
-            "Don't worry, you just a need a little bit more training!",
+            "Don't worry, you just need a little bit more training!",
             "Did you really think you could defeat me?",
             "It's my lucky day today!",
             "Was that the best you got?",
             "Of course I emerged victorious, what did you think would happen?",
-            "You put up a good fight. Unfortunately, it was not good enough.","You: \"Did I win?\"\nShopkeeper Dave: \"Kinda. You lost.\""};
+            "You put up a good fight. Unfortunately, it was not good enough."};
     private static final String[] lossQuotes = {"A well-deserved win.", "You have done well, I have met my match.",
             "This is not the end.", "This is not done yet.", "You were a worthy opponent,"
             + " I happily accept my defeat.", "I will be seeing you again very soon."};
@@ -87,5 +87,13 @@ public class WordsHelper {
     public static String capitalize(String original){
         if (Character.isUpperCase(original.charAt(0))) return original;
         return Character.toUpperCase(original.charAt(0)) + original.substring(1);
+    }
+
+    public static String shopkeeperQuote(){
+        int chance = RND.nextInt(100);
+        if(chance < 30)
+            return Colors.BLUE_BOLD + "You: " + Colors.RESET + "Did I win?\n"+ Colors.GREEN_BOLD + "Shopkeeper Dave: " + Colors.RESET + "Kinda. You lost...\n";
+        else
+            return "";
     }
 }

@@ -52,8 +52,8 @@ public class Shop {
         BufferedReader br = new BufferedReader(new FileReader("dialogueOptions.txt"));
         while(br.ready()){
             String quote = br.readLine();
-            quote = quote.replaceAll("Dave:", Colors.GREEN+"Dave:"+Colors.RESET); // colors
-            quote = quote.replaceAll("You:", Colors.BLUE+"You:"+Colors.RESET); // colors
+            quote = quote.replaceAll("Dave:", Colors.GREEN_BOLD+"Dave:"+Colors.RESET); // colors
+            quote = quote.replaceAll("You:", Colors.BLUE_BOLD+"You:"+Colors.RESET); // colors
             shopkeeperDialogue.add(quote);
         }
     }

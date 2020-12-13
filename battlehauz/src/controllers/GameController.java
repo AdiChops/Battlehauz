@@ -258,8 +258,13 @@ public class GameController {
         gamePlayer.resetMoves();
     }
 
+    public String playerLoss(){
+        String quote = WordsHelper.shopkeeperQuote();
+        return Colors.BOLD + "You died! You are getting sent back to the main menu.\n" + Colors.RESET + enemyTalk('W') + "\n" + quote;
+    }
+
     public String enemyTalk(char mode) {
-        return currentEnemy.getName() + ": " + currentEnemy.speak(mode);
+        return Colors.YELLOW_BOLD + currentEnemy.getName() + ": "+ Colors.RESET + currentEnemy.speak(mode);
     }
 
     public String displayLevelUp(int initialLevel){

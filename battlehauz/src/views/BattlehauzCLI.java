@@ -98,6 +98,7 @@ public class BattlehauzCLI {
             } // game.hasMoreEnemies, completing floor
             if (game.playerIsAlive()) game.nextFloor();
         }
+        WordsHelper.rollingTextPrint(game.playerLoss());
         game.restorePlayerHealth();
     }
 
