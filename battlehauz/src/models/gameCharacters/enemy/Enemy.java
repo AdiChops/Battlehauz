@@ -84,6 +84,10 @@ public abstract class Enemy extends GameCharacter implements Battleable {
         return new Turn(nextMove, s);
     }
 
+    /***
+     * name generator with their health
+     * @return enemy type with specific name of enemy and its current health
+     */
     @Override
     public String toString(){
         return getClass().getSimpleName() +  " of the name " + this.getName() + ", with " + this.getCurrentHealth() + " health";
