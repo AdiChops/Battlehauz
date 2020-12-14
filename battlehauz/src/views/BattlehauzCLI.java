@@ -14,7 +14,10 @@ public class BattlehauzCLI {
     private static final Scanner INPUT = new Scanner(System.in);
     private static int step = 0;
 
-    public static void displayStartUp() {
+    /**
+     * Method that displays start-up ascii art
+     */
+    private static void displayStartUp() {
         System.out.println(Colors.BLUE_BOLD+"""
                 Welcome to
                  .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.   .----------------. .----------------. .----------------. .----------------.\s
@@ -94,6 +97,11 @@ public class BattlehauzCLI {
         }
     }
 
+    /**
+     * main method
+     * @param args main method parameters
+     * @throws IOException if an exception gets thrown during initialization (such as file input of items inventory)
+     */
     public static void main(String[] args) throws IOException {
         GameController game = new GameController();
         displayStartUp();
@@ -128,6 +136,10 @@ public class BattlehauzCLI {
         } while (choice != 'Q'); // do-while
     }// main()
 
+    /**
+     * Method that gets called when the user chooses to enter the Battlehauz
+     * @param game GameController object that stores the current game
+     */
     private static void enterBattlehauz(GameController game) {
         WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz!" + Colors.BOLD + " Good luck!" + Colors.RESET + " Oh wait, you don't need luck, you need skill." + Colors.BOLD+ " Good skill!" + Colors.RESET);
         WordsHelper.rollingTextPrint(game.displayRules());
@@ -152,6 +164,10 @@ public class BattlehauzCLI {
         game.restorePlayer();
     }
 
+    /**
+     * Method that gets called when a battle between an enemy and the player starts
+     * @param game GameController object that stores the current game
+     */
     private static void battle(GameController game) {
         while (game.currentEnemyIsAlive() && game.playerIsAlive()) {
             System.out.println(game.displayCurrentFightersStatus());
@@ -185,6 +201,10 @@ public class BattlehauzCLI {
         } //while the currentEnemy and the player is still alive
     }
 
+    /**
+     * Method that gets called when the user selects a move
+     * @param game GameController object that stores the current game
+     */
     private static void performMove(GameController game) {
         System.out.println("Which move would you like to select?");
         System.out.println(game.displayPlayersMoves());
@@ -389,18 +409,34 @@ public class BattlehauzCLI {
         } while (shopChoice != 7);
     }
 
+    /**
+     * Method to display game credits if the user chooses the "About Game" option
+     * @param game GameController object that stores the current game
+     */
     private static void displayCredits(GameController game) {
         System.out.println(game.credits());
     }
 
+    /**
+     * Method to display full statistics summary if the user chooses the "View Full Stats" option
+     * @param game GameController object that stores the current game
+     */
     private static void displayStats(GameController game) {
         System.out.println(game.displayStats());
     }
 
+    /**
+     * Method to display the game's rules if the user chooses the "View Rules" option
+     * @param game GameController object that stores the current game
+     */
     private static void displayRules(GameController game) {
         System.out.println(game.displayGameplayRules());
     }
 
+    /**
+     * Method to quit the game if the user chooses to quit the game
+     * @param game GameController object that stores the current game
+     */
     private static void quit(GameController game) {
         displayStats(game);
         displayCredits(game);
