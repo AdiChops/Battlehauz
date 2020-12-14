@@ -1,9 +1,9 @@
 package models.items;
 
 public abstract class Item {
-    String name;
-    int buyingPrice;
-    int sellingPrice;
+    protected String name;
+    protected int buyingPrice;
+    protected int sellingPrice;
 
     public String getName() {
         return name;
