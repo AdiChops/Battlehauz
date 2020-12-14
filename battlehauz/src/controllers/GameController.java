@@ -390,7 +390,7 @@ public class GameController {
     }
 
     /***
-     * In the shop, a potion can only be purchased once per round of the battlehauz
+     * In the shop, a potion can only be purchased once per round of the Battlehauz
      * @return Boolean, true if a potion has already been purchased, false otherwise
      */
     public boolean boostHasNotBeenPurchasedCheck() {
