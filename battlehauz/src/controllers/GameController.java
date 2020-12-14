@@ -18,16 +18,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
-/* move starts with Player choosing move/item
- if move, then call performTurn(int index, boolean isMove), which calls:
-    - chooseMove(int index): returns Move at specified index
-    -
-
- */
-
-//remember, a controller is there so that we don't assume where the user input is coming from.
-//Straight from Lanthier's notes, we assume there is no System.out.println or scanner anywhere but here.
 public class GameController {
 
     private int currentFloor;
@@ -37,6 +27,7 @@ public class GameController {
     private final Shop shop;
     private boolean playersTurn = false;
 
+    //*********************[Constructors and Initializers]***************************
     public GameController() throws IOException {
         shop = new Shop();
         enemiesToFight = new LinkedList<>();
@@ -48,7 +39,7 @@ public class GameController {
         return Colors.BOLD + "Welcome to the Battlehauz, " + name + "!" + Colors.RESET;
     }
 
-    //**************************[Getter methods]*********************************************
+    //**************************[Getter methods]***************************************
 
     public int playerCurrentLevel(){
         return gamePlayer.calculateLevel();
@@ -70,10 +61,18 @@ public class GameController {
         return playersTurn;
     }
 
+    /**
+     * Determines if the current enemy is alive
+     * @return True if current enemy is still alive, false otherwise
+     */
     public boolean currentEnemyIsAlive() {
         return currentEnemy.isAlive();
     }
 
+    /**
+     * Determines if there are more enemies on the floor
+     * @return True if current enemy is still alive, false otherwise
+     */
     public boolean hasMoreEnemies() {
         return !enemiesToFight.isEmpty();
     }
@@ -82,11 +81,18 @@ public class GameController {
 
     //*********************************[Battles]************************************************
 
+    /**
+     * Method that runs when player enters a new floor of the Battlehauz
+     * (resets their potionBoostPurchased and generates the enemy queue)
+     */
     public void enterBattleFloor() {
         shop.setPotionBoostPurchased(false);
         generateEnemyQueue();
     }
 
+    /**
+     * Generates the queue of enemies that the player must fight on the current floor
+     */
     private void generateEnemyQueue() {
         enemiesToFight.clear();
         int numEnemies = numberOfEnemies();
@@ -105,20 +111,37 @@ public class GameController {
         }
     }
 
+    /**
+     * To have the enemy speak for miscellaneous reasons (determined on "mode")
+     * @param mode determines what kind of quote should be generated
+     * @return the String for the quote generated
+     */
     public String enemyTalk(char mode) {
         return Colors.YELLOW_BOLD + currentEnemy.getName() + ": "+ Colors.RESET + currentEnemy.speak(mode);
     }
 
+    /**
+     * Method removes and returns the first enemy in the list for the battle to start bettween this enemy
+     * and the player.
+     * @return String that is displayed to user to determine the enemy that the player has to fight next
+     */
     public String startBattle() {
         currentEnemy = enemiesToFight.remove();
         playerTurnStart();
         return "You have encountered the " + currentEnemy.toString() + "!";
     }
 
+    /**
+     * Method that sets playerTurn to true (called when the player's turn starts)
+     */
     public void playerTurnStart() {
         playersTurn = true;
     }
 
+    /**
+     * Method that returns the string for the user's options while they are battling
+     * @return String of options
+     */
     public String displayPlayerOptions() {
         return """
                 1. Attack
@@ -126,6 +149,10 @@ public class GameController {
                 """;
     }
 
+    /**
+     * Method for the player's available moves during battle
+     * @return String for the player's options for the move
+     */
     public String displayPlayersMoves() {
         ArrayList<Move> moves = gamePlayer.getMoves();
         StringBuilder buffer = new StringBuilder();
@@ -137,6 +164,10 @@ public class GameController {
         return buffer.toString();
     }
 
+    /**
+     * Method to display the Player's item inventory
+     * @return String representation of the player's item inventory
+     */
     public String displayPlayerInventory() {
         if (gamePlayer.getOwnedItemNames().size() == 0) return "You have no items you can use!";
         ArrayList<Item> items = gamePlayer.getOwnedItemNames();
@@ -150,6 +181,13 @@ public class GameController {
         return buffer.toString();
     }
 
+    /**
+     * Method to perform the player's turn
+     * @param moveIndex the move that the user chose to use
+     * @return String of Turn object for summary of the player's turn
+     * @throws IndexOutOfBoundsException If the user chose an invalid move (move out of array bounds)
+     * @throws InputException If the user enters an advanced move that they can't use anymore due to running out of uses
+     */
     public String doPlayerTurn(int moveIndex) throws IndexOutOfBoundsException, InputException {
         try {
             moveIndex--;
@@ -165,7 +203,7 @@ public class GameController {
      * Uses the item at the index that the user selected
      * Applies item effect to Player class
      * @param itemIndex index of item selected
-     * @return String that desrcribes action
+     * @return String that describes action
      */
     public String playerUseItem(int itemIndex) {
         Turn currentTurn = gamePlayer.useItem(itemIndex);
@@ -173,28 +211,51 @@ public class GameController {
         return "You " + currentTurn.toStringItem();
     }
 
+    /**
+     * Method that sets playersTurn = false. Called when player's turn ends and enemy's turn starts
+     */
     public void playerTurnEnd() {
         playersTurn = false;
     }
 
+    /**
+     * Method to display the enemy's current status
+     * @return String for the enemy's current status (their name and health)
+     */
     public String displayEnemyStatus() {
         return currentEnemy.getName() + "'s " + currentEnemy.currentFighterStatus();
     }
 
+    /**
+     * Method to perform the enemy's turn
+     * @return String of Turn object for summary of the enemy's turn
+     */
     public String doEnemyTurn() {
         Turn currentTurn = currentEnemy.performTurn(currentEnemy.generateMoveIndex(), gamePlayer);
         playerTurnStart();
         return currentEnemy.getName() + " " + currentTurn.toStringMove();
     }
 
+    /**
+     * Method for the Player's and Enemy's status to display after a turn is performed
+     * @return String representing the fighters' statuses (Player and Enemy)
+     */
     public String displayCurrentFightersStatus() {
         return "Your " + gamePlayer.currentFighterStatus() + "\n" + displayEnemyStatus();
     }
 
+    /**
+     * Method that returns the quote that the enemy says when they lose the battle
+     * @return string for quote that enemy says
+     */
     public String enemyLoss() {
         return enemyTalk('L') ;
     }
 
+    /**
+     * Method that increases the player's coins based on how many enemies are remaining on the floor
+     * @return the number of coins that the player received for defeating the enemy
+     */
     private int increasePlayerCoins() {
         int coins;
         switch (enemiesToFight.size()) {
@@ -207,6 +268,10 @@ public class GameController {
         return coins;
     }
 
+    /**
+     * Method that increases the player's XP based on how many enemies are remaining on the floor
+     * @return the number of XP that the player received for defeating the enemy
+     */
     private int increasePlayerXP() {
         int xp;
         switch (enemiesToFight.size()) {
@@ -219,29 +284,51 @@ public class GameController {
         return xp;
     }
 
+    /**
+     * Method that determines the coins and XP that a player got for defeating the enemy
+     * @return String that summarizes the player's rewards (coins and XP)
+     */
     public String displayPlayerRewards() {
         int coins = increasePlayerCoins();
         int xp = increasePlayerXP();
         return Colors.BOLD + "You got " + coins + " coins and " + xp + "XP!" + Colors.RESET;
     }
 
+    /**
+     * Method the shows the levelling up String if the user levelled up
+     * @param initialLevel to pass into the Player displayLevelUp function
+     * @return String the is returned from Player displayLevelUp function
+     */
     public String displayLevelUp(int initialLevel){
         return gamePlayer.displayLevelUp(initialLevel);
     }
 
+    /**
+     * Method that increments the floor
+     */
     public void nextFloor() {
         currentFloor++;
     }
 
+    /**
+     * Method that returns the string that gets displayed when a player loses
+     * @return String for quotes/dialogues that get displayed
+     */
     public String playerLoss(){
         String quote = WordsHelper.shopkeeperQuote();
         return Colors.BOLD + "You died! You are getting sent back to the main menu.\nGo to the shop to purchase consumable items, more powerful moves, and potion boosts.\n" + Colors.RESET + enemyTalk('W') + "\n" + quote;
     }
 
-    public void restorePlayerHealth() {
+    /**
+     * Method to restore user's health and attributes
+     */
+    public void restorePlayer() {
         gamePlayer.fullRestore();
     }
 
+    /**
+     * Method to reset player's moves to max uses
+     */
     public void movesReset(){
         gamePlayer.resetMoves();
     }

@@ -17,6 +17,7 @@ public class Player extends GameCharacter implements Battleable {
     private final double[] consumableBoost = {0, 0};
     private final double[] potionBoost = {0, 0, 0};
 
+    //**********************[Constructors]************************
     public Player(String name) {
         super(name);
         items = new HashMap<>();

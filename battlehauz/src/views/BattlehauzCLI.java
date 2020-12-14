@@ -149,7 +149,7 @@ public class BattlehauzCLI {
             if (game.playerIsAlive()) game.nextFloor();
         }
         WordsHelper.rollingTextPrint(game.playerLoss());
-        game.restorePlayerHealth();
+        game.restorePlayer();
     }
 
     private static void battle(GameController game) {
