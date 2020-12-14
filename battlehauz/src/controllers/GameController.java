@@ -333,6 +333,13 @@ public class GameController {
         gamePlayer.resetMoves();
     }
 
+    /**
+     * Method to reset the floor to floor 1 when the player reenters the battlehauz after dying
+     */
+    public void resetFloor(){
+        currentFloor = 1;
+    }
+
     //******************************************************************************************************************
 
     //*************************************************[this is where the shop functions start]*************************************************

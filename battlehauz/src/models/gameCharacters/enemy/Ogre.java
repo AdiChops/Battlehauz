@@ -9,7 +9,7 @@ import java.util.Random;
 
 
 public class Ogre extends Enemy {
-    Queue<Integer> sequence = new LinkedList<>(Arrays.asList(0, 1, 2));
+    private Queue<Integer> sequence = new LinkedList<>(Arrays.asList(0, 1, 2));
 
     public Ogre(String n, int level) {
         super(n, 1000, level);

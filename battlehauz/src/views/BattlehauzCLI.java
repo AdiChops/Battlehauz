@@ -141,6 +141,7 @@ public class BattlehauzCLI {
      * @param game GameController object that stores the current game
      */
     private static void enterBattlehauz(GameController game) {
+        game.resetFloor();
         WordsHelper.rollingTextPrint("Ah, so you have chosen to enter the Battlehauz!" + Colors.BOLD + " Good luck!" + Colors.RESET + " Oh wait, you don't need luck, you need skill." + Colors.BOLD+ " Good skill!" + Colors.RESET);
         WordsHelper.rollingTextPrint(game.displayRules());
         //Game starts and continues while player is alive
