@@ -219,17 +219,30 @@ public class Player extends GameCharacter implements Battleable {
 
     //***********************[Leveling up]********************
 
-    public boolean hasLevelledUp(int initialLevel) {
+    /**
+     * This function determines if the player has levelled up
+     * @param initialLevel this is the player's initial level (before this function was called)
+     * @return True if the player has levelled up, otherwise false
+     */
+    private boolean hasLevelledUp(int initialLevel) {
         return initialLevel < calculateLevel();
     }
 
-    public void levelUpPlayer() {
+    /**
+     * This levels the player up (increases max health and base damage for basic moves)
+     */
+    private void levelUpPlayer() {
         setMaxHealth(calculateMaxHealth());
         getMoves().get(0).setBaseDamage(150 * calculateLevel());
         getMoves().get(1).setBaseDamage(200 * calculateLevel());
         getMoves().get(2).setBaseDamage(250 * calculateLevel());
     }
 
+    /**
+     * Display the player levelling up
+     * @param initialLevel the player's initial level before the
+     * @return string of level up summary, blank string otherwise
+     */
     public String displayLevelUp(int initialLevel) {
         if (hasLevelledUp(initialLevel)) {
             levelUpPlayer();
@@ -242,6 +255,10 @@ public class Player extends GameCharacter implements Battleable {
         return "";
     }
 
+    /**
+     * Determines how much XP the player is away from levelling up
+     * @return int of of the amount of XP available
+     */
     private int calculateFromLevellingUp() {
         return ((this.calculateLevel() + 1) * 1000) - this.XP;
     }
@@ -269,6 +286,9 @@ public class Player extends GameCharacter implements Battleable {
         potionBoost[2] = 0;
     }
 
+    /**
+     * Restore the player's health and reset their
+     */
     public void fullRestore() {
         resetConsumableBoosts();
         resetPermanentBoosts();
@@ -277,6 +297,10 @@ public class Player extends GameCharacter implements Battleable {
 
     //**********************************************************
 
+    /**
+     * Have the string representation of the player's available moves
+     * @return String representation of all of the user's moves
+     */
     public String availableMoves() {
         StringBuilder returnString = new StringBuilder();
         for (int i = 0; i < moves.size(); i++) {
@@ -297,6 +321,10 @@ public class Player extends GameCharacter implements Battleable {
         return returnString.toString();
     }
 
+    /**
+     * Player's full summary
+     * @return String for Player's full summary
+     */
     public String toString() {
         return "Full Summary\n------------------------------ \n" +
                 this.getName() + "\nYou are at level " + this.calculateLevel() + "\n"
