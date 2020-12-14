@@ -12,6 +12,8 @@ public abstract class GameCharacter {
     protected ArrayList<Move> moves;
     private final static int MAX_MOVES = 9; //how many types of moves they can have
 
+    //**********************[Constructors]************************
+
     public GameCharacter(String name) {
         this.name = name;
         this.maxHealth = 1000;
