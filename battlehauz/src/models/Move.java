@@ -33,7 +33,7 @@ public class Move {
         this.baseDamage = baseDamage;
         this.isSellable = false;
         this.XPBoost = xpBoost;
-        this.maxUses = 0; //idk random number
+        this.maxUses = 0;
         this.buyingPrice = 0;
         remainingUses = 0;
         remainingUses = 0;
@@ -129,7 +129,7 @@ public class Move {
      * @return a String of Move attributes in summary format, without buying price or selling price.
      */
     @Override
-    public String toString() { //will update later
+    public String toString() {
         return getName() + " | Base Damage: " + getBaseDamage() + " | XP Boost: " + getXPBoost() + " | " + ((isSellable) ? getRemainingUses() : "Unlimited") + " Uses";
     }
 }
