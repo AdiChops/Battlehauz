@@ -96,7 +96,7 @@ public class Player extends GameCharacter implements Battleable {
     }
 
     public int calculateMaxHealth() {
-        return maxHealth * calculateLevel();
+        return 1000 * calculateLevel();
     }
 
     /***

@@ -471,9 +471,6 @@ public class GameController {
         return shop.buyBackItem(index - 1);
     }
 
-    /**
-     * @return String of a random conversation between the Shopkeeper and Player at shop.
-     */
     public String displayShopkeeperConversation(){
         return shop.getRandomDialogue();
     }
